@@ -24,7 +24,6 @@ body { display: flex; height: 100vh; background-color: var(--bg-abu); overflow: 
 .menu-icon { margin-right: 10px; }
 .status-badge { font-size: 0.75em; padding: 3px 8px; border-radius: 12px; font-weight: bold; }
 .status-done { background-color: #d4edda; color: #155724; }
-.status-pending { background-color: #fff3cd; color: #856404; }
 .status-ongoing { background-color: #cce5ff; color: #004085; }
 
 .main-content { flex-grow: 1; padding: 30px; overflow-y: auto; }
@@ -66,9 +65,9 @@ body { display: flex; height: 100vh; background-color: var(--bg-abu); overflow: 
 .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95em; }
 .form-control:focus { border-color: var(--biru-langit-utama); outline: none; }
 textarea.form-control { resize: vertical; min-height: 60px; }
-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
-th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
-th { background-color: var(--biru-langit-muda); color: var(--biru-langit-gelap); font-weight: bold; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+th { background-color: var(--biru-langit-muda); color: var(--biru-langit-gelap); font-weight: bold; font-size: 0.8em; }
 tr:hover { background-color: #f9f9f9; }
 .total-row td { font-weight: bold; background-color: #e8f4fd; color: var(--biru-langit-gelap); border-top: 2px solid var(--biru-langit-utama); }
 
@@ -101,6 +100,18 @@ tr:hover { background-color: #f9f9f9; }
 .sumber-btn.active { background-color: var(--biru-langit-utama); border-color: var(--biru-langit-utama); color: #fff; }
 .info-harga { background-color: #fffde7; border-left: 4px solid #ffc107; padding: 10px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.85em; display: none; }
 .info-harga.show { display: block; }
+
+/* BOX PIHAK KETIGA */
+.vendor-box { background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%); border: 2px dashed #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 15px; display: none; }
+.vendor-box.show { display: block; }
+.vendor-box h4 { font-size: 0.95em; color: #b8860b; margin-bottom: 12px; }
+.vendor-info { background: #fff; border-radius: 6px; padding: 10px 12px; margin-top: 10px; font-size: 0.85em; border-left: 3px solid var(--hijau-aman); }
+.vendor-info .fee-value { font-size: 1.3em; color: var(--hijau-aman); font-weight: bold; display: block; margin-top: 5px; }
+.vendor-info .margin-pct { font-size: 0.85em; color: #666; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f0f8ff; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-weight: bold; color: #009ACD; font-size: 0.9em; }
+.checkbox-label input { width: 18px; height: 18px; cursor: pointer; }
+
+.badge-vendor { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7em; font-weight: bold; background-color: #fff3cd; color: #856404; margin-left: 3px; }
 
 .link-list { list-style: none; }
 .link-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee; }
@@ -136,6 +147,7 @@ tr:hover { background-color: #f9f9f9; }
 .fin-card.hijau::before { background-color: var(--hijau-aman); }
 .fin-card.merah::before { background-color: var(--merah-alert); }
 .fin-card.kuning::before { background-color: #ffc107; }
+.fin-card.ungu::before { background-color: #9b59b6; }
 .fin-card h4 { color: #777; font-size: 0.8em; text-transform: uppercase; margin-bottom: 8px; }
 .fin-card .value { font-size: 1.5em; font-weight: bold; color: var(--teks-gelap); }
 .fin-card .sub-value { font-size: 0.82em; margin-top: 6px; display: block; color: #666; }
@@ -148,7 +160,6 @@ tr:hover { background-color: #f9f9f9; }
 .status-res-Aktif { background-color: #cce5ff; color: #004085; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: bold; }
 .status-res-Selesai { background-color: #d4edda; color: #155724; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: bold; }
 
-/* GANTT CHART */
 .gantt-wrapper { background-color: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--biru-langit-utama); margin-bottom: 20px; overflow-x: auto; }
 .gantt-table { min-width: 100%; border-collapse: collapse; }
 .gantt-table th { font-size: 0.75em; text-align: center; padding: 5px; background-color: var(--biru-langit-muda); color: var(--biru-langit-gelap); border: 1px solid #ddd; }
@@ -159,20 +170,22 @@ tr:hover { background-color: #f9f9f9; }
 .gantt-bar-rencana { background: linear-gradient(180deg, #00BFFF 0%, #009ACD 100%); }
 .gantt-bar-overbudget { background: linear-gradient(180deg, #FF4C4C 0%, #cc0000 100%); }
 .gantt-bar-selesai { background: linear-gradient(180deg, #28A745 0%, #1e7e34 100%); }
-
-/* KURVA-S SVG */
 .kurva-s-container { background-color: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--biru-langit-utama); margin-bottom: 20px; }
 .kurva-s-legend { display: flex; gap: 20px; margin-bottom: 15px; font-size: 0.85em; }
 .legend-item { display: flex; align-items: center; gap: 5px; }
 .legend-color { width: 20px; height: 3px; }
 .legend-rencana { background-color: #009ACD; }
 .legend-realisasi { background-color: #28A745; }
-
 .progress-bar-container { width: 100%; background-color: #eee; border-radius: 10px; height: 20px; overflow: hidden; }
 .progress-bar-fill { height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75em; font-weight: bold; }
 .progress-aman { background-color: var(--hijau-aman); }
-.progress-lambat { background-color: var(--merah-alert); }
 .progress-normal { background-color: var(--biru-langit-utama); }
+
+/* SUMMARY TOTAL ITEM PROYEK */
+.total-summary { background: linear-gradient(135deg, #f0f8ff 0%, #e0f7fa 100%); border-radius: 8px; padding: 15px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.total-summary-item { text-align: center; padding: 8px; border-radius: 6px; background: rgba(255,255,255,0.7); }
+.total-summary-item .label { font-size: 0.75em; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
+.total-summary-item .val { font-size: 1.1em; font-weight: bold; }
 
 @media (max-width: 900px) { .flex-container { flex-direction: column; } .panel-grid { grid-template-columns: 1fr; } }
 </style>
@@ -187,7 +200,7 @@ tr:hover { background-color: #f9f9f9; }
         <li><a href="#" class="menu-item" data-page="rab"><span><span class="menu-icon">📋</span> RAB & AHSP</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="material"><span><span class="menu-icon">📦</span> Material & Harga</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="resource"><span><span class="menu-icon">👷</span> Resource Planning</span><span class="status-badge status-done">✓</span></a></li>
-        <li><a href="#" class="menu-item active" data-page="jadwal"><span><span class="menu-icon">📅</span> Jadwal & Kurva-S</span><span class="status-badge status-ongoing">Proses</span></a></li>
+        <li><a href="#" class="menu-item" data-page="jadwal"><span><span class="menu-icon">📅</span> Jadwal & Kurva-S</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="akuntansi"><span><span class="menu-icon">💰</span> Akuntansi Proyek</span><span class="status-badge status-done">✓</span></a></li>
     </ul>
 </aside>
@@ -196,9 +209,7 @@ tr:hover { background-color: #f9f9f9; }
 
 <div id="page-dashboard" class="page-view">
     <div class="main-header"><h1>Dashboard</h1><p>Ringkasan performa bisnis Isakuiki Interior.</p></div>
-    <div class="widget-grid" id="dashboard-widgets">
-        <div class="widget-card"><h4>Total Nilai Proyek Aktif</h4><div class="value">-</div></div>
-    </div>
+    <div class="widget-grid" id="dashboard-widgets"><div class="widget-card"><h4>Memuat</h4><div class="value">...</div></div></div>
     <div class="panel-grid">
         <div class="panel"><h3>📈 Rencana vs Realisasi Biaya</h3><div class="chart-placeholder">Lihat detail di menu <strong>Akuntansi Proyek</strong>.</div></div>
         <div class="panel"><h3>📋 Update Info AHSP</h3>
@@ -275,19 +286,42 @@ tr:hover { background-color: #f9f9f9; }
                         <option value="Material">Material</option><option value="Upah">Upah</option><option value="Lainnya">Lainnya</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Qty</label><input type="number" id="itemProjQty" class="form-control" value="1"></div>
+                <div class="form-group"><label>Qty</label><input type="number" id="itemProjQty" class="form-control" value="1" oninput="hitungFeeProyek()"></div>
                 <div class="form-group"><label>Satuan</label><input type="text" id="itemProjSatuan" class="form-control"></div>
-                <div class="form-group"><label>Harga Satuan (Rp)</label><input type="number" id="itemProjHarga" class="form-control"></div>
+                <div class="form-group"><label>Harga Jual ke Konsumen (Rp)</label><input type="number" id="itemProjHarga" class="form-control" oninput="hitungFeeProyek()"></div>
+
+                <!-- CHECKBOX PIHAK KETIGA -->
+                <label class="checkbox-label">
+                    <input type="checkbox" id="itemProjIsVendor" onchange="toggleVendorBox()">
+                    🤝 Item ini dibeli dari Pihak Ketiga (Vendor)
+                </label>
+
+                <div class="vendor-box" id="vendorBox">
+                    <h4>🏭 Data Vendor (Pihak Ketiga)</h4>
+                    <div class="form-group"><label>Nama Vendor / Produsen</label><input type="text" id="itemProjVendor" class="form-control" placeholder="Contoh: CV Jaya Furniture"></div>
+                    <div class="form-group"><label>Harga Beli dari Vendor (Rp)</label><input type="number" id="itemProjHargaVendor" class="form-control" placeholder="Harga fixed, tidak bisa diubah" oninput="hitungFeeProyek()"></div>
+                    <div class="vendor-info" id="vendorInfo">
+                        <span>Fee / Keuntungan:</span>
+                        <span class="fee-value" id="feePreview">Rp 0</span>
+                        <span class="margin-pct" id="marginPreview">Margin: 0%</span>
+                    </div>
+                </div>
+
                 <div class="form-group"><label>Keterangan</label><textarea id="itemProjKet" class="form-control"></textarea></div>
                 <button class="btn-primary" id="btnSimpanItem" onclick="simpanItemProyek()">💾 Tambah Item</button>
             </div>
+
             <div class="table-card">
                 <h3>📋 Daftar Item Pesanan</h3>
                 <table>
-                    <thead><tr><th>No</th><th>Nama</th><th>Kategori</th><th>Qty</th><th>Satuan</th><th>Harga</th><th>Subtotal</th><th>Aksi</th></tr></thead>
+                    <thead><tr><th>No</th><th>Item</th><th>Qty</th><th>Harga Jual</th><th>Harga Vendor</th><th>Fee</th><th>Aksi</th></tr></thead>
                     <tbody id="detail-item-body"></tbody>
-                    <tfoot><tr class="total-row"><td colspan="6" style="text-align:right;">TOTAL</td><td id="detail-total">Rp 0</td><td></td></tr></tfoot>
                 </table>
+                <div class="total-summary" id="item-total-summary">
+                    <div class="total-summary-item"><span class="label">Total Jual</span><span class="val text-hijau" id="sum-total-jual">Rp 0</span></div>
+                    <div class="total-summary-item"><span class="label">Total Vendor</span><span class="val text-merah" id="sum-total-vendor">Rp 0</span></div>
+                    <div class="total-summary-item"><span class="label">Total Fee</span><span class="val" style="color:#9b59b6;" id="sum-total-fee">Rp 0</span></div>
+                </div>
             </div>
         </div>
         <div class="panel"><h3>📑 Riwayat RAB Proyek Ini</h3><div id="rab-list-container"><p class="empty-state">Belum ada RAB.</p></div></div>
@@ -392,7 +426,7 @@ tr:hover { background-color: #f9f9f9; }
         <div class="fin-grid">
             <div class="fin-card biru"><h4>Tenaga Kerja</h4><div class="value" id="res-total-tenaga">0</div><span class="sub-value">Orang</span></div>
             <div class="fin-card kuning"><h4>Alat</h4><div class="value" id="res-total-alat">0</div><span class="sub-value">Unit</span></div>
-            <div class="fin-card hijau"><h4>Total Biaya Resource</h4><div class="value" id="res-total-biaya">Rp 0</div><span class="sub-value" id="res-total-count">0 resource</span></div>
+            <div class="fin-card hijau"><h4>Total Biaya</h4><div class="value" id="res-total-biaya">Rp 0</div><span class="sub-value" id="res-total-count">0 resource</span></div>
             <div class="fin-card merah"><h4>Sisa Budget RAB</h4><div class="value" id="res-sisa-budget">Rp 0</div><span class="sub-value" id="res-sisa-info">-</span></div>
         </div>
         <div class="tabs">
@@ -448,39 +482,34 @@ tr:hover { background-color: #f9f9f9; }
     <div id="res-empty" class="panel"><div class="empty-state" style="padding:60px 20px;"><div style="font-size:3em; margin-bottom:15px;">👷</div><h3 style="color:#777;">Pilih Proyek Dulu</h3></div></div>
 </div>
 
-<!-- ==================== JADWAL & KURVA-S ==================== -->
-<div id="page-jadwal" class="page-view active">
+<div id="page-jadwal" class="page-view">
     <div class="main-header">
-        <div class="header-title-wrap"><div><h1>Jadwal & Kurva-S</h1><p>Kelola timeline pekerjaan, pantau progres rencana vs realisasi.</p></div></div>
+        <div class="header-title-wrap"><div><h1>Jadwal & Kurva-S</h1><p>Kelola timeline pekerjaan & pantau progres.</p></div></div>
     </div>
-
     <div class="project-selector-bar">
         <label>📁 Pilih Proyek:</label>
         <select id="jdwPilihProyek" class="form-control" onchange="onPilihProyekJadwal()"><option value="">-- Pilih Proyek --</option></select>
         <button class="btn-print" onclick="cetakKurvaS()">🖨️ Cetak Laporan</button>
     </div>
-
     <div id="jdw-content" style="display:none;">
         <div class="fin-grid">
-            <div class="fin-card biru"><h4>Total Bobot Pekerjaan</h4><div class="value" id="jdw-total-bobot">0%</div><span class="sub-value" id="jdw-total-count">0 pekerjaan</span></div>
-            <div class="fin-card hijau"><h4>Progres Rencana</h4><div class="value" id="jdw-progress-rencana">0%</div><span class="sub-value">Hari ini</span></div>
-            <div class="fin-card kuning"><h4>Progres Realisasi</h4><div class="value" id="jdw-progress-real">0%</div><span class="sub-value">Aktual</span></div>
+            <div class="fin-card biru"><h4>Total Bobot</h4><div class="value" id="jdw-total-bobot">0%</div><span class="sub-value" id="jdw-total-count">0 pekerjaan</span></div>
+            <div class="fin-card biru"><h4>Progres Rencana</h4><div class="value" id="jdw-progress-rencana">0%</div><span class="sub-value">Hari ini</span></div>
+            <div class="fin-card hijau"><h4>Progres Realisasi</h4><div class="value" id="jdw-progress-real">0%</div><span class="sub-value">Aktual</span></div>
             <div class="fin-card" id="jdw-status-card"><h4>Status Jadwal</h4><div class="value" id="jdw-status">-</div><span class="sub-value" id="jdw-deviasi">-</span></div>
         </div>
-
         <div class="tabs">
             <button class="tab-btn active" data-tab="tab-jadwal-form">➕ Tambah Pekerjaan</button>
             <button class="tab-btn" data-tab="tab-jadwal-gantt">📊 Gantt Chart</button>
             <button class="tab-btn" data-tab="tab-jadwal-kurvas">📈 Kurva-S</button>
         </div>
-
         <div id="tab-jadwal-form" class="tab-content active">
             <div class="form-card" style="max-width:800px;">
                 <h3>📝 Data Pekerjaan</h3>
                 <div class="flex-container" style="margin-bottom:0;">
                     <div style="flex:1; min-width:250px;">
-                        <div class="form-group"><label>Nama Pekerjaan</label><input type="text" id="jdwNama" class="form-control" placeholder="Contoh: Kitchen Set Bawah"></div>
-                        <div class="form-group"><label>Bobot (%)</label><input type="number" id="jdwBobot" class="form-control" value="10" min="0" max="100" step="0.1"></div>
+                        <div class="form-group"><label>Nama Pekerjaan</label><input type="text" id="jdwNama" class="form-control"></div>
+                        <div class="form-group"><label>Bobot (%)</label><input type="number" id="jdwBobot" class="form-control" value="10" step="0.1"></div>
                     </div>
                     <div style="flex:1; min-width:250px;">
                         <div class="form-group"><label>Tanggal Mulai</label><input type="date" id="jdwTglMulai" class="form-control"></div>
@@ -488,26 +517,19 @@ tr:hover { background-color: #f9f9f9; }
                     </div>
                 </div>
                 <div class="flex-container" style="margin-bottom:0;">
-                    <div style="flex:1; min-width:250px;">
-                        <div class="form-group"><label>Progress Realisasi (%)</label><input type="number" id="jdwProgress" class="form-control" value="0" min="0" max="100"></div>
-                    </div>
-                    <div style="flex:1; min-width:250px;">
-                        <div class="form-group"><label>Status</label>
-                            <select id="jdwStatusPekerjaan" class="form-control">
-                                <option value="Rencana">Rencana</option><option value="Berjalan">Berjalan</option><option value="Selesai">Selesai</option>
-                            </select>
-                        </div>
-                    </div>
+                    <div style="flex:1; min-width:250px;"><div class="form-group"><label>Progress (%)</label><input type="number" id="jdwProgress" class="form-control" value="0"></div></div>
+                    <div style="flex:1; min-width:250px;"><div class="form-group"><label>Status</label>
+                        <select id="jdwStatusPekerjaan" class="form-control"><option value="Rencana">Rencana</option><option value="Berjalan">Berjalan</option><option value="Selesai">Selesai</option></select>
+                    </div></div>
                 </div>
                 <div class="form-group"><label>Keterangan</label><textarea id="jdwKet" class="form-control"></textarea></div>
                 <button class="btn-primary" id="btnSimpanJdw" onclick="simpanJadwal()">💾 Simpan Pekerjaan</button>
                 <input type="hidden" id="jdwEditId">
             </div>
         </div>
-
         <div id="tab-jadwal-gantt" class="tab-content">
             <div class="gantt-wrapper">
-                <h3 style="margin-bottom:15px; color:var(--teks-gelap); font-size:1.1em;">📊 Gantt Chart Proyek</h3>
+                <h3 style="margin-bottom:15px; color:var(--teks-gelap); font-size:1.1em;">📊 Gantt Chart</h3>
                 <div id="gantt-container"><p class="empty-state">Belum ada jadwal.</p></div>
             </div>
             <div class="table-card">
@@ -519,10 +541,9 @@ tr:hover { background-color: #f9f9f9; }
                 </table>
             </div>
         </div>
-
         <div id="tab-jadwal-kurvas" class="tab-content">
             <div class="kurva-s-container">
-                <h3 style="margin-bottom:15px; color:var(--teks-gelap); font-size:1.1em;">📈 Kurva-S Progres Proyek</h3>
+                <h3 style="margin-bottom:15px; color:var(--teks-gelap); font-size:1.1em;">📈 Kurva-S</h3>
                 <div class="kurva-s-legend">
                     <div class="legend-item"><div class="legend-color legend-rencana"></div><span>Rencana</span></div>
                     <div class="legend-item"><div class="legend-color legend-realisasi"></div><span>Realisasi</span></div>
@@ -531,14 +552,7 @@ tr:hover { background-color: #f9f9f9; }
             </div>
         </div>
     </div>
-
-    <div id="jdw-empty" class="panel">
-        <div class="empty-state" style="padding:60px 20px;">
-            <div style="font-size:3em; margin-bottom:15px;">📅</div>
-            <h3 style="color:#777; margin-bottom:10px;">Pilih Proyek Dulu</h3>
-            <p>Silakan pilih proyek di dropdown atas untuk mengelola jadwal.</p>
-        </div>
-    </div>
+    <div id="jdw-empty" class="panel"><div class="empty-state" style="padding:60px 20px;"><div style="font-size:3em;">📅</div><h3 style="color:#777;">Pilih Proyek Dulu</h3></div></div>
 </div>
 
 <div id="page-akuntansi" class="page-view">
@@ -551,9 +565,13 @@ tr:hover { background-color: #f9f9f9; }
     <div id="akun-content" style="display:none;">
         <div class="fin-grid">
             <div class="fin-card biru"><h4>Nilai RAB</h4><div class="value" id="fin-total-rab">Rp 0</div><span class="sub-value" id="fin-rab-versi">-</span></div>
+            <div class="fin-card ungu"><h4>Fee Pihak Ketiga</h4><div class="value" id="fin-total-fee">Rp 0</div><span class="sub-value" id="fin-fee-info">-</span></div>
             <div class="fin-card hijau"><h4>Pemasukan</h4><div class="value" id="fin-total-income">Rp 0</div><span class="sub-value" id="fin-income-count">0 transaksi</span></div>
             <div class="fin-card merah"><h4>Pengeluaran</h4><div class="value" id="fin-total-expense">Rp 0</div><span class="sub-value" id="fin-expense-count">0 transaksi</span></div>
+        </div>
+        <div class="fin-grid" style="grid-template-columns: 1fr 1fr;">
             <div class="fin-card kuning"><h4>Laba Kotor</h4><div class="value" id="fin-laba">Rp 0</div><span class="sub-value" id="fin-margin">Margin -</span></div>
+            <div class="fin-card hijau" style="grid-column: span 2; display: none;" id="fin-fee-note"></div>
         </div>
         <div id="akun-alert" class="panel" style="display:none; padding:15px 20px;"><div id="akun-alert-content"></div></div>
         <div class="tabs">
@@ -568,6 +586,7 @@ tr:hover { background-color: #f9f9f9; }
                     <div class="form-group"><label>Kategori</label>
                         <select id="expKategori" class="form-control">
                             <option value="Material">Material</option><option value="Upah">Upah Tukang</option>
+                            <option value="Vendor">Bayar Vendor / Pihak Ketiga</option>
                             <option value="Transport">Transport</option><option value="Alat">Sewa Alat</option><option value="Lainnya">Lainnya</option>
                         </select>
                     </div>
@@ -643,7 +662,7 @@ tr:hover { background-color: #f9f9f9; }
     <h3 id="modalRabTitle">Detail RAB</h3>
     <div id="modalRabContent"></div>
     <div class="modal-actions"><button class="btn-back" onclick="tutupModal('modalDetailRAB')">Tutup</button>
-    <button class="btn-print" id="btnPrintFromModal" style="flex:1;" onclick="cetakDariModal()">🖨️ Cetak RAB</button></div>
+    <button class="btn-print" style="flex:1;" onclick="cetakDariModal()">🖨️ Cetak RAB</button></div>
 </div></div>
 
 <div id="modalSimpanRAB" class="modal-overlay"><div class="modal-box">
@@ -655,7 +674,6 @@ tr:hover { background-color: #f9f9f9; }
 </div></div>
 
 <script>
-// ============ KONFIGURASI ============
 const SUPABASE_URL = 'https://avkllsfjgtzefqlflmax.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2a2xsc2ZqZ3R6ZWZxbGZsbWF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTIwODcsImV4cCI6MjEwNDg2ODA4N30.bpV0FN8oqXbMrMSiQPawIHl7AQBg2VC0k3Nd-OEKSE4';
 const { createClient } = supabase;
@@ -672,7 +690,6 @@ const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currenc
 const formatTanggal = (tgl) => tgl ? new Date(tgl).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-';
 const formatTanggalShort = (tgl) => tgl ? new Date(tgl).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
 const formatDateTime = (tgl) => tgl ? new Date(tgl).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
-const formatDate = (d) => { const dt = new Date(d); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`; };
 
 // NAVIGASI
 document.querySelectorAll('.menu-item').forEach(item => {
@@ -699,12 +716,11 @@ document.querySelectorAll('.menu-item').forEach(item => {
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const targetTab = btn.getAttribute('data-tab');
-        const parent = btn.closest('.page-view') || btn.closest('.flex-container').parentElement;
+        const parent = btn.closest('.page-view');
         parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         parent.querySelector('#' + targetTab).classList.add('active');
-        // Auto-render jika buka tab Gantt/Kurva
         if (targetTab === 'tab-jadwal-gantt') renderGanttChart();
         if (targetTab === 'tab-jadwal-kurvas') renderKurvaS();
     });
@@ -717,24 +733,31 @@ function tutupModal(id) { document.getElementById(id).classList.remove('active')
 async function muatDashboard() {
     const { data: projects } = await db.from('projects').select('id, budget, status');
     const { data: rabs } = await db.from('project_rab').select('project_id, total');
-    const { data: expenses } = await db.from('project_expenses').select('project_id, jumlah');
+    const { data: expenses } = await db.from('project_expenses').select('project_id, jumlah, kategori');
     const { data: incomes } = await db.from('project_incomes').select('project_id, jumlah');
+    const { data: items } = await db.from('project_items').select('project_id, qty, harga_satuan, harga_vendor, is_third_party');
+
     const proyekAktif = (projects || []).filter(p => p.status !== 'Selesai' && p.status !== 'Penawaran');
     const totalNilaiProyek = proyekAktif.reduce((s, p) => s + (p.budget || 0), 0);
     const totalRealisasi = (expenses || []).reduce((s, e) => s + (e.jumlah || 0), 0);
     const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
     const totalLaba = totalIncome - totalRealisasi;
+    // Total Fee dari item pihak ketiga
+    const totalFee = (items || []).filter(i => i.is_third_party).reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
+
     const perProjectRAB = {}; (rabs || []).forEach(r => { perProjectRAB[r.project_id] = (perProjectRAB[r.project_id] || 0) + (r.total || 0); });
     const perProjectExp = {}; (expenses || []).forEach(e => { perProjectExp[e.project_id] = (perProjectExp[e.project_id] || 0) + (e.jumlah || 0); });
     let overbudgetCount = 0;
     (projects || []).forEach(p => { const rab = perProjectRAB[p.id] || 0; const exp = perProjectExp[p.id] || 0; if (rab > 0 && exp > rab) overbudgetCount++; });
+
     document.getElementById('dashboard-widgets').innerHTML = `
         <div class="widget-card"><h4>Total Nilai Proyek Aktif</h4><div class="value">${formatRupiah(totalNilaiProyek)}</div><span class="sub-value text-hijau">▲ ${proyekAktif.length} Proyek Berjalan</span></div>
         <div class="widget-card"><h4>Total Realisasi Biaya</h4><div class="value text-merah">${formatRupiah(totalRealisasi)}</div><span class="sub-value">${(expenses || []).length} transaksi</span></div>
+        <div class="widget-card" style="border-left-color:#9b59b6;"><h4>💰 Fee dari Pihak Ketiga</h4><div class="value" style="color:#9b59b6;">${formatRupiah(totalFee)}</div><span class="sub-value">${(items || []).filter(i => i.is_third_party).length} item vendor</span></div>
         <div class="widget-card"><h4>Estimasi Laba Kotor</h4><div class="value ${totalLaba >= 0 ? 'text-hijau' : 'text-merah'}">${formatRupiah(totalLaba)}</div><span class="sub-value">${totalIncome > 0 ? 'Margin ' + ((totalLaba / totalIncome) * 100).toFixed(1) + '%' : 'Belum ada pemasukan'}</span></div>
         <div class="widget-card" style="border-left-color: ${overbudgetCount > 0 ? 'var(--merah-alert)' : 'var(--hijau-aman)'};">
-            <h4>Peringatan Dini</h4><div class="value ${overbudgetCount > 0 ? 'text-merah' : 'text-hijau'}" style="font-size:1.2em;">${overbudgetCount > 0 ? '⚠️ ' + overbudgetCount + ' Proyek Overbudget' : '✅ Semua Proyek Aman'}</div>
-            <span class="sub-value">${overbudgetCount > 0 ? 'Cek di menu Akuntansi Proyek' : 'Tidak ada pembengkakan biaya'}</span></div>`;
+            <h4>Peringatan Dini</h4><div class="value ${overbudgetCount > 0 ? 'text-merah' : 'text-hijau'}" style="font-size:1.2em;">${overbudgetCount > 0 ? '⚠️ ' + overbudgetCount + ' Overbudget' : '✅ Semua Aman'}</div>
+            <span class="sub-value">${overbudgetCount > 0 ? 'Cek Akuntansi Proyek' : 'Tidak ada pembengkakan'}</span></div>`;
 }
 
 // SUMBER SELECTOR
@@ -783,6 +806,29 @@ async function loadLaborDropdown() {
     const s2 = document.getElementById('rabSelectLabor'); if (s2) s2.innerHTML = html;
 }
 
+// VENDOR / PIHAK KETIGA
+function toggleVendorBox() {
+    const checked = document.getElementById('itemProjIsVendor').checked;
+    document.getElementById('vendorBox').classList.toggle('show', checked);
+    if (!checked) {
+        document.getElementById('itemProjVendor').value = '';
+        document.getElementById('itemProjHargaVendor').value = '';
+    }
+    hitungFeeProyek();
+}
+function hitungFeeProyek() {
+    const qty = parseFloat(document.getElementById('itemProjQty').value) || 0;
+    const hargaJual = parseFloat(document.getElementById('itemProjHarga').value) || 0;
+    const hargaVendor = parseFloat(document.getElementById('itemProjHargaVendor').value) || 0;
+    const isVendor = document.getElementById('itemProjIsVendor').checked;
+    if (!isVendor) return;
+    const fee = (hargaJual - hargaVendor) * qty;
+    const marginPct = hargaJual > 0 ? ((hargaJual - hargaVendor) / hargaJual) * 100 : 0;
+    document.getElementById('feePreview').innerText = formatRupiah(fee);
+    document.getElementById('feePreview').style.color = fee >= 0 ? 'var(--hijau-aman)' : 'var(--merah-alert)';
+    document.getElementById('marginPreview').innerText = `Margin: ${marginPct.toFixed(1)}% (per unit)`;
+}
+
 // PROYEK
 function bukaFormProyek() { document.getElementById('proyek-list-view').classList.remove('active'); document.getElementById('proyek-form-view').classList.add('active'); document.getElementById('proyek-detail-view').classList.remove('active'); }
 function tutupFormProyek() { document.getElementById('proyek-form-view').classList.remove('active'); document.getElementById('proyek-list-view').classList.add('active'); ['projNama','projKontak','projJenis','projTglMulai','projTglSelesai','projBudget','projAlamat'].forEach(id => document.getElementById(id).value = ''); document.getElementById('projStatus').value = 'Penawaran'; }
@@ -792,15 +838,14 @@ async function muatProyek() {
     const grid = document.getElementById('project-grid');
     grid.innerHTML = '<div class="loading" style="grid-column:1/-1;">Memuat...</div>';
     const { data, error } = await db.from('projects').select('*, project_items(count), project_rab(count)').order('created_at', { ascending: false });
-    if (error) { grid.innerHTML = `<div class="loading text-merah" style="grid-column:1/-1;">Error: ${error.message}</div>`; return; }
-    if (data.length === 0) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Belum ada proyek.</div>'; return; }
+    if (error || data.length === 0) { grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Belum ada proyek.</div>`; return; }
     grid.innerHTML = data.map(p => {
-        const jumlahItem = p.project_items && p.project_items[0] ? p.project_items[0].count : 0;
-        const jumlahRAB = p.project_rab && p.project_rab[0] ? p.project_rab[0].count : 0;
+        const jItem = p.project_items && p.project_items[0] ? p.project_items[0].count : 0;
+        const jRAB = p.project_rab && p.project_rab[0] ? p.project_rab[0].count : 0;
         return `<div class="project-card" onclick="bukaDetailProyek(${p.id})">
             <div class="kode">${p.kode_proyek}</div><h4>${p.nama_konsumen}</h4>
-            <div class="detail-row"><span>Item:</span> <strong>${jumlahItem}</strong></div>
-            <div class="detail-row"><span>RAB:</span> <strong>${jumlahRAB} versi</strong></div>
+            <div class="detail-row"><span>Item:</span> <strong>${jItem}</strong></div>
+            <div class="detail-row"><span>RAB:</span> <strong>${jRAB} versi</strong></div>
             <div class="detail-row"><span>Budget:</span> <span class="budget">${formatRupiah(p.budget)}</span></div>
             <span class="badge-status badge-${p.status}">${p.status}</span></div>`;
     }).join('');
@@ -808,7 +853,7 @@ async function muatProyek() {
 async function simpanProyek() {
     const nama = document.getElementById('projNama').value.trim();
     if (!nama) { alert("Nama konsumen wajib diisi."); return; }
-    const btn = document.getElementById('btnSimpanProyek'); btn.disabled = true; btn.innerText = 'Menyimpan...';
+    const btn = document.getElementById('btnSimpanProyek'); btn.disabled = true; btn.innerText = '...';
     const { count } = await db.from('projects').select('*', { count: 'exact', head: true });
     const kodeBaru = 'PRJ-' + String((count || 0) + 1).padStart(3, '0');
     const { error } = await db.from('projects').insert([{
@@ -840,43 +885,83 @@ async function bukaDetailProyek(id) {
         <div class="info-item"><span class="label">Budget</span><span class="value">${formatRupiah(proj.budget)}</span></div>
         <div class="info-item"><span class="label">Alamat</span><span class="value">${proj.alamat || '-'}</span></div>`;
     await loadMaterialDropdown(); await loadLaborDropdown();
-    gantiSumber('manual'); muatItemsProyek(); muatRABProyek();
+    gantiSumber('manual');
+    document.getElementById('itemProjIsVendor').checked = false;
+    document.getElementById('vendorBox').classList.remove('show');
+    muatItemsProyek(); muatRABProyek();
 }
 async function muatItemsProyek() {
     const tbody = document.getElementById('detail-item-body');
-    tbody.innerHTML = '<tr><td colspan="8" class="loading">Memuat...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="loading">Memuat...</td></tr>';
     const { data, error } = await db.from('project_items').select('*').eq('project_id', currentProjectId).order('created_at');
-    if (error) { tbody.innerHTML = `<tr><td colspan="8" class="loading text-merah">Error</td></tr>`; return; }
-    if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Belum ada item.</td></tr>'; document.getElementById('detail-total').innerText = 'Rp 0'; return; }
-    let total = 0;
+    if (error) { tbody.innerHTML = `<tr><td colspan="7" class="loading text-merah">Error</td></tr>`; return; }
+    if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada item.</td></tr>'; hitungTotalItem([]); return; }
     tbody.innerHTML = data.map((item, i) => {
-        const sub = item.qty * item.harga_satuan; total += sub;
-        return `<tr><td>${i + 1}</td><td><strong>${item.nama_item}</strong></td><td>${item.kategori || '-'}</td>
-            <td>${item.qty}</td><td>${item.satuan}</td><td>${formatRupiah(item.harga_satuan)}</td>
-            <td>${formatRupiah(sub)}</td><td><button class="btn-hapus" onclick="hapusItemProyek(${item.id})">Hapus</button></td></tr>`;
+        const subJual = item.qty * item.harga_satuan;
+        const subVendor = item.qty * (item.harga_vendor || 0);
+        const fee = item.is_third_party ? subJual - subVendor : 0;
+        const badge = item.is_third_party ? `<span class="badge-vendor">🏭 ${item.vendor || 'Vendor'}</span>` : '';
+        return `<tr>
+            <td>${i + 1}</td>
+            <td><strong>${item.nama_item}</strong>${badge}<br><small style="color:#888;">${item.kategori || '-'}</small></td>
+            <td>${item.qty} ${item.satuan}</td>
+            <td>${formatRupiah(subJual)}</td>
+            <td>${item.is_third_party ? formatRupiah(subVendor) : '<span style="color:#ccc;">-</span>'}</td>
+            <td>${item.is_third_party ? `<strong style="color:#9b59b6;">${formatRupiah(fee)}</strong>` : '<span style="color:#ccc;">-</span>'}</td>
+            <td><button class="btn-hapus" onclick="hapusItemProyek(${item.id})">Hapus</button></td>
+        </tr>`;
     }).join('');
-    document.getElementById('detail-total').innerText = formatRupiah(total);
+    hitungTotalItem(data);
+}
+function hitungTotalItem(data) {
+    let totalJual = 0, totalVendor = 0, totalFee = 0;
+    (data || []).forEach(item => {
+        const subJual = item.qty * item.harga_satuan;
+        const subVendor = item.qty * (item.harga_vendor || 0);
+        totalJual += subJual;
+        if (item.is_third_party) { totalVendor += subVendor; totalFee += subJual - subVendor; }
+    });
+    document.getElementById('sum-total-jual').innerText = formatRupiah(totalJual);
+    document.getElementById('sum-total-vendor').innerText = formatRupiah(totalVendor);
+    document.getElementById('sum-total-fee').innerText = formatRupiah(totalFee);
 }
 async function simpanItemProyek() {
     const nama = document.getElementById('itemProjName').value.trim();
     const qty = parseFloat(document.getElementById('itemProjQty').value);
     const satuan = document.getElementById('itemProjSatuan').value.trim();
     const harga = parseFloat(document.getElementById('itemProjHarga').value);
-    if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi."); return; }
+    const isVendor = document.getElementById('itemProjIsVendor').checked;
+    const vendor = isVendor ? document.getElementById('itemProjVendor').value.trim() : null;
+    const hargaVendor = isVendor ? (parseFloat(document.getElementById('itemProjHargaVendor').value) || 0) : 0;
+
+    if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi: Nama, Qty, Satuan, Harga Jual."); return; }
+    if (isVendor && (!vendor || isNaN(hargaVendor))) { alert("Lengkapi Nama Vendor & Harga Vendor."); return; }
+    if (isVendor && hargaVendor > harga) { alert("⚠️ Harga Vendor lebih besar dari Harga Jual! Fee akan minus."); if (!confirm("Lanjutkan?")) return; }
+
     const btn = document.getElementById('btnSimpanItem'); btn.disabled = true; btn.innerText = 'Menyimpan...';
     const { error } = await db.from('project_items').insert([{
         project_id: currentProjectId, nama_item: nama,
         kategori: document.getElementById('itemProjKategori').value,
-        qty, satuan, harga_satuan: harga, keterangan: document.getElementById('itemProjKet').value.trim()
+        qty, satuan, harga_satuan: harga,
+        vendor: vendor, harga_vendor: hargaVendor, is_third_party: isVendor,
+        keterangan: document.getElementById('itemProjKet').value.trim()
     }]);
     btn.disabled = false; btn.innerText = '💾 Tambah Item';
     if (error) alert("Gagal: " + error.message);
-    else { ['itemProjName','itemProjQty','itemProjSatuan','itemProjHarga','itemProjKet'].forEach(id => document.getElementById(id).value = ''); document.getElementById('itemProjQty').value = 1; document.getElementById('infoHarga').classList.remove('show'); gantiSumber('manual'); muatItemsProyek(); }
+    else {
+        ['itemProjName','itemProjQty','itemProjSatuan','itemProjHarga','itemProjVendor','itemProjHargaVendor','itemProjKet'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('itemProjQty').value = 1;
+        document.getElementById('itemProjIsVendor').checked = false;
+        document.getElementById('vendorBox').classList.remove('show');
+        document.getElementById('infoHarga').classList.remove('show');
+        gantiSumber('manual');
+        muatItemsProyek();
+    }
 }
 async function hapusItemProyek(id) {
     if (!confirm("Hapus item ini?")) return;
-    const { error } = await db.from('project_items').delete().eq('id', id);
-    if (error) alert("Gagal"); else muatItemsProyek();
+    await db.from('project_items').delete().eq('id', id);
+    muatItemsProyek();
 }
 async function simpanSebagaiRAB() {
     const { data: items } = await db.from('project_items').select('*').eq('project_id', currentProjectId);
@@ -928,11 +1013,7 @@ async function lihatDetailRAB(rabId, judul, versi, jenis) {
     content.innerHTML = `<table><thead><tr><th>No</th><th>Nama</th><th>Kategori</th><th>Qty</th><th>Satuan</th><th>Harga</th><th>Subtotal</th></tr></thead><tbody>${rows}</tbody>
         <tfoot><tr class="total-row"><td colspan="6" style="text-align:right;">TOTAL</td><td>${formatRupiah(total)}</td></tr></tfoot></table>`;
 }
-async function hapusRAB(id) {
-    if (!confirm("Hapus RAB ini?")) return;
-    await db.from('project_rab').delete().eq('id', id);
-    muatRABProyek(); muatProyek();
-}
+async function hapusRAB(id) { if (!confirm("Hapus?")) return; await db.from('project_rab').delete().eq('id', id); muatRABProyek(); muatProyek(); }
 
 // RAB STANDALONE
 function gantiSumberRAB(sumber) {
@@ -1002,25 +1083,22 @@ async function konfirmasiSimpanRAB() {
     const catatan = document.getElementById('rabCatatan').value.trim();
     const total = previewRABItems.reduce((sum, i) => sum + i.subtotal, 0);
     const { data: header, error } = await db.from('standalone_rab').insert([{ judul, catatan, total, status: 'Draft' }]).select().single();
-    if (error) { alert("Gagal: " + error.message); return; }
+    if (error) { alert("Gagal"); return; }
     await db.from('standalone_rab_items').insert(previewRABItems.map(i => ({ rab_id: header.id, nama_item: i.nama_item, kategori: i.kategori, qty: i.qty, satuan: i.satuan, harga_satuan: i.harga_satuan, subtotal: i.subtotal, keterangan: i.keterangan })));
     tutupModal('modalSimpanRAB'); previewRABItems = []; renderPreviewRAB(); muatRABTersimpan();
-    alert(`RAB "${judul}" tersimpan!`);
 }
 async function muatRABTersimpan() {
     const container = document.getElementById('rab-saved-list'); container.innerHTML = '<p class="loading">Memuat...</p>';
     const { data } = await db.from('standalone_rab').select('*').order('created_at', { ascending: false });
-    if (!data || data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB tersimpan.</p>'; return; }
+    if (!data || data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB.</p>'; return; }
     container.innerHTML = data.map(r => `
         <div class="rab-card">
-            <div class="rab-card-header">
-                <div><h4>${r.judul}</h4><div class="rab-card-meta"><span>📅 ${formatDateTime(r.created_at)}</span></div></div>
-            </div>
+            <div class="rab-card-header"><div><h4>${r.judul}</h4><div class="rab-card-meta"><span>📅 ${formatDateTime(r.created_at)}</span></div></div></div>
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                 <span class="rab-card-total">${formatRupiah(r.total)}</span>
                 <div>
-                    <button class="btn-print" onclick="bukaPrintRAB(${r.id}, 'standalone')">🖨️ Cetak</button>
-                    <button class="btn-edit" onclick="lihatDetailRABStandalone(${r.id}, '${r.judul.replace(/'/g, "\\'")}')">👁️ Lihat</button>
+                    <button class="btn-print" onclick="bukaPrintRAB(${r.id}, 'standalone')">🖨️</button>
+                    <button class="btn-edit" onclick="lihatDetailRABStandalone(${r.id}, '${r.judul.replace(/'/g, "\\'")}')">👁️</button>
                     <button class="btn-hapus" onclick="hapusRABStandalone(${r.id})">Hapus</button>
                 </div>
             </div>
@@ -1040,8 +1118,6 @@ async function lihatDetailRABStandalone(rabId, judul) {
         <tfoot><tr class="total-row"><td colspan="6" style="text-align:right;">TOTAL</td><td>${formatRupiah(total)}</td></tr></tfoot></table>`;
 }
 async function hapusRABStandalone(id) { if (!confirm("Hapus?")) return; await db.from('standalone_rab').delete().eq('id', id); muatRABTersimpan(); }
-
-// CETAK RAB
 function cetakDariModal() { if (!lastPrintedRAB) return; bukaPrintRAB(lastPrintedRAB.id, lastPrintedRAB.jenis); }
 async function bukaPrintRAB(rabId, jenis) {
     let header, items, subTitle = '';
@@ -1060,7 +1136,7 @@ async function bukaPrintRAB(rabId, jenis) {
         return `<tr><td style="text-align:center;">${i+1}</td><td>${item.nama_item}</td><td style="text-align:center;">${item.kategori || '-'}</td><td style="text-align:center;">${item.qty}</td><td style="text-align:center;">${item.satuan}</td><td style="text-align:right;">${formatRupiah(item.harga_satuan)}</td><td style="text-align:right;">${formatRupiah(sub)}</td></tr>`; }).join('');
     const tgl = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     const nomorRAB = jenis === 'project' ? `PRJ-RAB-${String(rabId).padStart(4, '0')}` : `RAB-${String(rabId).padStart(4, '0')}`;
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${header.judul}</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:30px 40px;color:#333;font-size:12px;}.kop{display:flex;justify-content:space-between;border-bottom:3px double #333;padding-bottom:15px;margin-bottom:20px;}.kop-kiri h1{font-size:22px;color:#009ACD;}.kop-kiri p{font-size:11px;color:#555;margin-top:3px;}.kop-kanan{text-align:right;font-size:11px;}.kop-kanan .nomor{font-weight:bold;color:#009ACD;font-size:14px;}.judul-rab{text-align:center;margin-bottom:20px;}.judul-rab h2{font-size:16px;text-decoration:underline;}.info-proyek{margin-bottom:15px;font-size:11px;}.info-proyek td{padding:3px 10px 3px 0;}.info-proyek td:first-child{font-weight:bold;width:130px;}table.data{width:100%;border-collapse:collapse;margin-bottom:15px;font-size:11px;}table.data th{background-color:#E0F7FA;border:1px solid #333;padding:8px 6px;text-align:center;}table.data td{border:1px solid #333;padding:6px;}table.data tfoot td{background-color:#F0F8FF;font-weight:bold;}.catatan{margin-top:15px;padding:10px;background-color:#f9f9f9;border-left:3px solid #009ACD;}.ttd-container{display:flex;justify-content:space-between;margin-top:50px;font-size:11px;}.ttd-box{width:200px;text-align:center;}.ttd-box .nama{margin-top:60px;font-weight:bold;border-top:1px solid #333;padding-top:5px;}.footer{margin-top:30px;text-align:center;font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:10px;}@media print{.no-print{display:none!important;}@page{size:A4 portrait;margin:1cm;}}.no-print{position:fixed;top:10px;right:10px;padding:10px 15px;background-color:#009ACD;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;}</style></head><body>
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${header.judul}</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:30px 40px;color:#333;font-size:12px;}.kop{display:flex;justify-content:space-between;border-bottom:3px double #333;padding-bottom:15px;margin-bottom:20px;}.kop-kiri h1{font-size:22px;color:#009ACD;}.kop-kanan{text-align:right;font-size:11px;}.kop-kanan .nomor{font-weight:bold;color:#009ACD;font-size:14px;}.judul-rab{text-align:center;margin-bottom:20px;}.judul-rab h2{font-size:16px;text-decoration:underline;}.info-proyek{margin-bottom:15px;font-size:11px;}.info-proyek td{padding:3px 10px 3px 0;}.info-proyek td:first-child{font-weight:bold;width:130px;}table.data{width:100%;border-collapse:collapse;margin-bottom:15px;font-size:11px;}table.data th{background-color:#E0F7FA;border:1px solid #333;padding:8px 6px;text-align:center;}table.data td{border:1px solid #333;padding:6px;}table.data tfoot td{background-color:#F0F8FF;font-weight:bold;}.catatan{margin-top:15px;padding:10px;background-color:#f9f9f9;border-left:3px solid #009ACD;}.ttd-container{display:flex;justify-content:space-between;margin-top:50px;font-size:11px;}.ttd-box{width:200px;text-align:center;}.ttd-box .nama{margin-top:60px;font-weight:bold;border-top:1px solid #333;padding-top:5px;}.footer{margin-top:30px;text-align:center;font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:10px;}@media print{.no-print{display:none!important;}@page{size:A4 portrait;margin:1cm;}}.no-print{position:fixed;top:10px;right:10px;padding:10px 15px;background-color:#009ACD;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;}</style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak</button>
 <div class="kop"><div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Desain & Pembuatan Furniture Custom</p></div><div class="kop-kanan"><div class="nomor">${nomorRAB}</div><div>Tanggal: ${tgl}</div></div></div>
 <div class="judul-rab"><h2>RENCANA ANGGARAN BIAYA (RAB)</h2><p>${header.judul || ''}</p></div>
@@ -1070,14 +1146,13 @@ async function bukaPrintRAB(rabId, jenis) {
 ${header.catatan ? `<div class="catatan"><strong>Catatan:</strong> ${header.catatan}</div>` : ''}
 <div class="ttd-container"><div class="ttd-box"><div>Dibuat oleh,</div><div class="nama">Admin Isakuiki</div></div><div class="ttd-box"><div>Disetujui,</div><div class="nama">Klien</div></div></div>
 <div class="footer">Sistem Isakuiki Interior • ${tgl}</div><script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script></body></html>`;
-    const w = window.open('', '_blank', 'width=900,height=700');
-    if (!w) { alert("Popup diblokir!"); return; }
+    const w = window.open('', '_blank', 'width=900,height=700'); if (!w) { alert("Popup diblokir!"); return; }
     w.document.open(); w.document.write(html); w.document.close();
 }
 
 // AKUNTANSI
 async function muatDropdownProyekAkuntansi() {
-    const { data } = await db.from('projects').select('id, kode_proyek, nama_konsumen, status').order('created_at', { ascending: false });
+    const { data } = await db.from('projects').select('id, kode_proyek, nama_konsumen').order('created_at', { ascending: false });
     daftarProyekAkuntansi = data || [];
     const select = document.getElementById('akunPilihProyek');
     const cur = select.value;
@@ -1100,11 +1175,21 @@ async function muatDataAkuntansi() {
     const versiRAB = rabData && rabData.length > 0 ? 'v' + rabData[0].versi + ' • ' + rabData[0].judul : 'Belum ada RAB';
     const { data: expenses } = await db.from('project_expenses').select('*').eq('project_id', currentAkunProjectId).order('tanggal', { ascending: false });
     const { data: incomes } = await db.from('project_incomes').select('*').eq('project_id', currentAkunProjectId).order('tanggal', { ascending: false });
+    const { data: items } = await db.from('project_items').select('*').eq('project_id', currentAkunProjectId);
+
     const totalExpense = (expenses || []).reduce((s, e) => s + (e.jumlah || 0), 0);
     const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
     const labaKotor = totalIncome - totalExpense;
+
+    // Fee dari item vendor
+    const vendorItems = (items || []).filter(i => i.is_third_party);
+    const totalFee = vendorItems.reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
+    const totalVendorCost = vendorItems.reduce((s, i) => s + (i.harga_vendor * i.qty), 0);
+
     document.getElementById('fin-total-rab').innerText = formatRupiah(totalRAB);
     document.getElementById('fin-rab-versi').innerText = versiRAB;
+    document.getElementById('fin-total-fee').innerText = formatRupiah(totalFee);
+    document.getElementById('fin-fee-info').innerText = vendorItems.length + ' item dari vendor';
     document.getElementById('fin-total-income').innerText = formatRupiah(totalIncome);
     document.getElementById('fin-income-count').innerText = (incomes || []).length + ' transaksi';
     document.getElementById('fin-total-expense').innerText = formatRupiah(totalExpense);
@@ -1112,12 +1197,29 @@ async function muatDataAkuntansi() {
     document.getElementById('fin-laba').innerText = formatRupiah(labaKotor);
     document.getElementById('fin-laba').className = 'value ' + (labaKotor >= 0 ? 'text-hijau' : 'text-merah');
     document.getElementById('fin-margin').innerText = totalIncome > 0 ? 'Margin ' + ((labaKotor / totalIncome) * 100).toFixed(1) + '%' : '-';
+
+    // Fee note
+    const feeNote = document.getElementById('fin-fee-note');
+    if (vendorItems.length > 0) {
+        feeNote.style.display = 'block';
+        feeNote.className = 'fin-card ungu';
+        feeNote.innerHTML = `<h4 style="color:#9b59b6;">💡 Ringkasan Pihak Ketiga</h4>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
+                <div><span style="font-size:0.8em; color:#666; display:block;">Bayar ke Vendor</span><strong style="color:var(--merah-alert);">${formatRupiah(totalVendorCost)}</strong></div>
+                <div><span style="font-size:0.8em; color:#666; display:block;">Fee (Laba Anda)</span><strong style="color:#9b59b6;">${formatRupiah(totalFee)}</strong></div>
+                <div><span style="font-size:0.8em; color:#666; display:block;">Jumlah Item</span><strong>${vendorItems.length} item</strong></div>
+            </div>`;
+    } else {
+        feeNote.style.display = 'none';
+    }
+
     const alertBox = document.getElementById('akun-alert');
     if (totalRAB > 0 && totalExpense > totalRAB) {
         const over = totalExpense - totalRAB;
         document.getElementById('akun-alert-content').innerHTML = `<div style="display:flex;gap:15px;align-items:center;"><span style="font-size:2em;">⚠️</span><div><strong style="color:var(--merah-alert);">OVERBUDGET!</strong><p style="color:#666;margin-top:5px;">Pengeluaran melebihi RAB sebesar <strong class="text-merah">${formatRupiah(over)}</strong></p></div></div>`;
         alertBox.style.display = 'block';
     } else alertBox.style.display = 'none';
+
     const expBody = document.getElementById('expense-body');
     if ((expenses || []).length === 0) { expBody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada.</td></tr>'; document.getElementById('expense-total').innerText = 'Rp 0'; }
     else {
@@ -1140,8 +1242,8 @@ async function simpanExpense() {
     const tanggal = document.getElementById('expTanggal').value;
     const deskripsi = document.getElementById('expDeskripsi').value.trim();
     const jumlah = parseFloat(document.getElementById('expJumlah').value);
-    if (!tanggal || !deskripsi || isNaN(jumlah)) { alert("Lengkapi data."); return; }
-    const btn = document.getElementById('btnSimpanExpense'); btn.disabled = true; btn.innerText = 'Menyimpan...';
+    if (!tanggal || !deskripsi || isNaN(jumlah)) { alert("Lengkapi."); return; }
+    const btn = document.getElementById('btnSimpanExpense'); btn.disabled = true; btn.innerText = '...';
     const { error } = await db.from('project_expenses').insert([{ project_id: currentAkunProjectId, tanggal, kategori: document.getElementById('expKategori').value, deskripsi, jumlah, supplier: document.getElementById('expSupplier').value.trim(), metode_bayar: document.getElementById('expMetode').value, keterangan: document.getElementById('expKeterangan').value.trim() }]);
     btn.disabled = false; btn.innerText = '💸 Simpan Pengeluaran';
     if (error) alert("Gagal"); else { ['expDeskripsi','expJumlah','expSupplier','expKeterangan'].forEach(id => document.getElementById(id).value = ''); muatDataAkuntansi(); muatDashboard(); }
@@ -1152,8 +1254,8 @@ async function simpanIncome() {
     const tanggal = document.getElementById('incTanggal').value;
     const deskripsi = document.getElementById('incDeskripsi').value.trim();
     const jumlah = parseFloat(document.getElementById('incJumlah').value);
-    if (!tanggal || !deskripsi || isNaN(jumlah)) { alert("Lengkapi data."); return; }
-    const btn = document.getElementById('btnSimpanIncome'); btn.disabled = true; btn.innerText = 'Menyimpan...';
+    if (!tanggal || !deskripsi || isNaN(jumlah)) { alert("Lengkapi."); return; }
+    const btn = document.getElementById('btnSimpanIncome'); btn.disabled = true; btn.innerText = '...';
     const { error } = await db.from('project_incomes').insert([{ project_id: currentAkunProjectId, tanggal, deskripsi, jumlah, metode_bayar: document.getElementById('incMetode').value, keterangan: document.getElementById('incKeterangan').value.trim() }]);
     btn.disabled = false; btn.innerText = '💰 Simpan Pemasukan';
     if (error) alert("Gagal"); else { ['incDeskripsi','incJumlah','incKeterangan'].forEach(id => document.getElementById(id).value = ''); muatDataAkuntansi(); muatDashboard(); }
@@ -1166,13 +1268,17 @@ async function cetakLaporanAkuntansi() {
     const totalRAB = rabData && rabData.length > 0 ? rabData[0].total : 0;
     const { data: expenses } = await db.from('project_expenses').select('*').eq('project_id', currentAkunProjectId).order('tanggal');
     const { data: incomes } = await db.from('project_incomes').select('*').eq('project_id', currentAkunProjectId).order('tanggal');
+    const { data: items } = await db.from('project_items').select('*').eq('project_id', currentAkunProjectId).eq('is_third_party', true);
     const totalExpense = (expenses || []).reduce((s, e) => s + (e.jumlah || 0), 0);
     const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
+    const totalFee = (items || []).reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
+    const totalVendorCost = (items || []).reduce((s, i) => s + (i.harga_vendor * i.qty), 0);
     const laba = totalIncome - totalExpense;
     const tgl = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     const expRows = (expenses || []).map((e, i) => `<tr><td>${i+1}</td><td>${formatTanggalShort(e.tanggal)}</td><td>${e.kategori}</td><td>${e.deskripsi}</td><td style="text-align:right;">${formatRupiah(e.jumlah)}</td></tr>`).join('') || '<tr><td colspan="5" style="text-align:center;">Tidak ada</td></tr>';
     const incRows = (incomes || []).map((i, idx) => `<tr><td>${idx+1}</td><td>${formatTanggalShort(i.tanggal)}</td><td>${i.deskripsi}</td><td style="text-align:right;">${formatRupiah(i.jumlah)}</td></tr>`).join('') || '<tr><td colspan="4" style="text-align:center;">Tidak ada</td></tr>';
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Laporan</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:30px 40px;font-size:11px;color:#333;}.kop{display:flex;justify-content:space-between;border-bottom:3px double #333;padding-bottom:15px;margin-bottom:20px;}.kop-kiri h1{font-size:22px;color:#009ACD;}.judul{text-align:center;margin-bottom:20px;}.summary{display:flex;gap:15px;margin-bottom:20px;}.summary-box{flex:1;border:1px solid #ddd;padding:12px;border-radius:6px;}.summary-box h4{font-size:10px;color:#777;text-transform:uppercase;}table.data{width:100%;border-collapse:collapse;margin-bottom:15px;}table.data th{background-color:#E0F7FA;border:1px solid #333;padding:6px;text-align:center;}table.data td{border:1px solid #333;padding:5px;}table.data tfoot td{background-color:#F0F8FF;font-weight:bold;}h3.section{font-size:12px;color:#009ACD;margin:20px 0 10px;border-bottom:2px solid #E0F7FA;padding-bottom:5px;}.footer{margin-top:30px;text-align:center;font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:10px;}.no-print{position:fixed;top:10px;right:10px;padding:10px 15px;background-color:#009ACD;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;}@media print{.no-print{display:none!important;}@page{size:A4;margin:1cm;}}</style></head><body>
+    const feeRows = (items || []).map((it, i) => `<tr><td>${i+1}</td><td>${it.nama_item}</td><td>${it.vendor || '-'}</td><td>${it.qty} ${it.satuan}</td><td style="text-align:right;">${formatRupiah(it.harga_vendor)}</td><td style="text-align:right;">${formatRupiah(it.harga_satuan)}</td><td style="text-align:right;color:#9b59b6;font-weight:bold;">${formatRupiah((it.harga_satuan - it.harga_vendor) * it.qty)}</td></tr>`).join('') || '<tr><td colspan="7" style="text-align:center;">Tidak ada item vendor</td></tr>';
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Laporan</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:30px 40px;font-size:11px;color:#333;}.kop{display:flex;justify-content:space-between;border-bottom:3px double #333;padding-bottom:15px;margin-bottom:20px;}.kop-kiri h1{font-size:22px;color:#009ACD;}.judul{text-align:center;margin-bottom:20px;}.summary{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}.summary-box{flex:1;min-width:130px;border:1px solid #ddd;padding:12px;border-radius:6px;}.summary-box h4{font-size:10px;color:#777;text-transform:uppercase;}table.data{width:100%;border-collapse:collapse;margin-bottom:15px;}table.data th{background-color:#E0F7FA;border:1px solid #333;padding:6px;text-align:center;}table.data td{border:1px solid #333;padding:5px;}table.data tfoot td{background-color:#F0F8FF;font-weight:bold;}h3.section{font-size:12px;color:#009ACD;margin:20px 0 10px;border-bottom:2px solid #E0F7FA;padding-bottom:5px;}.footer{margin-top:30px;text-align:center;font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:10px;}.no-print{position:fixed;top:10px;right:10px;padding:10px 15px;background-color:#009ACD;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;}@media print{.no-print{display:none!important;}@page{size:A4;margin:1cm;}}</style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak</button>
 <div class="kop"><div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Furniture Custom</p></div><div style="text-align:right;"><strong>LAPORAN KEUANGAN</strong><br>${tgl}</div></div>
 <div class="judul"><h2 style="text-decoration:underline;">LAPORAN KEUANGAN PROYEK</h2><p>${proj.kode_proyek} - ${proj.nama_konsumen}</p></div>
@@ -1180,12 +1286,18 @@ async function cetakLaporanAkuntansi() {
 <div class="summary-box"><h4>RAB</h4><strong style="color:#009ACD;">${formatRupiah(totalRAB)}</strong></div>
 <div class="summary-box"><h4>Pemasukan</h4><strong style="color:#28A745;">${formatRupiah(totalIncome)}</strong></div>
 <div class="summary-box"><h4>Pengeluaran</h4><strong style="color:#FF4C4C;">${formatRupiah(totalExpense)}</strong></div>
+<div class="summary-box"><h4>Fee Vendor</h4><strong style="color:#9b59b6;">${formatRupiah(totalFee)}</strong></div>
 <div class="summary-box"><h4>Laba Kotor</h4><strong style="color:${laba >= 0 ? '#28A745' : '#FF4C4C'};">${formatRupiah(laba)}</strong></div>
 </div>
-<h3 class="section">A. PEMASUKAN</h3>
+${(items || []).length > 0 ? `
+<h3 class="section">A. RINCIAN PIHAK KETIGA (VENDOR)</h3>
+<table class="data"><thead><tr><th>No</th><th>Item</th><th>Vendor</th><th>Qty</th><th>Harga Beli</th><th>Harga Jual</th><th>Fee</th></tr></thead>
+<tbody>${feeRows}</tbody>
+<tfoot><tr><td colspan="4" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(totalVendorCost)}</td><td></td><td style="text-align:right;color:#9b59b6;">${formatRupiah(totalFee)}</td></tr></tfoot></table>` : ''}
+<h3 class="section">B. PEMASUKAN</h3>
 <table class="data"><thead><tr><th>No</th><th>Tanggal</th><th>Deskripsi</th><th>Jumlah</th></tr></thead><tbody>${incRows}</tbody>
 <tfoot><tr><td colspan="3" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(totalIncome)}</td></tr></tfoot></table>
-<h3 class="section">B. PENGELUARAN</h3>
+<h3 class="section">C. PENGELUARAN</h3>
 <table class="data"><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Deskripsi</th><th>Jumlah</th></tr></thead><tbody>${expRows}</tbody>
 <tfoot><tr><td colspan="4" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(totalExpense)}</td></tr></tfoot></table>
 <div class="footer">Sistem Isakuiki Interior • ${tgl}</div><script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script></body></html>`;
@@ -1230,7 +1342,7 @@ async function simpanResource() {
     const biaya = parseFloat(document.getElementById('resBiaya').value);
     if (!nama || isNaN(jumlah) || !satuan || isNaN(biaya)) { alert("Lengkapi."); return; }
     const payload = { project_id: currentResProjectId, jenis: document.getElementById('resJenis').value, nama_resource: nama, jumlah, satuan, tanggal_mulai: document.getElementById('resTglMulai').value || null, tanggal_selesai: document.getElementById('resTglSelesai').value || null, biaya_satuan: biaya, total_biaya: jumlah * biaya, status: document.getElementById('resStatus').value, keterangan: document.getElementById('resKet').value.trim() };
-    const btn = document.getElementById('btnSimpanRes'); btn.disabled = true; btn.innerText = 'Menyimpan...';
+    const btn = document.getElementById('btnSimpanRes'); btn.disabled = true; btn.innerText = '...';
     let error;
     if (editId) { const r = await db.from('project_resources').update(payload).eq('id', editId); error = r.error; }
     else { const r = await db.from('project_resources').insert([payload]); error = r.error; }
@@ -1267,16 +1379,11 @@ async function muatDataResource() {
     document.getElementById('resource-total').innerText = formatRupiah(totalBiaya);
 }
 function editResource(r) {
-    document.getElementById('resEditId').value = r.id;
-    document.getElementById('resJenis').value = r.jenis;
-    document.getElementById('resNama').value = r.nama_resource;
-    document.getElementById('resJumlah').value = r.jumlah;
-    document.getElementById('resSatuan').value = r.satuan;
-    document.getElementById('resBiaya').value = r.biaya_satuan;
-    document.getElementById('resTglMulai').value = r.tanggal_mulai || '';
-    document.getElementById('resTglSelesai').value = r.tanggal_selesai || '';
-    document.getElementById('resStatus').value = r.status;
-    document.getElementById('resKet').value = r.keterangan || '';
+    document.getElementById('resEditId').value = r.id; document.getElementById('resJenis').value = r.jenis;
+    document.getElementById('resNama').value = r.nama_resource; document.getElementById('resJumlah').value = r.jumlah;
+    document.getElementById('resSatuan').value = r.satuan; document.getElementById('resBiaya').value = r.biaya_satuan;
+    document.getElementById('resTglMulai').value = r.tanggal_mulai || ''; document.getElementById('resTglSelesai').value = r.tanggal_selesai || '';
+    document.getElementById('resStatus').value = r.status; document.getElementById('resKet').value = r.keterangan || '';
     hitungTotalResource();
     document.getElementById('btnSimpanRes').innerText = '💾 Update';
     document.querySelectorAll('#page-resource .tab-btn').forEach(b => b.classList.remove('active'));
@@ -1286,9 +1393,7 @@ function editResource(r) {
 }
 async function hapusResource(id) { if (!confirm("Hapus?")) return; await db.from('project_resources').delete().eq('id', id); muatDataResource(); }
 
-// ==========================================
-// JADWAL & KURVA-S
-// ==========================================
+// JADWAL
 async function muatDropdownProyekJadwal() {
     const { data } = await db.from('projects').select('id, kode_proyek, nama_konsumen').order('created_at', { ascending: false });
     const select = document.getElementById('jdwPilihProyek');
@@ -1296,34 +1401,20 @@ async function muatDropdownProyekJadwal() {
     select.innerHTML = '<option value="">-- Pilih Proyek --</option>' + (data || []).map(p => `<option value="${p.id}">${p.kode_proyek} • ${p.nama_konsumen}</option>`).join('');
     if (cur) select.value = cur;
 }
-
 async function onPilihProyekJadwal() {
     const val = document.getElementById('jdwPilihProyek').value;
-    if (!val) {
-        currentJdwProjectId = null;
-        document.getElementById('jdw-content').style.display = 'none';
-        document.getElementById('jdw-empty').style.display = 'block';
-        return;
-    }
+    if (!val) { currentJdwProjectId = null; document.getElementById('jdw-content').style.display = 'none'; document.getElementById('jdw-empty').style.display = 'block'; return; }
     currentJdwProjectId = val;
-    document.getElementById('jdw-content').style.display = 'block';
-    document.getElementById('jdw-empty').style.display = 'none';
-    resetFormJadwal();
-    muatDataJadwal();
+    document.getElementById('jdw-content').style.display = 'block'; document.getElementById('jdw-empty').style.display = 'none';
+    resetFormJadwal(); muatDataJadwal();
 }
-
 function resetFormJadwal() {
-    document.getElementById('jdwEditId').value = '';
-    document.getElementById('jdwNama').value = '';
-    document.getElementById('jdwBobot').value = 10;
-    document.getElementById('jdwTglMulai').value = '';
-    document.getElementById('jdwTglSelesai').value = '';
-    document.getElementById('jdwProgress').value = 0;
-    document.getElementById('jdwStatusPekerjaan').value = 'Rencana';
-    document.getElementById('jdwKet').value = '';
+    document.getElementById('jdwEditId').value = ''; document.getElementById('jdwNama').value = '';
+    document.getElementById('jdwBobot').value = 10; document.getElementById('jdwTglMulai').value = '';
+    document.getElementById('jdwTglSelesai').value = ''; document.getElementById('jdwProgress').value = 0;
+    document.getElementById('jdwStatusPekerjaan').value = 'Rencana'; document.getElementById('jdwKet').value = '';
     document.getElementById('btnSimpanJdw').innerText = '💾 Simpan Pekerjaan';
 }
-
 async function simpanJadwal() {
     if (!currentJdwProjectId) return;
     const editId = document.getElementById('jdwEditId').value;
@@ -1332,87 +1423,53 @@ async function simpanJadwal() {
     const tglSelesai = document.getElementById('jdwTglSelesai').value;
     const bobot = parseFloat(document.getElementById('jdwBobot').value);
     const progress = parseFloat(document.getElementById('jdwProgress').value);
-    if (!nama || !tglMulai || !tglSelesai || isNaN(bobot)) { alert("Lengkapi data: Nama, Tanggal Mulai/Selesai, Bobot."); return; }
-    if (new Date(tglMulai) > new Date(tglSelesai)) { alert("Tanggal mulai harus sebelum tanggal selesai."); return; }
-
-    const payload = {
-        project_id: currentJdwProjectId, nama_pekerjaan: nama,
-        tanggal_mulai: tglMulai, tanggal_selesai: tglSelesai,
-        bobot: bobot, progress_realisasi: progress || 0,
-        status: document.getElementById('jdwStatusPekerjaan').value,
-        keterangan: document.getElementById('jdwKet').value.trim()
-    };
-
-    const btn = document.getElementById('btnSimpanJdw'); btn.disabled = true; btn.innerText = 'Menyimpan...';
+    if (!nama || !tglMulai || !tglSelesai || isNaN(bobot)) { alert("Lengkapi."); return; }
+    const payload = { project_id: currentJdwProjectId, nama_pekerjaan: nama, tanggal_mulai: tglMulai, tanggal_selesai: tglSelesai, bobot, progress_realisasi: progress || 0, status: document.getElementById('jdwStatusPekerjaan').value, keterangan: document.getElementById('jdwKet').value.trim() };
+    const btn = document.getElementById('btnSimpanJdw'); btn.disabled = true; btn.innerText = '...';
     let error;
     if (editId) { const r = await db.from('project_schedules').update(payload).eq('id', editId); error = r.error; }
     else { const r = await db.from('project_schedules').insert([payload]); error = r.error; }
     btn.disabled = false; btn.innerText = '💾 Simpan Pekerjaan';
-    if (error) alert("Gagal: " + error.message);
-    else { resetFormJadwal(); muatDataJadwal(); }
+    if (error) alert("Gagal"); else { resetFormJadwal(); muatDataJadwal(); }
 }
-
 async function muatDataJadwal() {
     if (!currentJdwProjectId) return;
-    const { data, error } = await db.from('project_schedules').select('*').eq('project_id', currentJdwProjectId).order('tanggal_mulai');
-    if (error) { console.error(error); return; }
+    const { data } = await db.from('project_schedules').select('*').eq('project_id', currentJdwProjectId).order('tanggal_mulai');
     currentJadwalData = data || [];
-
-    // Hitung total bobot & progress
     const totalBobot = currentJadwalData.reduce((s, j) => s + (j.bobot || 0), 0);
-    const progressRencana = hitungProgressRencana(currentJadwalData);
-    const progressReal = currentJadwalData.reduce((s, j) => s + ((j.bobot || 0) * (j.progress_realisasi || 0) / 100), 0);
-    const deviasi = progressReal - progressRencana;
-
+    const progRencana = hitungProgressRencana(currentJadwalData);
+    const progReal = currentJadwalData.reduce((s, j) => s + ((j.bobot || 0) * (j.progress_realisasi || 0) / 100), 0);
+    const deviasi = progReal - progRencana;
     document.getElementById('jdw-total-bobot').innerText = totalBobot.toFixed(1) + '%';
     document.getElementById('jdw-total-count').innerText = currentJadwalData.length + ' pekerjaan';
-    document.getElementById('jdw-progress-rencana').innerText = progressRencana.toFixed(1) + '%';
-    document.getElementById('jdw-progress-real').innerText = progressReal.toFixed(1) + '%';
-
+    document.getElementById('jdw-progress-rencana').innerText = progRencana.toFixed(1) + '%';
+    document.getElementById('jdw-progress-real').innerText = progReal.toFixed(1) + '%';
     const statusCard = document.getElementById('jdw-status-card');
     const statusEl = document.getElementById('jdw-status');
     const devEl = document.getElementById('jdw-deviasi');
-    if (currentJadwalData.length === 0) {
-        statusEl.innerText = '-'; devEl.innerText = 'Belum ada jadwal';
-        statusCard.className = 'fin-card';
-    } else if (deviasi >= -2) {
-        statusEl.innerText = '✅ ON TRACK'; devEl.innerText = `Deviasi: +${deviasi.toFixed(1)}%`;
-        statusCard.className = 'fin-card hijau';
-    } else if (deviasi >= -10) {
-        statusEl.innerText = '⚠️ PERHATIAN'; devEl.innerText = `Deviasi: ${deviasi.toFixed(1)}%`;
-        statusCard.className = 'fin-card kuning';
-    } else {
-        statusEl.innerText = '🔴 TERLAMBAT'; devEl.innerText = `Deviasi: ${deviasi.toFixed(1)}%`;
-        statusCard.className = 'fin-card merah';
-    }
-
-    // Render tabel
+    if (currentJadwalData.length === 0) { statusEl.innerText = '-'; devEl.innerText = 'Belum ada jadwal'; statusCard.className = 'fin-card'; }
+    else if (deviasi >= -2) { statusEl.innerText = '✅ ON TRACK'; devEl.innerText = `Deviasi: +${deviasi.toFixed(1)}%`; statusCard.className = 'fin-card hijau'; }
+    else if (deviasi >= -10) { statusEl.innerText = '⚠️ PERHATIAN'; devEl.innerText = `Deviasi: ${deviasi.toFixed(1)}%`; statusCard.className = 'fin-card kuning'; }
+    else { statusEl.innerText = '🔴 TERLAMBAT'; devEl.innerText = `Deviasi: ${deviasi.toFixed(1)}%`; statusCard.className = 'fin-card merah'; }
     const tbody = document.getElementById('jadwal-body');
-    if (currentJadwalData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada pekerjaan.</td></tr>';
-    } else {
+    if (currentJadwalData.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada pekerjaan.</td></tr>'; }
+    else {
         tbody.innerHTML = currentJadwalData.map((j, i) => {
             const durasi = Math.ceil((new Date(j.tanggal_selesai) - new Date(j.tanggal_mulai)) / (1000*60*60*24)) + 1;
             let progClass = 'progress-normal';
             if (j.progress_realisasi >= 100) progClass = 'progress-aman';
-            return `<tr>
-                <td>${i + 1}</td>
-                <td><strong>${j.nama_pekerjaan}</strong></td>
+            return `<tr><td>${i + 1}</td><td><strong>${j.nama_pekerjaan}</strong></td>
                 <td style="font-size:0.85em;">${formatTanggalShort(j.tanggal_mulai)} — ${formatTanggalShort(j.tanggal_selesai)}<br><small style="color:#888;">${durasi} hari</small></td>
                 <td>${j.bobot}%</td>
                 <td><div class="progress-bar-container"><div class="progress-bar-fill ${progClass}" style="width:${j.progress_realisasi}%">${j.progress_realisasi}%</div></div></td>
                 <td><span class="status-res-${j.status}">${j.status}</span></td>
-                <td><button class="btn-edit" onclick='editJadwal(${JSON.stringify(j)})'>✏️</button><button class="btn-hapus" onclick="hapusJadwal(${j.id})">Hapus</button></td>
-            </tr>`;
+                <td><button class="btn-edit" onclick='editJadwal(${JSON.stringify(j)})'>✏️</button><button class="btn-hapus" onclick="hapusJadwal(${j.id})">Hapus</button></td></tr>`;
         }).join('');
     }
     document.getElementById('jadwal-total-bobot').innerText = totalBobot.toFixed(1) + '%';
-
-    // Auto-refresh Gantt & Kurva jika tab sedang aktif
     if (document.getElementById('tab-jadwal-gantt').classList.contains('active')) renderGanttChart();
     if (document.getElementById('tab-jadwal-kurvas').classList.contains('active')) renderKurvaS();
 }
-
 function hitungProgressRencana(data) {
     if (!data || data.length === 0) return 0;
     const today = new Date(); today.setHours(0,0,0,0);
@@ -1423,162 +1480,97 @@ function hitungProgressRencana(data) {
         let pct = 0;
         if (today >= end) pct = 100;
         else if (today <= start) pct = 0;
-        else { const total = end - start; const elapsed = today - start; pct = (elapsed / total) * 100; }
+        else { pct = ((today - start) / (end - start)) * 100; }
         totalRencana += (j.bobot || 0) * (pct / 100);
     });
     return totalRencana;
 }
-
 function editJadwal(j) {
-    document.getElementById('jdwEditId').value = j.id;
-    document.getElementById('jdwNama').value = j.nama_pekerjaan;
-    document.getElementById('jdwBobot').value = j.bobot;
-    document.getElementById('jdwTglMulai').value = j.tanggal_mulai;
-    document.getElementById('jdwTglSelesai').value = j.tanggal_selesai;
-    document.getElementById('jdwProgress').value = j.progress_realisasi;
-    document.getElementById('jdwStatusPekerjaan').value = j.status;
-    document.getElementById('jdwKet').value = j.keterangan || '';
+    document.getElementById('jdwEditId').value = j.id; document.getElementById('jdwNama').value = j.nama_pekerjaan;
+    document.getElementById('jdwBobot').value = j.bobot; document.getElementById('jdwTglMulai').value = j.tanggal_mulai;
+    document.getElementById('jdwTglSelesai').value = j.tanggal_selesai; document.getElementById('jdwProgress').value = j.progress_realisasi;
+    document.getElementById('jdwStatusPekerjaan').value = j.status; document.getElementById('jdwKet').value = j.keterangan || '';
     document.getElementById('btnSimpanJdw').innerText = '💾 Update';
     document.querySelectorAll('#page-jadwal .tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('#page-jadwal .tab-btn[data-tab="tab-jadwal-form"]').classList.add('active');
     document.querySelectorAll('#page-jadwal .tab-content').forEach(c => c.classList.remove('active'));
     document.getElementById('tab-jadwal-form').classList.add('active');
 }
-
-async function hapusJadwal(id) {
-    if (!confirm("Hapus pekerjaan ini?")) return;
-    await db.from('project_schedules').delete().eq('id', id);
-    muatDataJadwal();
-}
-
-// GANTT CHART
+async function hapusJadwal(id) { if (!confirm("Hapus?")) return; await db.from('project_schedules').delete().eq('id', id); muatDataJadwal(); }
 function renderGanttChart() {
     const container = document.getElementById('gantt-container');
     if (!currentJadwalData || currentJadwalData.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada jadwal.</p>'; return; }
-
-    // Tentukan rentang tanggal
     const allDates = [];
     currentJadwalData.forEach(j => { allDates.push(new Date(j.tanggal_mulai), new Date(j.tanggal_selesai)); });
     const minDate = new Date(Math.min(...allDates));
     const maxDate = new Date(Math.max(...allDates));
     const totalDays = Math.ceil((maxDate - minDate) / (1000*60*60*24)) + 1;
-
-    // Generate header tanggal (per minggu biar ringkas)
-    const headerCols = [];
-    let currentDate = new Date(minDate);
-    const dayMap = []; // untuk mapping hari ke index kolom
-    for (let i = 0; i < totalDays; i++) {
-        const d = new Date(currentDate);
-        dayMap.push(d);
-        headerCols.push(`<th style="min-width:30px; font-size:0.7em;">${d.getDate()}/${d.getMonth()+1}</th>`);
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
+    let headerCols = [];
+    for (let i = 0; i < totalDays; i++) { const d = new Date(minDate); d.setDate(d.getDate() + i); headerCols.push(`<th style="min-width:30px; font-size:0.7em;">${d.getDate()}/${d.getMonth()+1}</th>`); }
     let html = `<table class="gantt-table"><thead><tr><th class="gantt-label">Pekerjaan</th>`;
-    html += headerCols.join('');
-    html += `<th style="min-width:60px;">Bobot</th></tr></thead><tbody>`;
-
+    html += headerCols.join(''); html += `<th style="min-width:60px;">Bobot</th></tr></thead><tbody>`;
     currentJadwalData.forEach(j => {
-        const start = new Date(j.tanggal_mulai);
-        const end = new Date(j.tanggal_selesai);
+        const start = new Date(j.tanggal_mulai); const end = new Date(j.tanggal_selesai);
         const startIdx = Math.round((start - minDate) / (1000*60*60*24));
         const spanDays = Math.round((end - start) / (1000*60*60*24)) + 1;
-
-        // Bar class berdasarkan status
         let barClass = 'gantt-bar-rencana';
         if (j.status === 'Selesai' || j.progress_realisasi >= 100) barClass = 'gantt-bar-selesai';
         else if (j.progress_realisasi < 50 && new Date() > end) barClass = 'gantt-bar-overbudget';
-
         const startPct = (startIdx / totalDays) * 100;
         const widthPct = (spanDays / totalDays) * 100;
-
-        html += `<tr><td class="gantt-label" style="font-size:0.85em;">${j.nama_pekerjaan}</td>`;
-        html += `<td class="gantt-bar-cell" colspan="${totalDays}">
-            <div class="gantt-bar ${barClass}" style="left:${startPct}%; width:${widthPct}%;" title="${j.nama_pekerjaan} • ${formatTanggalShort(j.tanggal_mulai)} s/d ${formatTanggalShort(j.tanggal_selesai)} • Progress: ${j.progress_realisasi}%">
-                ${j.progress_realisasi}%
-            </div>
-        </td>`;
-        html += `<td style="text-align:center; font-weight:bold;">${j.bobot}%</td></tr>`;
+        html += `<tr><td class="gantt-label" style="font-size:0.85em;">${j.nama_pekerjaan}</td>
+            <td class="gantt-bar-cell" colspan="${totalDays}"><div class="gantt-bar ${barClass}" style="left:${startPct}%; width:${widthPct}%;">${j.progress_realisasi}%</div></td>
+            <td style="text-align:center; font-weight:bold;">${j.bobot}%</td></tr>`;
     });
-
     html += '</tbody></table>';
     container.innerHTML = html;
 }
-
-// KURVA-S
 function renderKurvaS() {
     const container = document.getElementById('kurvas-container');
     if (!currentJadwalData || currentJadwalData.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada jadwal.</p>'; return; }
-
-    // Tentukan rentang tanggal
     const allDates = [];
     currentJadwalData.forEach(j => { allDates.push(new Date(j.tanggal_mulai), new Date(j.tanggal_selesai)); });
     const minDate = new Date(Math.min(...allDates));
     const maxDate = new Date(Math.max(...allDates));
     const totalDays = Math.ceil((maxDate - minDate) / (1000*60*60*24)) + 1;
-
-    // SVG dimension
     const W = 800, H = 400, padL = 60, padR = 30, padT = 30, padB = 60;
     const plotW = W - padL - padR, plotH = H - padT - padB;
-
-    // Compute data per hari
-    const pointsRencana = []; // array of {x, y} cumulative %
-    const pointsRealisasi = [];
-
+    const pointsRencana = [], pointsRealisasi = [];
     const today = new Date(); today.setHours(0,0,0,0);
-
     for (let i = 0; i < totalDays; i++) {
         const d = new Date(minDate); d.setDate(d.getDate() + i); d.setHours(0,0,0,0);
         let cumRencana = 0, cumRealisasi = 0;
-
         currentJadwalData.forEach(j => {
             const start = new Date(j.tanggal_mulai); start.setHours(0,0,0,0);
             const end = new Date(j.tanggal_selesai); end.setHours(0,0,0,0);
-
-            // Rencana: linear
             let pctRencana = 0;
-            if (d >= end) pctRencana = 100;
-            else if (d <= start) pctRencana = 0;
-            else { pctRencana = ((d - start) / (end - start)) * 100; }
+            if (d >= end) pctRencana = 100; else if (d <= start) pctRencana = 0; else pctRencana = ((d - start) / (end - start)) * 100;
             cumRencana += (j.bobot || 0) * (pctRencana / 100);
-
-            // Realisasi: linear dari start sampai hari ini berdasarkan progress_realisasi saat ini
             let pctReal = 0;
             if (d <= start) pctReal = 0;
             else if (d >= today) pctReal = j.progress_realisasi || 0;
             else {
-                // Interpolasi linear dari start ke today
                 const daysPassed = Math.max(0, Math.ceil((d - start) / (1000*60*60*24)));
-                const totalDaysJob = Math.ceil((end - start) / (1000*60*60*24)) + 1;
                 const daysNow = Math.ceil((today - start) / (1000*60*60*24)) + 1;
                 if (daysNow <= 0) pctReal = 0;
                 else pctReal = (j.progress_realisasi || 0) * Math.min(1, daysPassed / daysNow);
             }
             cumRealisasi += (j.bobot || 0) * (pctReal / 100);
         });
-
         const x = padL + (i / (totalDays - 1 || 1)) * plotW;
         const yR = padT + plotH - (cumRencana / 100) * plotH;
         const yRl = padT + plotH - (cumRealisasi / 100) * plotH;
-        pointsRencana.push({ x, y: yR, val: cumRencana, date: new Date(d) });
-        pointsRealisasi.push({ x, y: yRl, val: cumRealisasi, date: new Date(d) });
+        pointsRencana.push({ x, y: yR });
+        pointsRealisasi.push({ x, y: yRl });
     }
-
-    // Build SVG
     let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%; max-width:${W}px; height:auto; background-color:#fafafa; border-radius:8px;">`;
-
-    // Grid horizontal (Y)
     for (let pct = 0; pct <= 100; pct += 20) {
         const y = padT + plotH - (pct / 100) * plotH;
         svg += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#ddd" stroke-width="1"/>`;
         svg += `<text x="${padL - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#666">${pct}%</text>`;
     }
-
-    // Garis sumbu
     svg += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H - padB}" stroke="#333" stroke-width="1.5"/>`;
     svg += `<line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="#333" stroke-width="1.5"/>`;
-
-    // Grid vertikal (X - setiap beberapa hari)
     const stepX = Math.max(1, Math.floor(totalDays / 10));
     for (let i = 0; i < totalDays; i += stepX) {
         const x = padL + (i / (totalDays - 1 || 1)) * plotW;
@@ -1586,35 +1578,17 @@ function renderKurvaS() {
         svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${H - padB}" stroke="#eee" stroke-width="1"/>`;
         svg += `<text x="${x}" y="${H - padB + 15}" text-anchor="middle" font-size="9" fill="#666">${d.getDate()}/${d.getMonth()+1}</text>`;
     }
-
-    // Polyline Rencana
-    const pathRencana = pointsRencana.map(p => `${p.x},${p.y}`).join(' ');
-    svg += `<polyline points="${pathRencana}" fill="none" stroke="#009ACD" stroke-width="2.5"/>`;
-
-    // Polyline Realisasi
-    const pathReal = pointsRealisasi.map(p => `${p.x},${p.y}`).join(' ');
-    svg += `<polyline points="${pathReal}" fill="none" stroke="#28A745" stroke-width="2.5" stroke-dasharray="6,3"/>`;
-
-    // Dots Rencana
-    pointsRencana.forEach(p => { svg += `<circle cx="${p.x}" cy="${p.y}" r="2" fill="#009ACD"/>`; });
-    // Dots Realisasi
-    pointsRealisasi.forEach(p => { svg += `<circle cx="${p.x}" cy="${p.y}" r="2" fill="#28A745"/>`; });
-
-    // Garis hari ini (vertikal)
+    svg += `<polyline points="${pointsRencana.map(p => `${p.x},${p.y}`).join(' ')}" fill="none" stroke="#009ACD" stroke-width="2.5"/>`;
+    svg += `<polyline points="${pointsRealisasi.map(p => `${p.x},${p.y}`).join(' ')}" fill="none" stroke="#28A745" stroke-width="2.5" stroke-dasharray="6,3"/>`;
     const todayIdx = Math.round((today - minDate) / (1000*60*60*24));
     if (todayIdx >= 0 && todayIdx < totalDays) {
         const xToday = padL + (todayIdx / (totalDays - 1 || 1)) * plotW;
         svg += `<line x1="${xToday}" y1="${padT}" x2="${xToday}" y2="${H - padB}" stroke="#FF4C4C" stroke-width="1.5" stroke-dasharray="4,3"/>`;
         svg += `<text x="${xToday}" y="${padT - 8}" text-anchor="middle" font-size="10" fill="#FF4C4C" font-weight="bold">Hari Ini</text>`;
     }
-
-    // Judul
-    svg += `<text x="${padL}" y="${padT - 10}" font-size="12" fill="#333" font-weight="bold">Kurva-S Progres Proyek (%)</text>`;
-
     svg += `</svg>`;
     container.innerHTML = svg;
 }
-
 async function cetakKurvaS() {
     if (!currentJdwProjectId) { alert("Pilih proyek dulu."); return; }
     const { data: proj } = await db.from('projects').select('*').eq('id', currentJdwProjectId).single();
@@ -1622,10 +1596,8 @@ async function cetakKurvaS() {
     const totalBobot = currentJadwalData.reduce((s, j) => s + (j.bobot || 0), 0);
     const progRencana = hitungProgressRencana(currentJadwalData);
     const progReal = currentJadwalData.reduce((s, j) => s + ((j.bobot || 0) * (j.progress_realisasi || 0) / 100), 0);
-
     const jadwalRows = currentJadwalData.map((j, i) => `<tr><td>${i+1}</td><td>${j.nama_pekerjaan}</td><td>${formatTanggalShort(j.tanggal_mulai)}</td><td>${formatTanggalShort(j.tanggal_selesai)}</td><td style="text-align:center;">${j.bobot}%</td><td style="text-align:center;">${j.progress_realisasi}%</td><td style="text-align:center;">${j.status}</td></tr>`).join('');
-
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Jadwal ${proj.kode_proyek}</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:30px 40px;font-size:11px;color:#333;}.kop{display:flex;justify-content:space-between;border-bottom:3px double #333;padding-bottom:15px;margin-bottom:20px;}.kop-kiri h1{font-size:22px;color:#009ACD;}.judul{text-align:center;margin-bottom:20px;}.summary{display:flex;gap:15px;margin-bottom:20px;}.summary-box{flex:1;border:1px solid #ddd;padding:12px;border-radius:6px;}.summary-box h4{font-size:10px;color:#777;text-transform:uppercase;}table.data{width:100%;border-collapse:collapse;margin-bottom:15px;}table.data th{background-color:#E0F7FA;border:1px solid #333;padding:6px;text-align:center;}table.data td{border:1px solid #333;padding:5px;}table.data tfoot td{background-color:#F0F8FF;font-weight:bold;}.footer{margin-top:30px;text-align:center;font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:10px;}.no-print{position:fixed;top:10px;right:10px;padding:10px 15px;background-color:#009ACD;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;}@media print{.no-print{display:none!important;}@page{size:A4 landscape;margin:1cm;}}</style></head><body>
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Jadwal</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}body{padding:30px 40px;font-size:11px;color:#333;}.kop{display:flex;justify-content:space-between;border-bottom:3px double #333;padding-bottom:15px;margin-bottom:20px;}.kop-kiri h1{font-size:22px;color:#009ACD;}.judul{text-align:center;margin-bottom:20px;}.summary{display:flex;gap:15px;margin-bottom:20px;}.summary-box{flex:1;border:1px solid #ddd;padding:12px;border-radius:6px;}.summary-box h4{font-size:10px;color:#777;text-transform:uppercase;}table.data{width:100%;border-collapse:collapse;margin-bottom:15px;}table.data th{background-color:#E0F7FA;border:1px solid #333;padding:6px;text-align:center;}table.data td{border:1px solid #333;padding:5px;}table.data tfoot td{background-color:#F0F8FF;font-weight:bold;}.footer{margin-top:30px;text-align:center;font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:10px;}.no-print{position:fixed;top:10px;right:10px;padding:10px 15px;background-color:#009ACD;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;}@media print{.no-print{display:none!important;}@page{size:A4 landscape;margin:1cm;}}</style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak</button>
 <div class="kop"><div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Furniture Custom</p></div><div style="text-align:right;"><strong>LAPORAN JADWAL & PROGRES</strong><br>${tgl}</div></div>
 <div class="judul"><h2 style="text-decoration:underline;">LAPORAN JADWAL & PROGRES PROYEK</h2><p>${proj.kode_proyek} - ${proj.nama_konsumen}</p></div>
@@ -1635,10 +1607,8 @@ async function cetakKurvaS() {
 <div class="summary-box"><h4>Progres Realisasi</h4><strong style="color:#28A745;">${progReal.toFixed(1)}%</strong></div>
 <div class="summary-box"><h4>Deviasi</h4><strong style="color:${progReal - progRencana >= -2 ? '#28A745' : '#FF4C4C'};">${(progReal - progRencana).toFixed(1)}%</strong></div>
 </div>
-<h3 style="font-size:12px;color:#009ACD;margin:20px 0 10px;border-bottom:2px solid #E0F7FA;padding-bottom:5px;">DAFTAR PEKERJAAN</h3>
 <table class="data"><thead><tr><th>No</th><th>Pekerjaan</th><th>Mulai</th><th>Selesai</th><th>Bobot</th><th>Progres</th><th>Status</th></tr></thead>
-<tbody>${jadwalRows || '<tr><td colspan="7" style="text-align:center;">Tidak ada data</td></tr>'}</tbody>
-<tfoot><tr><td colspan="4" style="text-align:right;">TOTAL BOBOT</td><td style="text-align:center;">${totalBobot.toFixed(1)}%</td><td colspan="2"></td></tr></tfoot></table>
+<tbody>${jadwalRows || '<tr><td colspan="7" style="text-align:center;">Tidak ada data</td></tr>'}</tbody></table>
 <div class="footer">Sistem Isakuiki Interior • ${tgl}</div><script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script></body></html>`;
     const w = window.open('', '_blank', 'width=1100,height=700'); if (!w) { alert("Popup diblokir!"); return; }
     w.document.open(); w.document.write(html); w.document.close();
@@ -1682,7 +1652,6 @@ async function simpanMaterial() {
     if (error) alert("Gagal"); else { ['matName','matUnit','matPrice'].forEach(id => document.getElementById(id).value = ''); muatMaterial(); loadMaterialDropdown(); }
 }
 async function hapusMaterial(id) { if (!confirm("Hapus?")) return; await db.from('materials').delete().eq('id', id); muatMaterial(); loadMaterialDropdown(); }
-
 async function muatLabor() {
     const tbody = document.getElementById('labor-body');
     const { data } = await db.from('labors').select('*').order('created_at', { ascending: false });
