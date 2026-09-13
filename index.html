@@ -45,6 +45,8 @@
         .btn-hapus:hover { background-color: #cc0000; }
         .btn-edit { background-color: #ffc107; color: #333; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-right: 3px; }
         .btn-edit:hover { background-color: #e0a800; }
+        .btn-print { background-color: #17a2b8; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-right: 3px; }
+        .btn-print:hover { background-color: #138496; }
         .btn-success { background-color: var(--hijau-aman); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9em; }
         .btn-success:hover { background-color: #218838; }
 
@@ -141,7 +143,7 @@
         <ul class="menu-list">
             <li><a href="#" class="menu-item" data-page="dashboard"><span><span class="menu-icon">📊</span> Dashboard</span><span class="status-badge status-done">Selesai</span></a></li>
             <li><a href="#" class="menu-item" data-page="proyek"><span><span class="menu-icon">📁</span> Proyek</span><span class="status-badge status-done">Selesai</span></a></li>
-            <li><a href="#" class="menu-item active" data-page="rab"><span><span class="menu-icon">📋</span> RAB & AHSP</span><span class="status-badge status-ongoing">Proses</span></a></li>
+            <li><a href="#" class="menu-item active" data-page="rab"><span><span class="menu-icon">📋</span> RAB & AHSP</span><span class="status-badge status-done">Selesai</span></a></li>
             <li><a href="#" class="menu-item" data-page="material"><span><span class="menu-icon">📦</span> Material & Harga</span><span class="status-badge status-done">Selesai</span></a></li>
             <li><a href="#" class="menu-item" data-page="resource"><span><span class="menu-icon">👷</span> Resource Planning</span><span class="status-badge status-pending">Belum</span></a></li>
             <li><a href="#" class="menu-item" data-page="jadwal"><span><span class="menu-icon">📅</span> Jadwal & Kurva-S</span><span class="status-badge status-pending">Belum</span></a></li>
@@ -151,7 +153,6 @@
 
     <main class="main-content">
 
-        <!-- DASHBOARD -->
         <div id="page-dashboard" class="page-view">
             <div class="main-header"><h1>Dashboard</h1><p>Selamat datang kembali. Berikut ringkasan performa bisnis Isakuiki Interior hari ini.</p></div>
             <div class="widget-grid">
@@ -171,11 +172,10 @@
             </div>
         </div>
 
-        <!-- PROYEK -->
         <div id="page-proyek" class="page-view">
             <div id="proyek-list-view" class="sub-view active">
                 <div class="main-header">
-                    <div class="header-title-wrap"><div><h1>Daftar Proyek</h1><p>Kelola semua proyek interior Anda. Klik kartu proyek untuk melihat detail pesanan.</p></div></div>
+                    <div class="header-title-wrap"><div><h1>Daftar Proyek</h1><p>Kelola semua proyek interior Anda.</p></div></div>
                     <button class="btn-primary" onclick="bukaFormProyek()">➕ Tambah Proyek Baru</button>
                 </div>
                 <div id="project-grid" class="project-grid"><div class="loading" style="grid-column: 1/-1;">Memuat data proyek...</div></div>
@@ -187,17 +187,17 @@
                     <h3>📝 Data Konsumen & Proyek</h3>
                     <div class="flex-container" style="margin-bottom: 0;">
                         <div style="flex: 1; min-width: 250px;">
-                            <div class="form-group"><label>Nama Konsumen</label><input type="text" id="projNama" class="form-control" placeholder="Contoh: Bpk. Budi"></div>
-                            <div class="form-group"><label>Kontak (No. HP/WA)</label><input type="text" id="projKontak" class="form-control" placeholder="Contoh: 0812xxxx"></div>
-                            <div class="form-group"><label>Jenis Proyek</label><input type="text" id="projJenis" class="form-control" placeholder="Contoh: Kitchen Set / Full House"></div>
+                            <div class="form-group"><label>Nama Konsumen</label><input type="text" id="projNama" class="form-control"></div>
+                            <div class="form-group"><label>Kontak (No. HP/WA)</label><input type="text" id="projKontak" class="form-control"></div>
+                            <div class="form-group"><label>Jenis Proyek</label><input type="text" id="projJenis" class="form-control"></div>
                         </div>
                         <div style="flex: 1; min-width: 250px;">
                             <div class="form-group"><label>Tanggal Mulai</label><input type="date" id="projTglMulai" class="form-control"></div>
-                            <div class="form-group"><label>Tanggal Selesai (Estimasi)</label><input type="date" id="projTglSelesai" class="form-control"></div>
-                            <div class="form-group"><label>Budget Awal (Rp)</label><input type="number" id="projBudget" class="form-control" placeholder="Contoh: 50000000"></div>
+                            <div class="form-group"><label>Tanggal Selesai</label><input type="date" id="projTglSelesai" class="form-control"></div>
+                            <div class="form-group"><label>Budget Awal (Rp)</label><input type="number" id="projBudget" class="form-control"></div>
                         </div>
                     </div>
-                    <div class="form-group"><label>Alamat Proyek</label><textarea id="projAlamat" class="form-control" placeholder="Alamat lengkap lokasi proyek"></textarea></div>
+                    <div class="form-group"><label>Alamat Proyek</label><textarea id="projAlamat" class="form-control"></textarea></div>
                     <div class="form-group"><label>Status Proyek</label>
                         <select id="projStatus" class="form-control">
                             <option value="Penawaran">Penawaran</option><option value="Deal">Deal</option>
@@ -227,16 +227,10 @@
                                 <button class="sumber-btn" data-sumber="upah" onclick="gantiSumber('upah')">👷 Upah</button>
                             </div>
                         </div>
-                        <div class="form-group" id="group-pilih-material" style="display:none;">
-                            <label>Pilih Material</label>
-                            <select id="selectMaterial" class="form-control" onchange="onMaterialPilih()"><option value="">-- Pilih Material --</option></select>
-                        </div>
-                        <div class="form-group" id="group-pilih-upah" style="display:none;">
-                            <label>Pilih Upah Tenaga Kerja</label>
-                            <select id="selectLabor" class="form-control" onchange="onLaborPilih()"><option value="">-- Pilih Upah --</option></select>
-                        </div>
+                        <div class="form-group" id="group-pilih-material" style="display:none;"><label>Pilih Material</label><select id="selectMaterial" class="form-control" onchange="onMaterialPilih()"><option value="">-- Pilih --</option></select></div>
+                        <div class="form-group" id="group-pilih-upah" style="display:none;"><label>Pilih Upah</label><select id="selectLabor" class="form-control" onchange="onLaborPilih()"><option value="">-- Pilih --</option></select></div>
                         <div class="info-harga" id="infoHarga"></div>
-                        <div class="form-group"><label>Nama Item</label><input type="text" id="itemProjName" class="form-control" placeholder="Contoh: Lemari Pakaian"></div>
+                        <div class="form-group"><label>Nama Item</label><input type="text" id="itemProjName" class="form-control"></div>
                         <div class="form-group"><label>Kategori</label>
                             <select id="itemProjKategori" class="form-control">
                                 <option value="Kitchen Set">Kitchen Set</option><option value="Wardrobe">Wardrobe</option>
@@ -245,10 +239,10 @@
                                 <option value="Material">Material</option><option value="Upah">Upah</option><option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Qty</label><input type="number" id="itemProjQty" class="form-control" placeholder="Contoh: 2" value="1"></div>
-                        <div class="form-group"><label>Satuan</label><input type="text" id="itemProjSatuan" class="form-control" placeholder="Contoh: unit"></div>
-                        <div class="form-group"><label>Harga Satuan (Rp)</label><input type="number" id="itemProjHarga" class="form-control" placeholder="Contoh: 2500000"></div>
-                        <div class="form-group"><label>Keterangan (Opsional)</label><textarea id="itemProjKet" class="form-control"></textarea></div>
+                        <div class="form-group"><label>Qty</label><input type="number" id="itemProjQty" class="form-control" value="1"></div>
+                        <div class="form-group"><label>Satuan</label><input type="text" id="itemProjSatuan" class="form-control"></div>
+                        <div class="form-group"><label>Harga Satuan (Rp)</label><input type="number" id="itemProjHarga" class="form-control"></div>
+                        <div class="form-group"><label>Keterangan</label><textarea id="itemProjKet" class="form-control"></textarea></div>
                         <button class="btn-primary" id="btnSimpanItem" onclick="simpanItemProyek()">💾 Tambah Item</button>
                     </div>
                     <div class="table-card">
@@ -256,46 +250,37 @@
                         <table>
                             <thead><tr><th>No</th><th>Nama Item</th><th>Kategori</th><th>Qty</th><th>Satuan</th><th>Harga</th><th>Subtotal</th><th>Aksi</th></tr></thead>
                             <tbody id="detail-item-body"></tbody>
-                            <tfoot><tr class="total-row"><td colspan="6" style="text-align:right;">TOTAL PESANAN</td><td id="detail-total">Rp 0</td><td></td></tr></tfoot>
+                            <tfoot><tr class="total-row"><td colspan="6" style="text-align:right;">TOTAL</td><td id="detail-total">Rp 0</td><td></td></tr></tfoot>
                         </table>
                     </div>
                 </div>
                 <div class="panel">
                     <h3>📑 Riwayat RAB Proyek Ini</h3>
-                    <div id="rab-list-container"><p class="empty-state">Belum ada RAB tersimpan.</p></div>
+                    <div id="rab-list-container"><p class="empty-state">Belum ada RAB.</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- ============ RAB & AHSP (STANDALONE) ============ -->
+        <!-- RAB & AHSP -->
         <div id="page-rab" class="page-view active">
             <div class="main-header">
-                <div class="header-title-wrap"><div><h1>RAB & AHSP</h1><p>Kalkulator RAB cepat. Tambahkan item, lalu simpan dengan judul agar tersimpan di database.</p></div></div>
+                <div class="header-title-wrap"><div><h1>RAB & AHSP</h1><p>Kalkulator RAB cepat. Tambahkan item, lalu simpan.</p></div></div>
                 <button class="btn-success" onclick="simpanRABStandalone()">💾 Simpan RAB Ini</button>
             </div>
-
             <div class="flex-container">
-                <!-- FORM INPUT -->
                 <div class="form-card">
                     <h3>➕ Tambah Item RAB</h3>
-                    <div class="form-group">
-                        <label>Sumber Data</label>
+                    <div class="form-group"><label>Sumber Data</label>
                         <div class="sumber-selector">
                             <button class="sumber-btn active" data-sumber="manual" onclick="gantiSumberRAB('manual')">✏️ Manual</button>
                             <button class="sumber-btn" data-sumber="material" onclick="gantiSumberRAB('material')">📦 Material</button>
                             <button class="sumber-btn" data-sumber="upah" onclick="gantiSumberRAB('upah')">👷 Upah</button>
                         </div>
                     </div>
-                    <div class="form-group" id="rab-group-material" style="display:none;">
-                        <label>Pilih Material</label>
-                        <select id="rabSelectMaterial" class="form-control" onchange="onRABMaterialPilih()"><option value="">-- Pilih Material --</option></select>
-                    </div>
-                    <div class="form-group" id="rab-group-upah" style="display:none;">
-                        <label>Pilih Upah</label>
-                        <select id="rabSelectLabor" class="form-control" onchange="onRABLaborPilih()"><option value="">-- Pilih Upah --</option></select>
-                    </div>
+                    <div class="form-group" id="rab-group-material" style="display:none;"><label>Pilih Material</label><select id="rabSelectMaterial" class="form-control" onchange="onRABMaterialPilih()"><option value="">-- Pilih --</option></select></div>
+                    <div class="form-group" id="rab-group-upah" style="display:none;"><label>Pilih Upah</label><select id="rabSelectLabor" class="form-control" onchange="onRABLaborPilih()"><option value="">-- Pilih --</option></select></div>
                     <div class="info-harga" id="rabInfoHarga"></div>
-                    <div class="form-group"><label>Nama Item / Pekerjaan</label><input type="text" id="rabItemName" class="form-control" placeholder="Contoh: Kitchen Set Bawah"></div>
+                    <div class="form-group"><label>Nama Item</label><input type="text" id="rabItemName" class="form-control"></div>
                     <div class="form-group"><label>Kategori</label>
                         <select id="rabItemKategori" class="form-control">
                             <option value="Kitchen Set">Kitchen Set</option><option value="Wardrobe">Wardrobe</option>
@@ -305,73 +290,67 @@
                         </select>
                     </div>
                     <div class="form-group"><label>Volume / Qty</label><input type="number" id="rabItemQty" class="form-control" value="1"></div>
-                    <div class="form-group"><label>Satuan</label><input type="text" id="rabItemSatuan" class="form-control" placeholder="Contoh: m lari / unit"></div>
-                    <div class="form-group"><label>Harga Satuan (Rp)</label><input type="number" id="rabItemHarga" class="form-control" placeholder="Contoh: 1500000"></div>
-                    <div class="form-group"><label>Keterangan (Opsional)</label><textarea id="rabItemKet" class="form-control"></textarea></div>
+                    <div class="form-group"><label>Satuan</label><input type="text" id="rabItemSatuan" class="form-control"></div>
+                    <div class="form-group"><label>Harga Satuan (Rp)</label><input type="number" id="rabItemHarga" class="form-control"></div>
+                    <div class="form-group"><label>Keterangan</label><textarea id="rabItemKet" class="form-control"></textarea></div>
                     <button class="btn-primary" onclick="tambahItemRAB()">➕ Tambah ke Daftar</button>
                 </div>
-
-                <!-- PREVIEW TABLE -->
                 <div class="table-card">
                     <h3>📋 Preview RAB (Belum Disimpan)</h3>
                     <table>
                         <thead><tr><th>No</th><th>Uraian</th><th>Kategori</th><th>Vol</th><th>Satuan</th><th>Harga</th><th>Total</th><th>Aksi</th></tr></thead>
-                        <tbody id="rab-preview-body"><tr><td colspan="8" class="empty-state">Belum ada item. Tambahkan di form sebelah kiri.</td></tr></tbody>
+                        <tbody id="rab-preview-body"><tr><td colspan="8" class="empty-state">Belum ada item.</td></tr></tbody>
                         <tfoot><tr class="total-row"><td colspan="6" style="text-align:right;">TOTAL RAB</td><td id="total-rab-preview">Rp 0</td><td></td></tr></tfoot>
                     </table>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                        <button class="btn-hapus" style="flex: 1; padding: 12px;" onclick="kosongkanPreviewRAB()">🗑️ Kosongkan Semua</button>
-                    </div>
+                    <div style="margin-top: 15px;"><button class="btn-hapus" style="width: 100%; padding: 12px;" onclick="kosongkanPreviewRAB()">🗑️ Kosongkan Semua</button></div>
                 </div>
             </div>
-
-            <!-- DAFTAR RAB TERSIMPAN -->
             <div class="panel">
                 <h3>📚 Daftar RAB Tersimpan</h3>
-                <div id="rab-saved-list"><p class="loading">Memuat daftar RAB...</p></div>
+                <div id="rab-saved-list"><p class="loading">Memuat...</p></div>
             </div>
         </div>
 
         <!-- MATERIAL -->
         <div id="page-material" class="page-view">
-            <div class="main-header"><h1>Material & Harga</h1><p>Database harga material dan upah tenaga kerja. Klik Edit untuk mengubah harga.</p></div>
+            <div class="main-header"><h1>Material & Harga</h1><p>Database harga material dan upah.</p></div>
             <div class="tabs">
                 <button class="tab-btn active" data-tab="tab-material">📦 Material</button>
-                <button class="tab-btn" data-tab="tab-upah">👷 Upah Tenaga Kerja</button>
+                <button class="tab-btn" data-tab="tab-upah">👷 Upah</button>
             </div>
             <div id="tab-material" class="tab-content active">
                 <div class="flex-container">
                     <div class="form-card">
-                        <h3>➕ Tambah Material Baru</h3>
+                        <h3>➕ Tambah Material</h3>
                         <div class="form-group"><label>Nama Material</label><input type="text" id="matName" class="form-control"></div>
                         <div class="form-group"><label>Satuan</label><input type="text" id="matUnit" class="form-control"></div>
                         <div class="form-group"><label>Harga Satuan (Rp)</label><input type="number" id="matPrice" class="form-control"></div>
                         <div class="form-group"><label>Kategori</label>
                             <select id="matCategory" class="form-control"><option value="Kayu">Kayu</option><option value="Finishing">Finishing</option><option value="Hardware">Hardware</option><option value="Umum">Umum</option></select>
                         </div>
-                        <button class="btn-primary" id="btnSimpanMaterial" onclick="simpanMaterial()">💾 Simpan Material</button>
+                        <button class="btn-primary" id="btnSimpanMaterial" onclick="simpanMaterial()">💾 Simpan</button>
                     </div>
                     <div class="table-card">
                         <h3>📋 Daftar Material</h3>
-                        <table><thead><tr><th>No</th><th>Nama Material</th><th>Satuan</th><th>Harga</th><th>Kategori</th><th>Aksi</th></tr></thead><tbody id="material-body"><tr><td colspan="6" class="loading">Memuat data...</td></tr></tbody></table>
+                        <table><thead><tr><th>No</th><th>Nama</th><th>Satuan</th><th>Harga</th><th>Kategori</th><th>Aksi</th></tr></thead><tbody id="material-body"></tbody></table>
                     </div>
                 </div>
             </div>
             <div id="tab-upah" class="tab-content">
                 <div class="flex-container">
                     <div class="form-card">
-                        <h3>➕ Tambah Upah Baru</h3>
+                        <h3>➕ Tambah Upah</h3>
                         <div class="form-group"><label>Nama Pekerjaan</label><input type="text" id="laborName" class="form-control"></div>
                         <div class="form-group"><label>Satuan</label><input type="text" id="laborUnit" class="form-control"></div>
                         <div class="form-group"><label>Upah (Rp)</label><input type="number" id="laborPrice" class="form-control"></div>
                         <div class="form-group"><label>Keahlian</label>
                             <select id="laborSkill" class="form-control"><option value="Tukang Kayu">Tukang Kayu</option><option value="Tukang Finishing">Tukang Finishing</option><option value="Tukang Besi">Tukang Besi</option><option value="Helper">Helper</option></select>
                         </div>
-                        <button class="btn-primary" id="btnSimpanLabor" onclick="simpanLabor()">💾 Simpan Upah</button>
+                        <button class="btn-primary" id="btnSimpanLabor" onclick="simpanLabor()">💾 Simpan</button>
                     </div>
                     <div class="table-card">
                         <h3>📋 Daftar Upah</h3>
-                        <table><thead><tr><th>No</th><th>Nama Pekerjaan</th><th>Satuan</th><th>Upah</th><th>Keahlian</th><th>Aksi</th></tr></thead><tbody id="labor-body"><tr><td colspan="6" class="loading">Memuat data...</td></tr></tbody></table>
+                        <table><thead><tr><th>No</th><th>Nama</th><th>Satuan</th><th>Upah</th><th>Keahlian</th><th>Aksi</th></tr></thead><tbody id="labor-body"></tbody></table>
                     </div>
                 </div>
             </div>
@@ -383,7 +362,6 @@
 
     </main>
 
-    <!-- MODAL EDIT MATERIAL -->
     <div id="modalEditMaterial" class="modal-overlay">
         <div class="modal-box">
             <h3>✏️ Edit Material</h3>
@@ -398,7 +376,6 @@
         </div>
     </div>
 
-    <!-- MODAL EDIT UPAH -->
     <div id="modalEditLabor" class="modal-overlay">
         <div class="modal-box">
             <h3>✏️ Edit Upah</h3>
@@ -413,22 +390,23 @@
         </div>
     </div>
 
-    <!-- MODAL DETAIL RAB -->
     <div id="modalDetailRAB" class="modal-overlay">
         <div class="modal-box" style="max-width: 800px;">
             <h3 id="modalRabTitle">Detail RAB</h3>
             <div id="modalRabContent"></div>
-            <div class="modal-actions"><button class="btn-back" onclick="tutupModal('modalDetailRAB')">Tutup</button></div>
+            <div class="modal-actions">
+                <button class="btn-back" onclick="tutupModal('modalDetailRAB')">Tutup</button>
+                <button class="btn-print" id="btnPrintFromModal" style="flex:1;" onclick="cetakDariModal()">🖨️ Cetak RAB</button>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL SIMPAN RAB STANDALONE -->
     <div id="modalSimpanRAB" class="modal-overlay">
         <div class="modal-box">
             <h3>💾 Simpan RAB</h3>
-            <p style="font-size:0.85em;color:#666;margin-bottom:15px;">Total sementara: <strong id="modal-rab-total">Rp 0</strong></p>
+            <p style="font-size:0.85em;color:#666;margin-bottom:15px;">Total: <strong id="modal-rab-total">Rp 0</strong></p>
             <div class="form-group"><label>Judul RAB</label><input type="text" id="rabJudul" class="form-control" placeholder="Contoh: RAB Dapur Minimalis"></div>
-            <div class="form-group"><label>Catatan (Opsional)</label><textarea id="rabCatatan" class="form-control" placeholder="Catatan tambahan..."></textarea></div>
+            <div class="form-group"><label>Catatan</label><textarea id="rabCatatan" class="form-control"></textarea></div>
             <div class="modal-actions"><button class="btn-back" onclick="tutupModal('modalSimpanRAB')">Batal</button><button class="btn-primary" onclick="konfirmasiSimpanRAB()">💾 Simpan</button></div>
         </div>
     </div>
@@ -439,22 +417,20 @@
         // ==========================================
         const SUPABASE_URL = 'https://avkllsfjgtzefqlflmax.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2a2xsc2ZqZ3R6ZWZxbGZsbWF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTIwODcsImV4cCI6MjEwNDg2ODA4N30.bpV0FN8oqXbMrMSiQPawIHl7AQBg2VC0k3Nd-OEKSE4';
-        
         const { createClient } = supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // State global
         let currentProjectId = null;
         let currentProjectKode = '';
         let daftarMaterial = [];
         let daftarLabor = [];
         let sumberAktif = 'manual';
         let sumberAktifRAB = 'manual';
-        let previewRABItems = []; // Array untuk menyimpan item RAB sementara
+        let previewRABItems = [];
+        let lastPrintedRAB = null; // menyimpan info RAB terakhir yang dibuka di modal
 
-        // Helper
         const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
-        const formatTanggal = (tgl) => tgl ? new Date(tgl).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-';
+        const formatTanggal = (tgl) => tgl ? new Date(tgl).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-';
         const formatDateTime = (tgl) => tgl ? new Date(tgl).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
 
         // ==========================================
@@ -491,20 +467,16 @@
         function tutupModal(id) { document.getElementById(id).classList.remove('active'); }
 
         // ==========================================
-        // SUMBER DATA SELECTOR (Proyek Detail)
+        // SUMBER SELECTOR (Proyek Detail)
         // ==========================================
         function gantiSumber(sumber) {
             sumberAktif = sumber;
-            document.querySelectorAll('.sumber-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.sumber-btn[data-sumber="${sumber}"]`).classList.add('active');
+            document.querySelectorAll('#page-proyek .sumber-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`#page-proyek .sumber-btn[data-sumber="${sumber}"]`).classList.add('active');
             document.getElementById('group-pilih-material').style.display = (sumber === 'material') ? 'block' : 'none';
             document.getElementById('group-pilih-upah').style.display = (sumber === 'upah') ? 'block' : 'none';
-            const infoHarga = document.getElementById('infoHarga');
-            infoHarga.classList.remove('show');
-            infoHarga.innerHTML = '';
-            document.getElementById('itemProjName').value = '';
-            document.getElementById('itemProjHarga').value = '';
-            document.getElementById('itemProjSatuan').value = '';
+            document.getElementById('infoHarga').classList.remove('show');
+            ['itemProjName','itemProjHarga','itemProjSatuan'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('selectMaterial').value = '';
             document.getElementById('selectLabor').value = '';
         }
@@ -540,29 +512,23 @@
         async function loadMaterialDropdown() {
             const { data } = await db.from('materials').select('*').order('nama_material');
             daftarMaterial = data || [];
-            // Untuk proyek detail
-            const select = document.getElementById('selectMaterial');
-            if (select) select.innerHTML = '<option value="">-- Pilih Material --</option>' + 
-                daftarMaterial.map(m => `<option value="${m.id}">${m.nama_material} (${m.satuan}) — ${formatRupiah(m.harga_satuan)}</option>`).join('');
-            // Untuk RAB standalone
-            const select2 = document.getElementById('rabSelectMaterial');
-            if (select2) select2.innerHTML = '<option value="">-- Pilih Material --</option>' + 
-                daftarMaterial.map(m => `<option value="${m.id}">${m.nama_material} (${m.satuan}) — ${formatRupiah(m.harga_satuan)}</option>`).join('');
+            const s1 = document.getElementById('selectMaterial');
+            if (s1) s1.innerHTML = '<option value="">-- Pilih Material --</option>' + daftarMaterial.map(m => `<option value="${m.id}">${m.nama_material} (${m.satuan}) — ${formatRupiah(m.harga_satuan)}</option>`).join('');
+            const s2 = document.getElementById('rabSelectMaterial');
+            if (s2) s2.innerHTML = '<option value="">-- Pilih Material --</option>' + daftarMaterial.map(m => `<option value="${m.id}">${m.nama_material} (${m.satuan}) — ${formatRupiah(m.harga_satuan)}</option>`).join('');
         }
 
         async function loadLaborDropdown() {
             const { data } = await db.from('labors').select('*').order('nama_pekerjaan');
             daftarLabor = data || [];
-            const select = document.getElementById('selectLabor');
-            if (select) select.innerHTML = '<option value="">-- Pilih Upah --</option>' + 
-                daftarLabor.map(l => `<option value="${l.id}">${l.nama_pekerjaan} (${l.satuan}) — ${formatRupiah(l.upah)}</option>`).join('');
-            const select2 = document.getElementById('rabSelectLabor');
-            if (select2) select2.innerHTML = '<option value="">-- Pilih Upah --</option>' + 
-                daftarLabor.map(l => `<option value="${l.id}">${l.nama_pekerjaan} (${l.satuan}) — ${formatRupiah(l.upah)}</option>`).join('');
+            const s1 = document.getElementById('selectLabor');
+            if (s1) s1.innerHTML = '<option value="">-- Pilih Upah --</option>' + daftarLabor.map(l => `<option value="${l.id}">${l.nama_pekerjaan} (${l.satuan}) — ${formatRupiah(l.upah)}</option>`).join('');
+            const s2 = document.getElementById('rabSelectLabor');
+            if (s2) s2.innerHTML = '<option value="">-- Pilih Upah --</option>' + daftarLabor.map(l => `<option value="${l.id}">${l.nama_pekerjaan} (${l.satuan}) — ${formatRupiah(l.upah)}</option>`).join('');
         }
 
         // ==========================================
-        // PROYEK (sama seperti sebelumnya)
+        // PROYEK
         // ==========================================
         function bukaFormProyek() {
             document.getElementById('proyek-list-view').classList.remove('active');
@@ -584,7 +550,7 @@
 
         async function muatProyek() {
             const grid = document.getElementById('project-grid');
-            grid.innerHTML = '<div class="loading" style="grid-column: 1/-1;">Memuat data proyek...</div>';
+            grid.innerHTML = '<div class="loading" style="grid-column: 1/-1;">Memuat...</div>';
             const { data, error } = await db.from('projects').select('*, project_items(count), project_rab(count)').order('created_at', { ascending: false });
             if (error) { grid.innerHTML = `<div class="loading text-merah" style="grid-column: 1/-1;">Error: ${error.message}</div>`; return; }
             if (data.length === 0) { grid.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">Belum ada proyek.</div>'; return; }
@@ -593,10 +559,10 @@
                 const jumlahRAB = p.project_rab && p.project_rab[0] ? p.project_rab[0].count : 0;
                 return `<div class="project-card" onclick="bukaDetailProyek(${p.id})">
                     <div class="kode">${p.kode_proyek}</div><h4>${p.nama_konsumen}</h4>
-                    <div class="konsumen">📞 ${p.kontak || '-'} &nbsp;|&nbsp; 📍 ${p.alamat ? p.alamat.substring(0, 30) + (p.alamat.length > 30 ? '...' : '') : '-'}</div>
+                    <div class="konsumen">📞 ${p.kontak || '-'} &nbsp;|&nbsp; 📍 ${p.alamat ? p.alamat.substring(0, 30) : '-'}</div>
                     <div class="detail-row"><span>Jenis:</span> <strong>${p.jenis_proyek || '-'}</strong></div>
-                    <div class="detail-row"><span>Item Pesanan:</span> <strong>${jumlahItem} item</strong></div>
-                    <div class="detail-row"><span>RAB Tersimpan:</span> <strong>${jumlahRAB} versi</strong></div>
+                    <div class="detail-row"><span>Item:</span> <strong>${jumlahItem}</strong></div>
+                    <div class="detail-row"><span>RAB:</span> <strong>${jumlahRAB} versi</strong></div>
                     <div class="detail-row"><span>Budget:</span> <span class="budget">${formatRupiah(p.budget)}</span></div>
                     <div class="detail-row"><span>Periode:</span> <strong>${formatTanggal(p.tanggal_mulai)} - ${formatTanggal(p.tanggal_selesai)}</strong></div>
                     <span class="badge-status badge-${p.status}">${p.status}</span>
@@ -650,7 +616,7 @@
 
         async function muatItemsProyek() {
             const tbody = document.getElementById('detail-item-body');
-            tbody.innerHTML = '<tr><td colspan="8" class="loading">Memuat item...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="loading">Memuat...</td></tr>';
             const { data, error } = await db.from('project_items').select('*').eq('project_id', currentProjectId).order('created_at');
             if (error) { tbody.innerHTML = `<tr><td colspan="8" class="loading text-merah">Error: ${error.message}</td></tr>`; return; }
             if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Belum ada item.</td></tr>'; document.getElementById('detail-total').innerText = 'Rp 0'; return; }
@@ -671,7 +637,7 @@
             const qty = parseFloat(document.getElementById('itemProjQty').value);
             const satuan = document.getElementById('itemProjSatuan').value.trim();
             const harga = parseFloat(document.getElementById('itemProjHarga').value);
-            if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi semua data item."); return; }
+            if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi."); return; }
             const btn = document.getElementById('btnSimpanItem');
             btn.disabled = true; btn.innerText = 'Menyimpan...';
             const { error } = await db.from('project_items').insert([{
@@ -700,7 +666,7 @@
         async function simpanSebagaiRAB() {
             const { data: items, error: errItems } = await db.from('project_items').select('*').eq('project_id', currentProjectId);
             if (errItems) { alert("Gagal: " + errItems.message); return; }
-            if (!items || items.length === 0) { alert("Belum ada item pesanan."); return; }
+            if (!items || items.length === 0) { alert("Belum ada item."); return; }
             const { data: existingRab } = await db.from('project_rab').select('versi').eq('project_id', currentProjectId).order('versi', { ascending: false }).limit(1);
             const versiBaru = (existingRab && existingRab.length > 0) ? existingRab[0].versi + 1 : 1;
             const judul = prompt("Judul RAB:", `RAB ${currentProjectKode} - v${versiBaru}`);
@@ -708,10 +674,9 @@
             const catatan = prompt("Catatan (opsional):", "Dibuat otomatis dari daftar item pesanan.") || '';
             const total = items.reduce((sum, i) => sum + (i.qty * i.harga_satuan), 0);
             const { data: rabBaru, error: errRab } = await db.from('project_rab').insert([{
-                project_id: currentProjectId, versi: versiBaru,
-                judul: judul, catatan: catatan, total: total, status: 'Draft'
+                project_id: currentProjectId, versi: versiBaru, judul, catatan, total, status: 'Draft'
             }]).select().single();
-            if (errRab) { alert("Gagal simpan RAB: " + errRab.message); return; }
+            if (errRab) { alert("Gagal: " + errRab.message); return; }
             const rabItems = items.map(i => ({
                 rab_id: rabBaru.id, nama_item: i.nama_item, kategori: i.kategori,
                 qty: i.qty, satuan: i.satuan, harga_satuan: i.harga_satuan,
@@ -725,15 +690,15 @@
 
         async function muatRABProyek() {
             const container = document.getElementById('rab-list-container');
-            container.innerHTML = '<p class="loading">Memuat RAB...</p>';
+            container.innerHTML = '<p class="loading">Memuat...</p>';
             const { data, error } = await db.from('project_rab').select('*').eq('project_id', currentProjectId).order('versi', { ascending: false });
             if (error) { container.innerHTML = `<p class="text-merah">Error: ${error.message}</p>`; return; }
-            if (data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB tersimpan.</p>'; return; }
+            if (data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB.</p>'; return; }
             container.innerHTML = data.map(r => `
                 <div class="rab-card">
                     <div class="rab-card-header">
                         <div><h4>${r.judul}</h4>
-                            <div class="rab-card-meta"><span>📅 ${formatDateTime(r.created_at)}</span><span>📝 Status: <strong>${r.status}</strong></span></div>
+                            <div class="rab-card-meta"><span>📅 ${formatDateTime(r.created_at)}</span><span>📝 ${r.status}</span></div>
                         </div>
                         <span class="rab-versi">v${r.versi}</span>
                     </div>
@@ -741,17 +706,19 @@
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <span class="rab-card-total">${formatRupiah(r.total)}</span>
                         <div>
-                            <button class="btn-edit" onclick="lihatDetailRAB(${r.id}, '${r.judul.replace(/'/g, "\\'")}', ${r.versi})">👁️ Lihat</button>
+                            <button class="btn-print" onclick="bukaPrintRAB(${r.id}, 'project')">🖨️ Cetak</button>
+                            <button class="btn-edit" onclick="lihatDetailRAB(${r.id}, '${r.judul.replace(/'/g, "\\'")}', ${r.versi}, 'project')">👁️ Lihat</button>
                             <button class="btn-hapus" onclick="hapusRAB(${r.id})">Hapus</button>
                         </div>
                     </div>
                 </div>`).join('');
         }
 
-        async function lihatDetailRAB(rabId, judul, versi) {
+        async function lihatDetailRAB(rabId, judul, versi, jenis) {
             document.getElementById('modalRabTitle').innerText = `📋 ${judul} (v${versi})`;
             const content = document.getElementById('modalRabContent');
-            content.innerHTML = '<p class="loading">Memuat detail...</p>';
+            content.innerHTML = '<p class="loading">Memuat...</p>';
+            lastPrintedRAB = { id: rabId, judul, jenis };
             bukaModal('modalDetailRAB');
             const { data, error } = await db.from('project_rab_items').select('*').eq('rab_id', rabId).order('id');
             if (error) { content.innerHTML = `<p class="text-merah">Error: ${error.message}</p>`; return; }
@@ -773,7 +740,7 @@
         }
 
         // ==========================================
-        // RAB STANDALONE (Kalkulator RAB)
+        // RAB STANDALONE
         // ==========================================
         function gantiSumberRAB(sumber) {
             sumberAktifRAB = sumber;
@@ -782,9 +749,7 @@
             document.getElementById('rab-group-material').style.display = (sumber === 'material') ? 'block' : 'none';
             document.getElementById('rab-group-upah').style.display = (sumber === 'upah') ? 'block' : 'none';
             document.getElementById('rabInfoHarga').classList.remove('show');
-            document.getElementById('rabItemName').value = '';
-            document.getElementById('rabItemHarga').value = '';
-            document.getElementById('rabItemSatuan').value = '';
+            ['rabItemName','rabItemHarga','rabItemSatuan'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('rabSelectMaterial').value = '';
             document.getElementById('rabSelectLabor').value = '';
         }
@@ -822,23 +787,15 @@
             const qty = parseFloat(document.getElementById('rabItemQty').value);
             const satuan = document.getElementById('rabItemSatuan').value.trim();
             const harga = parseFloat(document.getElementById('rabItemHarga').value);
-            if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi semua data item."); return; }
-            
+            if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi."); return; }
             previewRABItems.push({
-                nama_item: nama,
-                kategori: document.getElementById('rabItemKategori').value,
-                qty, satuan, harga_satuan: harga,
-                subtotal: qty * harga,
+                nama_item: nama, kategori: document.getElementById('rabItemKategori').value,
+                qty, satuan, harga_satuan: harga, subtotal: qty * harga,
                 keterangan: document.getElementById('rabItemKet').value.trim()
             });
-            
             renderPreviewRAB();
-            // Reset form
-            document.getElementById('rabItemName').value = '';
+            ['rabItemName','rabItemSatuan','rabItemHarga','rabItemKet'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('rabItemQty').value = 1;
-            document.getElementById('rabItemSatuan').value = '';
-            document.getElementById('rabItemHarga').value = '';
-            document.getElementById('rabItemKet').value = '';
             document.getElementById('rabInfoHarga').classList.remove('show');
             gantiSumberRAB('manual');
         }
@@ -846,7 +803,7 @@
         function renderPreviewRAB() {
             const tbody = document.getElementById('rab-preview-body');
             if (previewRABItems.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Belum ada item. Tambahkan di form sebelah kiri.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Belum ada item.</td></tr>';
                 document.getElementById('total-rab-preview').innerText = 'Rp 0';
                 return;
             }
@@ -864,20 +821,15 @@
             document.getElementById('total-rab-preview').innerText = formatRupiah(total);
         }
 
-        function hapusItemPreviewRAB(index) {
-            previewRABItems.splice(index, 1);
-            renderPreviewRAB();
-        }
-
+        function hapusItemPreviewRAB(index) { previewRABItems.splice(index, 1); renderPreviewRAB(); }
         function kosongkanPreviewRAB() {
-            if (previewRABItems.length === 0) { alert("Daftar sudah kosong."); return; }
-            if (!confirm("Kosongkan semua item di preview?")) return;
-            previewRABItems = [];
-            renderPreviewRAB();
+            if (previewRABItems.length === 0) { alert("Sudah kosong."); return; }
+            if (!confirm("Kosongkan semua item?")) return;
+            previewRABItems = []; renderPreviewRAB();
         }
 
         function simpanRABStandalone() {
-            if (previewRABItems.length === 0) { alert("Belum ada item untuk disimpan."); return; }
+            if (previewRABItems.length === 0) { alert("Belum ada item."); return; }
             const total = previewRABItems.reduce((sum, i) => sum + i.subtotal, 0);
             document.getElementById('modal-rab-total').innerText = formatRupiah(total);
             document.getElementById('rabJudul').value = '';
@@ -890,34 +842,23 @@
             if (!judul) { alert("Judul RAB wajib diisi."); return; }
             const catatan = document.getElementById('rabCatatan').value.trim();
             const total = previewRABItems.reduce((sum, i) => sum + i.subtotal, 0);
-
-            // Insert header
-            const { data: header, error: errHeader } = await db.from('standalone_rab').insert([{
-                judul, catatan, total, status: 'Draft'
-            }]).select().single();
-            if (errHeader) { alert("Gagal simpan RAB: " + errHeader.message); return; }
-
-            // Insert items
+            const { data: header, error: errHeader } = await db.from('standalone_rab').insert([{ judul, catatan, total, status: 'Draft' }]).select().single();
+            if (errHeader) { alert("Gagal: " + errHeader.message); return; }
             const itemsToInsert = previewRABItems.map(i => ({
-                rab_id: header.id,
-                nama_item: i.nama_item, kategori: i.kategori,
-                qty: i.qty, satuan: i.satuan,
-                harga_satuan: i.harga_satuan, subtotal: i.subtotal,
-                keterangan: i.keterangan
+                rab_id: header.id, nama_item: i.nama_item, kategori: i.kategori,
+                qty: i.qty, satuan: i.satuan, harga_satuan: i.harga_satuan, subtotal: i.subtotal, keterangan: i.keterangan
             }));
             const { error: errItems } = await db.from('standalone_rab_items').insert(itemsToInsert);
-            if (errItems) { alert("Header tersimpan, tapi detail gagal: " + errItems.message); return; }
-
+            if (errItems) { alert("Detail gagal: " + errItems.message); return; }
             tutupModal('modalSimpanRAB');
-            previewRABItems = [];
-            renderPreviewRAB();
+            previewRABItems = []; renderPreviewRAB();
             muatRABTersimpan();
-            alert(`✅ RAB "${judul}" berhasil disimpan!`);
+            alert(`✅ RAB "${judul}" tersimpan!`);
         }
 
         async function muatRABTersimpan() {
             const container = document.getElementById('rab-saved-list');
-            container.innerHTML = '<p class="loading">Memuat daftar RAB...</p>';
+            container.innerHTML = '<p class="loading">Memuat...</p>';
             const { data, error } = await db.from('standalone_rab').select('*').order('created_at', { ascending: false });
             if (error) { container.innerHTML = `<p class="text-merah">Error: ${error.message}</p>`; return; }
             if (data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB tersimpan.</p>'; return; }
@@ -932,6 +873,7 @@
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <span class="rab-card-total">${formatRupiah(r.total)}</span>
                         <div>
+                            <button class="btn-print" onclick="bukaPrintRAB(${r.id}, 'standalone')">🖨️ Cetak</button>
                             <button class="btn-edit" onclick="lihatDetailRABStandalone(${r.id}, '${r.judul.replace(/'/g, "\\'")}')">👁️ Lihat</button>
                             <button class="btn-hapus" onclick="hapusRABStandalone(${r.id})">Hapus</button>
                         </div>
@@ -942,7 +884,8 @@
         async function lihatDetailRABStandalone(rabId, judul) {
             document.getElementById('modalRabTitle').innerText = `📋 ${judul}`;
             const content = document.getElementById('modalRabContent');
-            content.innerHTML = '<p class="loading">Memuat detail...</p>';
+            content.innerHTML = '<p class="loading">Memuat...</p>';
+            lastPrintedRAB = { id: rabId, judul, jenis: 'standalone' };
             bukaModal('modalDetailRAB');
             const { data, error } = await db.from('standalone_rab_items').select('*').eq('rab_id', rabId).order('id');
             if (error) { content.innerHTML = `<p class="text-merah">Error: ${error.message}</p>`; return; }
@@ -964,13 +907,182 @@
         }
 
         // ==========================================
-        // MATERIAL & UPAH (sama seperti sebelumnya + Edit)
+        // CETAK RAB (OPSI A)
+        // ==========================================
+        function cetakDariModal() {
+            if (!lastPrintedRAB) { alert("Tidak ada RAB yang dipilih."); return; }
+            bukaPrintRAB(lastPrintedRAB.id, lastPrintedRAB.jenis);
+        }
+
+        async function bukaPrintRAB(rabId, jenis) {
+            // 1. Ambil header RAB
+            let header, items, subTitle = '';
+            if (jenis === 'project') {
+                const { data: h, error: eh } = await db.from('project_rab').select('*').eq('id', rabId).single();
+                if (eh) { alert("Gagal memuat RAB: " + eh.message); return; }
+                header = h;
+                const { data: proj } = await db.from('projects').select('*').eq('id', h.project_id).single();
+                if (proj) subTitle = `${proj.kode_proyek} • ${proj.nama_konsumen}${proj.alamat ? ' • ' + proj.alamat : ''}`;
+                const { data: i, error: ei } = await db.from('project_rab_items').select('*').eq('rab_id', rabId).order('id');
+                if (ei) { alert("Gagal memuat detail: " + ei.message); return; }
+                items = i;
+            } else {
+                const { data: h, error: eh } = await db.from('standalone_rab').select('*').eq('id', rabId).single();
+                if (eh) { alert("Gagal memuat RAB: " + eh.message); return; }
+                header = h;
+                subTitle = 'RAB Standalone';
+                const { data: i, error: ei } = await db.from('standalone_rab_items').select('*').eq('rab_id', rabId).order('id');
+                if (ei) { alert("Gagal memuat detail: " + ei.message); return; }
+                items = i;
+            }
+
+            if (!items || items.length === 0) { alert("RAB tidak memiliki item."); return; }
+
+            // 2. Bangun HTML print
+            let total = 0;
+            const rowsHtml = items.map((item, i) => {
+                const sub = item.qty * item.harga_satuan;
+                total += sub;
+                return `<tr>
+                    <td style="text-align:center;">${i + 1}</td>
+                    <td>${item.nama_item}${item.keterangan ? '<br><small style="color:#666;font-style:italic;">' + item.keterangan + '</small>' : ''}</td>
+                    <td style="text-align:center;">${item.kategori || '-'}</td>
+                    <td style="text-align:center;">${item.qty}</td>
+                    <td style="text-align:center;">${item.satuan}</td>
+                    <td style="text-align:right;">${formatRupiah(item.harga_satuan)}</td>
+                    <td style="text-align:right;">${formatRupiah(sub)}</td>
+                </tr>`;
+            }).join('');
+
+            const tanggalCetak = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const nomorRAB = jenis === 'project' ? `PRJ-RAB-${String(rabId).padStart(4, '0')}` : `RAB-${String(rabId).padStart(4, '0')}`;
+
+            const htmlPrint = `<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>${header.judul || 'RAB'} - Isakuiki Interior</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { padding: 30px 40px; color: #333; font-size: 12px; }
+    .kop { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px double #333; padding-bottom: 15px; margin-bottom: 20px; }
+    .kop-kiri h1 { font-size: 22px; color: #009ACD; letter-spacing: 1px; }
+    .kop-kiri p { font-size: 11px; color: #555; margin-top: 3px; }
+    .kop-kanan { text-align: right; font-size: 11px; }
+    .kop-kanan .nomor { font-weight: bold; color: #009ACD; font-size: 14px; }
+    .judul-rab { text-align: center; margin-bottom: 20px; }
+    .judul-rab h2 { font-size: 16px; text-decoration: underline; margin-bottom: 5px; }
+    .judul-rab p { font-size: 11px; color: #555; }
+    .info-proyek { margin-bottom: 15px; font-size: 11px; }
+    .info-proyek table { width: auto; }
+    .info-proyek td { padding: 3px 10px 3px 0; border: none; vertical-align: top; }
+    .info-proyek td:first-child { font-weight: bold; width: 130px; }
+    table.data { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px; }
+    table.data th { background-color: #E0F7FA; border: 1px solid #333; padding: 8px 6px; text-align: center; font-weight: bold; }
+    table.data td { border: 1px solid #333; padding: 6px; vertical-align: top; }
+    table.data tfoot td { background-color: #F0F8FF; font-weight: bold; font-size: 12px; }
+    .catatan { margin-top: 15px; font-size: 11px; background-color: #f9f9f9; padding: 10px; border-left: 3px solid #009ACD; }
+    .catatan strong { display: block; margin-bottom: 3px; }
+    .ttd-container { display: flex; justify-content: space-between; margin-top: 50px; font-size: 11px; }
+    .ttd-box { width: 200px; text-align: center; }
+    .ttd-box .nama { margin-top: 60px; font-weight: bold; border-top: 1px solid #333; padding-top: 5px; }
+    .footer { margin-top: 30px; text-align: center; font-size: 9px; color: #999; border-top: 1px solid #ddd; padding-top: 10px; }
+    @media print {
+        body { padding: 15px 25px; }
+        .no-print { display: none !important; }
+        @page { size: A4 portrait; margin: 1cm; }
+    }
+    .no-print { position: fixed; top: 10px; right: 10px; padding: 10px 15px; background-color: #009ACD; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    .no-print:hover { background-color: #007B9E; }
+</style>
+</head>
+<body>
+    <button class="no-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+
+    <div class="kop">
+        <div class="kop-kiri">
+            <h1>ISAKUIKI INTERIOR</h1>
+            <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+        </div>
+        <div class="kop-kanan">
+            <div class="nomor">${nomorRAB}</div>
+            <div>Tanggal Cetak: ${tanggalCetak}</div>
+        </div>
+    </div>
+
+    <div class="judul-rab">
+        <h2>RENCANA ANGGARAN BIAYA (RAB)</h2>
+        <p>${header.judul || ''}</p>
+    </div>
+
+    <div class="info-proyek">
+        <table>
+            <tr><td>Proyek</td><td>: ${subTitle}</td></tr>
+            <tr><td>Versi</td><td>: ${header.versi ? 'v' + header.versi : '-'}</td></tr>
+            <tr><td>Status</td><td>: ${header.status || 'Draft'}</td></tr>
+        </table>
+    </div>
+
+    <table class="data">
+        <thead>
+            <tr>
+                <th style="width:30px;">No</th>
+                <th>Uraian Pekerjaan / Item</th>
+                <th style="width:80px;">Kategori</th>
+                <th style="width:40px;">Vol</th>
+                <th style="width:55px;">Satuan</th>
+                <th style="width:100px;">Harga Satuan</th>
+                <th style="width:110px;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>${rowsHtml}</tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" style="text-align:right; padding-right:15px;">TOTAL RAB</td>
+                <td style="text-align:right;">${formatRupiah(total)}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    ${header.catatan ? `<div class="catatan"><strong>Catatan:</strong>${header.catatan}</div>` : ''}
+
+    <div class="ttd-container">
+        <div class="ttd-box">
+            <div>Dibuat oleh,</div>
+            <div class="nama">Admin Isakuiki Interior</div>
+        </div>
+        <div class="ttd-box">
+            <div>Disetujui oleh,</div>
+            <div class="nama">Klien</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Dokumen ini dibuat secara otomatis oleh Sistem Isakuiki Interior • ${tanggalCetak}
+    </div>
+
+    <script>
+        window.addEventListener('load', () => { setTimeout(() => window.print(), 400); });
+    <\/script>
+</body>
+</html>`;
+
+            // 3. Buka window baru
+            const printWindow = window.open('', '_blank', 'width=900,height=700');
+            if (!printWindow) { alert("Popup diblokir! Izinkan popup untuk mencetak RAB."); return; }
+            printWindow.document.open();
+            printWindow.document.write(htmlPrint);
+            printWindow.document.close();
+        }
+
+        // ==========================================
+        // MATERIAL & UPAH
         // ==========================================
         async function muatMaterial() {
             const tbody = document.getElementById('material-body');
             const { data, error } = await db.from('materials').select('*').order('created_at', { ascending: false });
             if (error) { tbody.innerHTML = `<tr><td colspan="6" class="loading text-merah">Error: ${error.message}</td></tr>`; return; }
-            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Belum ada data material.</td></tr>'; return; }
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Belum ada data.</td></tr>'; return; }
             tbody.innerHTML = data.map((item, index) => `<tr>
                 <td>${index + 1}</td><td>${item.nama_material}</td><td>${item.satuan}</td>
                 <td>${formatRupiah(item.harga_satuan)}</td><td>${item.kategori}</td>
@@ -1007,7 +1119,7 @@
             const btn = document.getElementById('btnSimpanMaterial');
             btn.disabled = true; btn.innerText = 'Menyimpan...';
             const { error } = await db.from('materials').insert([{ nama_material: nama, satuan, harga_satuan: harga, kategori: document.getElementById('matCategory').value }]);
-            btn.disabled = false; btn.innerText = '💾 Simpan Material';
+            btn.disabled = false; btn.innerText = '💾 Simpan';
             if (error) alert("Gagal: " + error.message);
             else { ['matName','matUnit','matPrice'].forEach(id => document.getElementById(id).value = ''); muatMaterial(); loadMaterialDropdown(); }
         }
@@ -1022,7 +1134,7 @@
             const tbody = document.getElementById('labor-body');
             const { data, error } = await db.from('labors').select('*').order('created_at', { ascending: false });
             if (error) { tbody.innerHTML = `<tr><td colspan="6" class="loading text-merah">Error: ${error.message}</td></tr>`; return; }
-            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Belum ada data upah.</td></tr>'; return; }
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Belum ada data.</td></tr>'; return; }
             tbody.innerHTML = data.map((item, index) => `<tr>
                 <td>${index + 1}</td><td>${item.nama_pekerjaan}</td><td>${item.satuan}</td>
                 <td>${formatRupiah(item.upah)}</td><td>${item.keahlian}</td>
@@ -1059,7 +1171,7 @@
             const btn = document.getElementById('btnSimpanLabor');
             btn.disabled = true; btn.innerText = 'Menyimpan...';
             const { error } = await db.from('labors').insert([{ nama_pekerjaan: nama, satuan, upah, keahlian: document.getElementById('laborSkill').value }]);
-            btn.disabled = false; btn.innerText = '💾 Simpan Upah';
+            btn.disabled = false; btn.innerText = '💾 Simpan';
             if (error) alert("Gagal: " + error.message);
             else { ['laborName','laborUnit','laborPrice'].forEach(id => document.getElementById(id).value = ''); muatLabor(); loadLaborDropdown(); }
         }
