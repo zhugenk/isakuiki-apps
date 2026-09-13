@@ -179,10 +179,10 @@ tr:hover { background-color: #f9f9f9; }
 .progress-aman { background-color: var(--hijau-aman); }
 .progress-normal { background-color: var(--biru-langit-utama); }
 
-.total-summary { background: linear-gradient(135deg, #f0f8ff 0%, #e0f7fa 100%); border-radius: 8px; padding: 15px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.total-summary { background: linear-gradient(135deg, #f0f8ff 0%, #e0f7fa 100%); border-radius: 8px; padding: 15px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
 .total-summary-item { text-align: center; padding: 8px; border-radius: 6px; background: rgba(255,255,255,0.7); }
 .total-summary-item .label { font-size: 0.75em; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
-.total-summary-item .val { font-size: 1.1em; font-weight: bold; }
+.total-summary-item .val { font-size: 1.05em; font-weight: bold; }
 
 @media (max-width: 900px) { .flex-container { flex-direction: column; } .panel-grid { grid-template-columns: 1fr; } }
 </style>
@@ -199,7 +199,7 @@ tr:hover { background-color: #f9f9f9; }
         <li><a href="#" class="menu-item" data-page="resource"><span><span class="menu-icon">👷</span> Resource Planning</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="jadwal"><span><span class="menu-icon">📅</span> Jadwal & Kurva-S</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="akuntansi"><span><span class="menu-icon">💰</span> Akuntansi Proyek</span><span class="status-badge status-done">✓</span></a></li>
-        <li><a href="#" class="menu-item" data-page="laporan"><span><span class="menu-icon">📈</span> Laporan Laba Rugi</span><span class="status-badge status-ongoing">Baru</span></a></li>
+        <li><a href="#" class="menu-item" data-page="laporan"><span><span class="menu-icon">📈</span> Laporan Laba Rugi</span><span class="status-badge status-done">✓</span></a></li>
     </ul>
 </aside>
 
@@ -286,7 +286,13 @@ tr:hover { background-color: #f9f9f9; }
                 </div>
                 <div class="form-group"><label>Qty</label><input type="number" id="itemProjQty" class="form-control" value="1" oninput="hitungFeeProyek()"></div>
                 <div class="form-group"><label>Satuan</label><input type="text" id="itemProjSatuan" class="form-control"></div>
-                <div class="form-group"><label>Harga Jual ke Konsumen (Rp)</label><input type="number" id="itemProjHarga" class="form-control" oninput="hitungFeeProyek()"></div>
+
+                <div class="form-group">
+                    <label>Harga Penawaran Awal (Rp) <small style="color:#888;font-weight:normal;">— opsional, untuk tracking diskon</small></label>
+                    <input type="number" id="itemProjHargaPenawaran" class="form-control" placeholder="Contoh: 10000000" oninput="hitungFeeProyek()">
+                </div>
+
+                <div class="form-group"><label>Harga Jual ke Konsumen / Deal (Rp)</label><input type="number" id="itemProjHarga" class="form-control" oninput="hitungFeeProyek()"></div>
 
                 <label class="checkbox-label">
                     <input type="checkbox" id="itemProjIsVendor" onchange="toggleVendorBox()">
@@ -311,11 +317,13 @@ tr:hover { background-color: #f9f9f9; }
             <div class="table-card">
                 <h3>📋 Daftar Item Pesanan</h3>
                 <table>
-                    <thead><tr><th>No</th><th>Item</th><th>Qty</th><th>Harga Jual</th><th>Harga Vendor</th><th>Fee</th><th>Aksi</th></tr></thead>
+                    <thead><tr><th>No</th><th>Item</th><th>Qty</th><th>Harga Penawaran</th><th>Harga Deal</th><th>Diskon</th><th>Harga Vendor</th><th>Fee</th><th>Aksi</th></tr></thead>
                     <tbody id="detail-item-body"></tbody>
                 </table>
                 <div class="total-summary" id="item-total-summary">
-                    <div class="total-summary-item"><span class="label">Total Jual</span><span class="val text-hijau" id="sum-total-jual">Rp 0</span></div>
+                    <div class="total-summary-item"><span class="label">Total Penawaran</span><span class="val" style="color:#009ACD;" id="sum-total-penawaran">Rp 0</span></div>
+                    <div class="total-summary-item"><span class="label">Total Diskon</span><span class="val text-merah" id="sum-total-diskon">Rp 0</span></div>
+                    <div class="total-summary-item"><span class="label">Total Deal</span><span class="val text-hijau" id="sum-total-jual">Rp 0</span></div>
                     <div class="total-summary-item"><span class="label">Total Vendor</span><span class="val text-merah" id="sum-total-vendor">Rp 0</span></div>
                     <div class="total-summary-item"><span class="label">Total Fee</span><span class="val" style="color:#9b59b6;" id="sum-total-fee">Rp 0</span></div>
                 </div>
@@ -637,7 +645,6 @@ tr:hover { background-color: #f9f9f9; }
     <div id="akun-empty" class="panel"><div class="empty-state" style="padding:60px 20px;"><div style="font-size:3em;">💰</div><h3 style="color:#777;">Pilih Proyek Dulu</h3></div></div>
 </div>
 
-<!-- ============ LAPORAN LABA RUGI ============ -->
 <div id="page-laporan" class="page-view">
     <div class="main-header">
         <div class="header-title-wrap"><div><h1>Laporan Laba Rugi</h1><p>Rekap pemasukan & pengeluaran lintas proyek per periode.</p></div></div>
@@ -815,7 +822,7 @@ async function muatDashboard() {
     const { data: rabs } = await db.from('project_rab').select('project_id, total');
     const { data: expenses } = await db.from('project_expenses').select('project_id, jumlah, kategori');
     const { data: incomes } = await db.from('project_incomes').select('project_id, jumlah');
-    const { data: items } = await db.from('project_items').select('project_id, qty, harga_satuan, harga_vendor, is_third_party');
+    const { data: items } = await db.from('project_items').select('project_id, qty, harga_satuan, harga_vendor, is_third_party, harga_penawaran');
 
     const proyekAktif = (projects || []).filter(p => p.status !== 'Selesai' && p.status !== 'Penawaran');
     const totalNilaiProyek = proyekAktif.reduce((s, p) => s + (p.budget || 0), 0);
@@ -823,6 +830,11 @@ async function muatDashboard() {
     const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
     const totalLaba = totalIncome - totalRealisasi;
     const totalFee = (items || []).filter(i => i.is_third_party).reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
+    const totalDiskon = (items || []).reduce((s, i) => {
+        const hp = i.harga_penawaran || 0;
+        if (hp > i.harga_satuan) return s + ((hp - i.harga_satuan) * i.qty);
+        return s;
+    }, 0);
 
     const perProjectRAB = {}; (rabs || []).forEach(r => { perProjectRAB[r.project_id] = (perProjectRAB[r.project_id] || 0) + (r.total || 0); });
     const perProjectExp = {}; (expenses || []).forEach(e => { perProjectExp[e.project_id] = (perProjectExp[e.project_id] || 0) + (e.jumlah || 0); });
@@ -833,6 +845,7 @@ async function muatDashboard() {
         <div class="widget-card"><h4>Total Nilai Proyek Aktif</h4><div class="value">${formatRupiah(totalNilaiProyek)}</div><span class="sub-value text-hijau">▲ ${proyekAktif.length} Proyek Berjalan</span></div>
         <div class="widget-card"><h4>Total Realisasi Biaya</h4><div class="value text-merah">${formatRupiah(totalRealisasi)}</div><span class="sub-value">${(expenses || []).length} transaksi</span></div>
         <div class="widget-card" style="border-left-color:#9b59b6;"><h4>💰 Fee dari Pihak Ketiga</h4><div class="value" style="color:#9b59b6;">${formatRupiah(totalFee)}</div><span class="sub-value">${(items || []).filter(i => i.is_third_party).length} item vendor</span></div>
+        <div class="widget-card" style="border-left-color:#e74c3c;"><h4>🔻 Total Diskon Diberikan</h4><div class="value" style="color:#e74c3c;">${formatRupiah(totalDiskon)}</div><span class="sub-value">Selisih penawaran ke deal</span></div>
         <div class="widget-card"><h4>Estimasi Laba Kotor</h4><div class="value ${totalLaba >= 0 ? 'text-hijau' : 'text-merah'}">${formatRupiah(totalLaba)}</div><span class="sub-value">${totalIncome > 0 ? 'Margin ' + ((totalLaba / totalIncome) * 100).toFixed(1) + '%' : 'Belum ada pemasukan'}</span></div>
         <div class="widget-card" style="border-left-color: ${overbudgetCount > 0 ? 'var(--merah-alert)' : 'var(--hijau-aman)'};">
             <h4>Peringatan Dini</h4><div class="value ${overbudgetCount > 0 ? 'text-merah' : 'text-hijau'}" style="font-size:1.2em;">${overbudgetCount > 0 ? '⚠️ ' + overbudgetCount + ' Overbudget' : '✅ Semua Aman'}</div>
@@ -885,7 +898,7 @@ async function loadLaborDropdown() {
     const s2 = document.getElementById('rabSelectLabor'); if (s2) s2.innerHTML = html;
 }
 
-// VENDOR
+// VENDOR & DISKON
 function toggleVendorBox() {
     const checked = document.getElementById('itemProjIsVendor').checked;
     document.getElementById('vendorBox').classList.toggle('show', checked);
@@ -897,15 +910,30 @@ function toggleVendorBox() {
 }
 function hitungFeeProyek() {
     const qty = parseFloat(document.getElementById('itemProjQty').value) || 0;
+    const hargaPenawaran = parseFloat(document.getElementById('itemProjHargaPenawaran').value) || 0;
     const hargaJual = parseFloat(document.getElementById('itemProjHarga').value) || 0;
     const hargaVendor = parseFloat(document.getElementById('itemProjHargaVendor').value) || 0;
     const isVendor = document.getElementById('itemProjIsVendor').checked;
+
+    const diskon = (hargaPenawaran > 0 && hargaPenawaran > hargaJual) ? (hargaPenawaran - hargaJual) * qty : 0;
+    const diskonPct = hargaPenawaran > 0 ? ((hargaPenawaran - hargaJual) / hargaPenawaran * 100) : 0;
+
     if (!isVendor) return;
     const fee = (hargaJual - hargaVendor) * qty;
     const marginPct = hargaJual > 0 ? ((hargaJual - hargaVendor) / hargaJual) * 100 : 0;
-    document.getElementById('feePreview').innerText = formatRupiah(fee);
-    document.getElementById('feePreview').style.color = fee >= 0 ? 'var(--hijau-aman)' : 'var(--merah-alert)';
-    document.getElementById('marginPreview').innerText = `Margin: ${marginPct.toFixed(1)}% (per unit)`;
+
+    let infoHtml = `<span>Fee / Keuntungan:</span>
+        <span class="fee-value" id="feePreview">${formatRupiah(fee)}</span>
+        <span class="margin-pct" id="marginPreview">Margin: ${marginPct.toFixed(1)}% (per unit)</span>`;
+    if (diskon > 0) {
+        infoHtml += `<div style="margin-top:8px; padding-top:8px; border-top:1px dashed #ddd;">
+            <span style="font-size:0.9em; color:#666;">Diskon ke Konsumen:</span>
+            <strong style="color:var(--merah-alert);"> ${formatRupiah(diskon)} (${diskonPct.toFixed(1)}%)</strong>
+        </div>`;
+    }
+    document.getElementById('vendorInfo').innerHTML = infoHtml;
+    const feeEl = document.getElementById('feePreview');
+    if (feeEl) feeEl.style.color = fee >= 0 ? 'var(--hijau-aman)' : 'var(--merah-alert)';
 }
 
 // PROYEK
@@ -971,20 +999,25 @@ async function bukaDetailProyek(id) {
 }
 async function muatItemsProyek() {
     const tbody = document.getElementById('detail-item-body');
-    tbody.innerHTML = '<tr><td colspan="7" class="loading">Memuat...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="loading">Memuat...</td></tr>';
     const { data, error } = await db.from('project_items').select('*').eq('project_id', currentProjectId).order('created_at');
-    if (error) { tbody.innerHTML = `<tr><td colspan="7" class="loading text-merah">Error</td></tr>`; return; }
-    if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada item.</td></tr>'; hitungTotalItem([]); return; }
+    if (error) { tbody.innerHTML = `<tr><td colspan="9" class="loading text-merah">Error</td></tr>`; return; }
+    if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Belum ada item.</td></tr>'; hitungTotalItem([]); return; }
     tbody.innerHTML = data.map((item, i) => {
+        const hargaPenawaran = item.harga_penawaran || 0;
         const subJual = item.qty * item.harga_satuan;
+        const subPenawaran = item.qty * hargaPenawaran;
         const subVendor = item.qty * (item.harga_vendor || 0);
+        const diskon = hargaPenawaran > item.harga_satuan ? subPenawaran - subJual : 0;
         const fee = item.is_third_party ? subJual - subVendor : 0;
         const badge = item.is_third_party ? `<span class="badge-vendor">🏭 ${item.vendor || 'Vendor'}</span>` : '';
         return `<tr>
             <td>${i + 1}</td>
             <td><strong>${item.nama_item}</strong>${badge}<br><small style="color:#888;">${item.kategori || '-'}</small></td>
             <td>${item.qty} ${item.satuan}</td>
+            <td>${hargaPenawaran > 0 ? formatRupiah(subPenawaran) : '<span style="color:#ccc;">-</span>'}</td>
             <td>${formatRupiah(subJual)}</td>
+            <td>${diskon > 0 ? `<strong style="color:var(--merah-alert);">−${formatRupiah(diskon)}</strong>` : '<span style="color:#ccc;">-</span>'}</td>
             <td>${item.is_third_party ? formatRupiah(subVendor) : '<span style="color:#ccc;">-</span>'}</td>
             <td>${item.is_third_party ? `<strong style="color:#9b59b6;">${formatRupiah(fee)}</strong>` : '<span style="color:#ccc;">-</span>'}</td>
             <td><button class="btn-hapus" onclick="hapusItemProyek(${item.id})">Hapus</button></td>
@@ -993,13 +1026,21 @@ async function muatItemsProyek() {
     hitungTotalItem(data);
 }
 function hitungTotalItem(data) {
-    let totalJual = 0, totalVendor = 0, totalFee = 0;
+    let totalPenawaran = 0, totalJual = 0, totalDiskon = 0, totalVendor = 0, totalFee = 0;
     (data || []).forEach(item => {
+        const hargaPenawaran = item.harga_penawaran || 0;
         const subJual = item.qty * item.harga_satuan;
+        const subPenawaran = item.qty * hargaPenawaran;
         const subVendor = item.qty * (item.harga_vendor || 0);
+        if (hargaPenawaran > 0) {
+            totalPenawaran += subPenawaran;
+            if (hargaPenawaran > item.harga_satuan) totalDiskon += (subPenawaran - subJual);
+        }
         totalJual += subJual;
         if (item.is_third_party) { totalVendor += subVendor; totalFee += subJual - subVendor; }
     });
+    document.getElementById('sum-total-penawaran').innerText = formatRupiah(totalPenawaran);
+    document.getElementById('sum-total-diskon').innerText = formatRupiah(totalDiskon);
     document.getElementById('sum-total-jual').innerText = formatRupiah(totalJual);
     document.getElementById('sum-total-vendor').innerText = formatRupiah(totalVendor);
     document.getElementById('sum-total-fee').innerText = formatRupiah(totalFee);
@@ -1009,26 +1050,28 @@ async function simpanItemProyek() {
     const qty = parseFloat(document.getElementById('itemProjQty').value);
     const satuan = document.getElementById('itemProjSatuan').value.trim();
     const harga = parseFloat(document.getElementById('itemProjHarga').value);
+    const hargaPenawaran = parseFloat(document.getElementById('itemProjHargaPenawaran').value) || 0;
     const isVendor = document.getElementById('itemProjIsVendor').checked;
     const vendor = isVendor ? document.getElementById('itemProjVendor').value.trim() : null;
     const hargaVendor = isVendor ? (parseFloat(document.getElementById('itemProjHargaVendor').value) || 0) : 0;
 
-    if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi: Nama, Qty, Satuan, Harga Jual."); return; }
+    if (!nama || isNaN(qty) || !satuan || isNaN(harga)) { alert("Mohon lengkapi: Nama, Qty, Satuan, Harga Deal."); return; }
     if (isVendor && (!vendor || isNaN(hargaVendor))) { alert("Lengkapi Nama Vendor & Harga Vendor."); return; }
-    if (isVendor && hargaVendor > harga) { alert("⚠️ Harga Vendor lebih besar dari Harga Jual! Fee akan minus."); if (!confirm("Lanjutkan?")) return; }
+    if (isVendor && hargaVendor > harga) { alert("⚠️ Harga Vendor lebih besar dari Harga Deal! Fee akan minus."); if (!confirm("Lanjutkan?")) return; }
 
     const btn = document.getElementById('btnSimpanItem'); btn.disabled = true; btn.innerText = 'Menyimpan...';
     const { error } = await db.from('project_items').insert([{
         project_id: currentProjectId, nama_item: nama,
         kategori: document.getElementById('itemProjKategori').value,
         qty, satuan, harga_satuan: harga,
+        harga_penawaran: hargaPenawaran,
         vendor: vendor, harga_vendor: hargaVendor, is_third_party: isVendor,
         keterangan: document.getElementById('itemProjKet').value.trim()
     }]);
     btn.disabled = false; btn.innerText = '💾 Tambah Item';
     if (error) alert("Gagal: " + error.message);
     else {
-        ['itemProjName','itemProjQty','itemProjSatuan','itemProjHarga','itemProjVendor','itemProjHargaVendor','itemProjKet'].forEach(id => document.getElementById(id).value = '');
+        ['itemProjName','itemProjQty','itemProjSatuan','itemProjHarga','itemProjVendor','itemProjHargaVendor','itemProjKet','itemProjHargaPenawaran'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('itemProjQty').value = 1;
         document.getElementById('itemProjIsVendor').checked = false;
         document.getElementById('vendorBox').classList.remove('show');
