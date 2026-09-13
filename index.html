@@ -101,7 +101,6 @@ tr:hover { background-color: #f9f9f9; }
 .info-harga { background-color: #fffde7; border-left: 4px solid #ffc107; padding: 10px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.85em; display: none; }
 .info-harga.show { display: block; }
 
-/* BOX PIHAK KETIGA */
 .vendor-box { background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%); border: 2px dashed #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 15px; display: none; }
 .vendor-box.show { display: block; }
 .vendor-box h4 { font-size: 0.95em; color: #b8860b; margin-bottom: 12px; }
@@ -110,7 +109,6 @@ tr:hover { background-color: #f9f9f9; }
 .vendor-info .margin-pct { font-size: 0.85em; color: #666; }
 .checkbox-label { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f0f8ff; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-weight: bold; color: #009ACD; font-size: 0.9em; }
 .checkbox-label input { width: 18px; height: 18px; cursor: pointer; }
-
 .badge-vendor { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7em; font-weight: bold; background-color: #fff3cd; color: #856404; margin-left: 3px; }
 
 .link-list { list-style: none; }
@@ -181,7 +179,6 @@ tr:hover { background-color: #f9f9f9; }
 .progress-aman { background-color: var(--hijau-aman); }
 .progress-normal { background-color: var(--biru-langit-utama); }
 
-/* SUMMARY TOTAL ITEM PROYEK */
 .total-summary { background: linear-gradient(135deg, #f0f8ff 0%, #e0f7fa 100%); border-radius: 8px; padding: 15px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
 .total-summary-item { text-align: center; padding: 8px; border-radius: 6px; background: rgba(255,255,255,0.7); }
 .total-summary-item .label { font-size: 0.75em; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
@@ -202,6 +199,7 @@ tr:hover { background-color: #f9f9f9; }
         <li><a href="#" class="menu-item" data-page="resource"><span><span class="menu-icon">👷</span> Resource Planning</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="jadwal"><span><span class="menu-icon">📅</span> Jadwal & Kurva-S</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="akuntansi"><span><span class="menu-icon">💰</span> Akuntansi Proyek</span><span class="status-badge status-done">✓</span></a></li>
+        <li><a href="#" class="menu-item" data-page="laporan"><span><span class="menu-icon">📈</span> Laporan Laba Rugi</span><span class="status-badge status-ongoing">Baru</span></a></li>
     </ul>
 </aside>
 
@@ -290,7 +288,6 @@ tr:hover { background-color: #f9f9f9; }
                 <div class="form-group"><label>Satuan</label><input type="text" id="itemProjSatuan" class="form-control"></div>
                 <div class="form-group"><label>Harga Jual ke Konsumen (Rp)</label><input type="number" id="itemProjHarga" class="form-control" oninput="hitungFeeProyek()"></div>
 
-                <!-- CHECKBOX PIHAK KETIGA -->
                 <label class="checkbox-label">
                     <input type="checkbox" id="itemProjIsVendor" onchange="toggleVendorBox()">
                     🤝 Item ini dibeli dari Pihak Ketiga (Vendor)
@@ -571,7 +568,7 @@ tr:hover { background-color: #f9f9f9; }
         </div>
         <div class="fin-grid" style="grid-template-columns: 1fr 1fr;">
             <div class="fin-card kuning"><h4>Laba Kotor</h4><div class="value" id="fin-laba">Rp 0</div><span class="sub-value" id="fin-margin">Margin -</span></div>
-            <div class="fin-card hijau" style="grid-column: span 2; display: none;" id="fin-fee-note"></div>
+            <div class="fin-card ungu" style="display:none;" id="fin-fee-note"></div>
         </div>
         <div id="akun-alert" class="panel" style="display:none; padding:15px 20px;"><div id="akun-alert-content"></div></div>
         <div class="tabs">
@@ -612,6 +609,14 @@ tr:hover { background-color: #f9f9f9; }
                 <div class="form-card">
                     <h3>➕ Catat Pemasukan</h3>
                     <div class="form-group"><label>Tanggal</label><input type="date" id="incTanggal" class="form-control"></div>
+                    <div class="form-group"><label>Jenis Pembayaran</label>
+                        <select id="incJenis" class="form-control">
+                            <option value="DP">DP (Uang Muka)</option>
+                            <option value="Cicilan">Cicilan</option>
+                            <option value="Pelunasan">Pelunasan</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
                     <div class="form-group"><label>Deskripsi</label><input type="text" id="incDeskripsi" class="form-control"></div>
                     <div class="form-group"><label>Jumlah (Rp)</label><input type="number" id="incJumlah" class="form-control"></div>
                     <div class="form-group"><label>Metode Bayar</label>
@@ -630,6 +635,60 @@ tr:hover { background-color: #f9f9f9; }
         </div>
     </div>
     <div id="akun-empty" class="panel"><div class="empty-state" style="padding:60px 20px;"><div style="font-size:3em;">💰</div><h3 style="color:#777;">Pilih Proyek Dulu</h3></div></div>
+</div>
+
+<!-- ============ LAPORAN LABA RUGI ============ -->
+<div id="page-laporan" class="page-view">
+    <div class="main-header">
+        <div class="header-title-wrap"><div><h1>Laporan Laba Rugi</h1><p>Rekap pemasukan & pengeluaran lintas proyek per periode.</p></div></div>
+        <button class="btn-print" onclick="cetakLaporanLabaRugi()" style="padding:12px 24px; font-size:1em;">🖨️ Cetak Laporan</button>
+    </div>
+
+    <div class="project-selector-bar">
+        <label>📅 Periode:</label>
+        <select id="lrBulan" class="form-control" style="max-width:180px;" onchange="muatLaporanLabaRugi()">
+            <option value="0">Semua Bulan</option>
+            <option value="1">Januari</option><option value="2">Februari</option>
+            <option value="3">Maret</option><option value="4">April</option>
+            <option value="5">Mei</option><option value="6">Juni</option>
+            <option value="7">Juli</option><option value="8">Agustus</option>
+            <option value="9">September</option><option value="10">Oktober</option>
+            <option value="11">November</option><option value="12">Desember</option>
+        </select>
+        <select id="lrTahun" class="form-control" style="max-width:140px;" onchange="muatLaporanLabaRugi()"></select>
+    </div>
+
+    <div id="lr-content">
+        <div class="fin-grid">
+            <div class="fin-card hijau"><h4>Total Pemasukan</h4><div class="value" id="lr-total-income">Rp 0</div><span class="sub-value" id="lr-count-income">0 transaksi</span></div>
+            <div class="fin-card merah"><h4>Total Pengeluaran</h4><div class="value" id="lr-total-expense">Rp 0</div><span class="sub-value" id="lr-count-expense">0 transaksi</span></div>
+            <div class="fin-card biru"><h4>Laba Kotor</h4><div class="value" id="lr-laba-kotor">Rp 0</div><span class="sub-value" id="lr-margin">Margin -</span></div>
+            <div class="fin-card ungu"><h4>Fee Pihak Ketiga</h4><div class="value" id="lr-total-fee">Rp 0</div><span class="sub-value" id="lr-fee-info">-</span></div>
+        </div>
+
+        <div class="panel">
+            <h3>📊 Rekap Per Proyek</h3>
+            <div class="table-card" style="box-shadow:none; border-top:none; padding:0;">
+                <table>
+                    <thead>
+                        <tr><th>No</th><th>Proyek</th><th>Konsumen</th><th>Pemasukan</th><th>Pengeluaran</th><th>Laba</th><th>Margin</th></tr>
+                    </thead>
+                    <tbody id="lr-rekap-body"><tr><td colspan="7" class="empty-state">Belum ada data.</td></tr></tbody>
+                    <tfoot><tr class="total-row"><td colspan="3" style="text-align:right;">TOTAL</td><td id="lr-rekap-income">Rp 0</td><td id="lr-rekap-expense">Rp 0</td><td id="lr-rekap-laba">Rp 0</td><td id="lr-rekap-margin">-</td></tr></tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>💸 Rincian Pengeluaran per Kategori</h3>
+            <div class="table-card" style="box-shadow:none; border-top:none; padding:0;">
+                <table>
+                    <thead><tr><th>Kategori</th><th>Jumlah Transaksi</th><th>Total</th><th>Persentase</th></tr></thead>
+                    <tbody id="lr-kategori-body"><tr><td colspan="4" class="empty-state">Belum ada data.</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 </main>
@@ -685,11 +744,31 @@ let sumberAktif = 'manual', sumberAktifRAB = 'manual';
 let previewRABItems = [], lastPrintedRAB = null;
 let currentAkunProjectId = null, currentResProjectId = null, currentJdwProjectId = null;
 let currentJadwalData = [];
+let lrDataCache = null;
 
 const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
 const formatTanggal = (tgl) => tgl ? new Date(tgl).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-';
 const formatTanggalShort = (tgl) => tgl ? new Date(tgl).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
 const formatDateTime = (tgl) => tgl ? new Date(tgl).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+
+function terbilang(n) {
+    n = Math.floor(Math.abs(n || 0));
+    const angka = ['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembilan','sepuluh','sebelas'];
+    if (n < 12) return angka[n];
+    if (n < 20) return angka[n - 10] + ' belas';
+    if (n < 100) return angka[Math.floor(n/10)] + ' puluh ' + terbilang(n % 10);
+    if (n < 200) return 'seratus ' + terbilang(n - 100);
+    if (n < 1000) return angka[Math.floor(n/100)] + ' ratus ' + terbilang(n % 100);
+    if (n < 2000) return 'seribu ' + terbilang(n - 1000);
+    if (n < 1000000) return terbilang(Math.floor(n/1000)) + ' ribu ' + terbilang(n % 1000);
+    if (n < 1000000000) return terbilang(Math.floor(n/1000000)) + ' juta ' + terbilang(n % 1000000);
+    if (n < 1000000000000) return terbilang(Math.floor(n/1000000000)) + ' miliar ' + terbilang(n % 1000000000);
+    return terbilang(Math.floor(n/1000000000000)) + ' triliun ' + terbilang(n % 1000000000000);
+}
+function terbilangRupiah(n) {
+    const t = terbilang(n).trim().replace(/\s+/g, ' ');
+    return (t.charAt(0).toUpperCase() + t.slice(1)) + ' Rupiah';
+}
 
 // NAVIGASI
 document.querySelectorAll('.menu-item').forEach(item => {
@@ -710,6 +789,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
         if (targetPage === 'dashboard') muatDashboard();
         if (targetPage === 'resource') muatDropdownProyekResource();
         if (targetPage === 'jadwal') muatDropdownProyekJadwal();
+        if (targetPage === 'laporan') initLaporanLabaRugi();
     });
 });
 
@@ -742,7 +822,6 @@ async function muatDashboard() {
     const totalRealisasi = (expenses || []).reduce((s, e) => s + (e.jumlah || 0), 0);
     const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
     const totalLaba = totalIncome - totalRealisasi;
-    // Total Fee dari item pihak ketiga
     const totalFee = (items || []).filter(i => i.is_third_party).reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
 
     const perProjectRAB = {}; (rabs || []).forEach(r => { perProjectRAB[r.project_id] = (perProjectRAB[r.project_id] || 0) + (r.total || 0); });
@@ -806,7 +885,7 @@ async function loadLaborDropdown() {
     const s2 = document.getElementById('rabSelectLabor'); if (s2) s2.innerHTML = html;
 }
 
-// VENDOR / PIHAK KETIGA
+// VENDOR
 function toggleVendorBox() {
     const checked = document.getElementById('itemProjIsVendor').checked;
     document.getElementById('vendorBox').classList.toggle('show', checked);
@@ -838,7 +917,7 @@ async function muatProyek() {
     const grid = document.getElementById('project-grid');
     grid.innerHTML = '<div class="loading" style="grid-column:1/-1;">Memuat...</div>';
     const { data, error } = await db.from('projects').select('*, project_items(count), project_rab(count)').order('created_at', { ascending: false });
-    if (error || data.length === 0) { grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Belum ada proyek.</div>`; return; }
+    if (error || !data || data.length === 0) { grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">Belum ada proyek.</div>`; return; }
     grid.innerHTML = data.map(p => {
         const jItem = p.project_items && p.project_items[0] ? p.project_items[0].count : 0;
         const jRAB = p.project_rab && p.project_rab[0] ? p.project_rab[0].count : 0;
@@ -958,11 +1037,7 @@ async function simpanItemProyek() {
         muatItemsProyek();
     }
 }
-async function hapusItemProyek(id) {
-    if (!confirm("Hapus item ini?")) return;
-    await db.from('project_items').delete().eq('id', id);
-    muatItemsProyek();
-}
+async function hapusItemProyek(id) { if (!confirm("Hapus item ini?")) return; await db.from('project_items').delete().eq('id', id); muatItemsProyek(); }
 async function simpanSebagaiRAB() {
     const { data: items } = await db.from('project_items').select('*').eq('project_id', currentProjectId);
     if (!items || items.length === 0) { alert("Belum ada item."); return; }
@@ -983,7 +1058,7 @@ async function muatRABProyek() {
     const container = document.getElementById('rab-list-container');
     container.innerHTML = '<p class="loading">Memuat...</p>';
     const { data, error } = await db.from('project_rab').select('*').eq('project_id', currentProjectId).order('versi', { ascending: false });
-    if (error || data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB.</p>'; return; }
+    if (error || !data || data.length === 0) { container.innerHTML = '<p class="empty-state">Belum ada RAB.</p>'; return; }
     container.innerHTML = data.map(r => `
         <div class="rab-card">
             <div class="rab-card-header">
@@ -1119,6 +1194,7 @@ async function lihatDetailRABStandalone(rabId, judul) {
 }
 async function hapusRABStandalone(id) { if (!confirm("Hapus?")) return; await db.from('standalone_rab').delete().eq('id', id); muatRABTersimpan(); }
 function cetakDariModal() { if (!lastPrintedRAB) return; bukaPrintRAB(lastPrintedRAB.id, lastPrintedRAB.jenis); }
+
 async function bukaPrintRAB(rabId, jenis) {
     let header, items, subTitle = '';
     if (jenis === 'project') {
@@ -1180,8 +1256,6 @@ async function muatDataAkuntansi() {
     const totalExpense = (expenses || []).reduce((s, e) => s + (e.jumlah || 0), 0);
     const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
     const labaKotor = totalIncome - totalExpense;
-
-    // Fee dari item vendor
     const vendorItems = (items || []).filter(i => i.is_third_party);
     const totalFee = vendorItems.reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
     const totalVendorCost = vendorItems.reduce((s, i) => s + (i.harga_vendor * i.qty), 0);
@@ -1198,11 +1272,9 @@ async function muatDataAkuntansi() {
     document.getElementById('fin-laba').className = 'value ' + (labaKotor >= 0 ? 'text-hijau' : 'text-merah');
     document.getElementById('fin-margin').innerText = totalIncome > 0 ? 'Margin ' + ((labaKotor / totalIncome) * 100).toFixed(1) + '%' : '-';
 
-    // Fee note
     const feeNote = document.getElementById('fin-fee-note');
     if (vendorItems.length > 0) {
         feeNote.style.display = 'block';
-        feeNote.className = 'fin-card ungu';
         feeNote.innerHTML = `<h4 style="color:#9b59b6;">💡 Ringkasan Pihak Ketiga</h4>
             <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
                 <div><span style="font-size:0.8em; color:#666; display:block;">Bayar ke Vendor</span><strong style="color:var(--merah-alert);">${formatRupiah(totalVendorCost)}</strong></div>
@@ -1223,17 +1295,26 @@ async function muatDataAkuntansi() {
     const expBody = document.getElementById('expense-body');
     if ((expenses || []).length === 0) { expBody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada.</td></tr>'; document.getElementById('expense-total').innerText = 'Rp 0'; }
     else {
-        expBody.innerHTML = expenses.map(e => `<tr><td>${formatTanggalShort(e.tanggal)}</td><td>${e.kategori}</td><td>${e.deskripsi}</td>
+        expBody.innerHTML = expenses.map(e => `<tr>
+            <td>${formatTanggalShort(e.tanggal)}</td><td>${e.kategori}</td><td>${e.deskripsi}</td>
             <td style="font-weight:bold;color:var(--merah-alert);">${formatRupiah(e.jumlah)}</td><td>${e.supplier || '-'}</td><td>${e.metode_bayar || '-'}</td>
-            <td><button class="btn-hapus" onclick="hapusExpense(${e.id})">Hapus</button></td></tr>`).join('');
+            <td>
+                <button class="btn-print" onclick='cetakFaktur(${e.id})' title="Cetak Faktur">🖨️</button>
+                <button class="btn-hapus" onclick="hapusExpense(${e.id})">Hapus</button>
+            </td></tr>`).join('');
         document.getElementById('expense-total').innerText = formatRupiah(totalExpense);
     }
     const incBody = document.getElementById('income-body');
     if ((incomes || []).length === 0) { incBody.innerHTML = '<tr><td colspan="5" class="empty-state">Belum ada.</td></tr>'; document.getElementById('income-total').innerText = 'Rp 0'; }
     else {
-        incBody.innerHTML = incomes.map(i => `<tr><td>${formatTanggalShort(i.tanggal)}</td><td>${i.deskripsi}</td>
+        incBody.innerHTML = incomes.map(i => `<tr>
+            <td>${formatTanggalShort(i.tanggal)}</td>
+            <td><span class="badge-vendor">${i.jenis || 'DP'}</span> ${i.deskripsi}</td>
             <td style="font-weight:bold;color:var(--hijau-aman);">${formatRupiah(i.jumlah)}</td><td>${i.metode_bayar || '-'}</td>
-            <td><button class="btn-hapus" onclick="hapusIncome(${i.id})">Hapus</button></td></tr>`).join('');
+            <td>
+                <button class="btn-print" onclick='cetakKwitansi(${i.id})' title="Cetak Kwitansi">🖨️</button>
+                <button class="btn-hapus" onclick="hapusIncome(${i.id})">Hapus</button>
+            </td></tr>`).join('');
         document.getElementById('income-total').innerText = formatRupiah(totalIncome);
     }
 }
@@ -1256,11 +1337,18 @@ async function simpanIncome() {
     const jumlah = parseFloat(document.getElementById('incJumlah').value);
     if (!tanggal || !deskripsi || isNaN(jumlah)) { alert("Lengkapi."); return; }
     const btn = document.getElementById('btnSimpanIncome'); btn.disabled = true; btn.innerText = '...';
-    const { error } = await db.from('project_incomes').insert([{ project_id: currentAkunProjectId, tanggal, deskripsi, jumlah, metode_bayar: document.getElementById('incMetode').value, keterangan: document.getElementById('incKeterangan').value.trim() }]);
+    const { error } = await db.from('project_incomes').insert([{
+        project_id: currentAkunProjectId,
+        tanggal, deskripsi, jumlah,
+        jenis: document.getElementById('incJenis').value,
+        metode_bayar: document.getElementById('incMetode').value,
+        keterangan: document.getElementById('incKeterangan').value.trim()
+    }]);
     btn.disabled = false; btn.innerText = '💰 Simpan Pemasukan';
     if (error) alert("Gagal"); else { ['incDeskripsi','incJumlah','incKeterangan'].forEach(id => document.getElementById(id).value = ''); muatDataAkuntansi(); muatDashboard(); }
 }
 async function hapusIncome(id) { if (!confirm("Hapus?")) return; await db.from('project_incomes').delete().eq('id', id); muatDataAkuntansi(); muatDashboard(); }
+
 async function cetakLaporanAkuntansi() {
     if (!currentAkunProjectId) { alert("Pilih proyek."); return; }
     const { data: proj } = await db.from('projects').select('*').eq('id', currentAkunProjectId).single();
@@ -1302,6 +1390,358 @@ ${(items || []).length > 0 ? `
 <tfoot><tr><td colspan="4" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(totalExpense)}</td></tr></tfoot></table>
 <div class="footer">Sistem Isakuiki Interior • ${tgl}</div><script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script></body></html>`;
     const w = window.open('', '_blank', 'width=900,height=700'); if (!w) { alert("Popup diblokir!"); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+}
+
+// CETAK KWITANSI
+async function cetakKwitansi(incomeId) {
+    const { data: inc } = await db.from('project_incomes').select('*').eq('id', incomeId).single();
+    if (!inc) { alert("Data tidak ditemukan."); return; }
+    const { data: proj } = await db.from('projects').select('*').eq('id', inc.project_id).single();
+    if (!proj) { alert("Proyek tidak ditemukan."); return; }
+    const { data: rabData } = await db.from('project_rab').select('total').eq('project_id', inc.project_id).order('versi', { ascending: false }).limit(1);
+    const totalRAB = rabData && rabData.length > 0 ? rabData[0].total : 0;
+    const { data: allIncomes } = await db.from('project_incomes').select('jumlah').eq('project_id', inc.project_id);
+    const totalPaid = (allIncomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
+    const sisa = totalRAB - totalPaid;
+
+    const tgl = new Date(inc.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const tglCetak = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const noKwitansi = `KW-${new Date(inc.tanggal).getFullYear()}${String(new Date(inc.tanggal).getMonth()+1).padStart(2,'0')}-${String(inc.id).padStart(4,'0')}`;
+    const jenisLabel = inc.jenis === 'DP' ? 'UANG MUKA (DP)' : inc.jenis === 'Pelunasan' ? 'PELUNASAN' : inc.jenis === 'Cicilan' ? 'CICILAN' : 'PEMBAYARAN';
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Kwitansi ${noKwitansi}</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Times New Roman', Times, serif; }
+body { padding:40px 50px; color:#000; font-size:13px; }
+.kop { text-align:center; border-bottom:3px double #000; padding-bottom:15px; margin-bottom:25px; }
+.kop h1 { font-size:24px; letter-spacing:2px; }
+.kop p { font-size:11px; margin-top:4px; font-style:italic; }
+.kwitansi-title { text-align:center; margin-bottom:25px; }
+.kwitansi-title h2 { font-size:20px; text-decoration:underline; letter-spacing:3px; }
+.kwitansi-title .no { margin-top:5px; font-size:12px; }
+.row { display:flex; margin-bottom:12px; font-size:13px; }
+.row .label { width:170px; font-weight:normal; }
+.row .colon { width:15px; }
+.row .value { flex:1; font-weight:bold; border-bottom:1px dotted #666; padding-bottom:3px; }
+.jumlah-box { margin:20px 0; padding:15px 20px; background-color:#f5f5f5; border-left:5px solid #000; border-radius:4px; }
+.jumlah-box .angka { font-size:26px; font-weight:bold; margin-bottom:8px; }
+.jumlah-box .kata { font-size:12px; font-style:italic; color:#333; }
+.info-sisa { margin-top:15px; padding:10px 15px; background:#fff8e1; border-left:3px solid #ffc107; font-size:12px; }
+.info-sisa table { width:auto; }
+.info-sisa td { padding:3px 15px 3px 0; }
+.ttd-area { display:flex; justify-content:space-between; margin-top:60px; font-size:13px; }
+.ttd-box { width:200px; text-align:center; }
+.ttd-box .space { height:70px; }
+.ttd-box .nama { border-top:1px solid #000; padding-top:5px; font-weight:bold; }
+.footer { margin-top:40px; text-align:center; font-size:10px; color:#666; font-style:italic; }
+@media print { body { padding:20px 30px; } .no-print { display:none !important; } @page { size:A5 landscape; margin:1cm; } }
+.no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; font-family:'Segoe UI',sans-serif; }
+</style></head><body>
+<button class="no-print" onclick="window.print()">🖨️ Cetak Kwitansi</button>
+<div class="kop">
+    <h1>ISAKUIKI INTERIOR</h1>
+    <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+</div>
+<div class="kwitansi-title">
+    <h2>KWITANSI ${jenisLabel}</h2>
+    <div class="no">No: ${noKwitansi}</div>
+</div>
+<div class="row"><div class="label">Sudah diterima dari</div><div class="colon">:</div><div class="value">${proj.nama_konsumen}</div></div>
+<div class="row"><div class="label">Uang sejumlah</div><div class="colon">:</div><div class="value">${terbilangRupiah(inc.jumlah)}</div></div>
+<div class="row"><div class="label">Untuk pembayaran</div><div class="colon">:</div><div class="value">${jenisLabel} Proyek ${proj.kode_proyek}${inc.deskripsi ? ' - ' + inc.deskripsi : ''}</div></div>
+<div class="row"><div class="label">Tanggal</div><div class="colon">:</div><div class="value">${tgl}</div></div>
+<div class="row"><div class="label">Metode Pembayaran</div><div class="colon">:</div><div class="value">${inc.metode_bayar || '-'}</div></div>
+${inc.keterangan ? `<div class="row"><div class="label">Keterangan</div><div class="colon">:</div><div class="value">${inc.keterangan}</div></div>` : ''}
+
+<div class="jumlah-box">
+    <div class="angka">${formatRupiah(inc.jumlah)}</div>
+    <div class="kata">(${terbilangRupiah(inc.jumlah)})</div>
+</div>
+
+${totalRAB > 0 ? `<div class="info-sisa">
+    <strong>Informasi Pembayaran Proyek:</strong>
+    <table>
+        <tr><td>Total Nilai Proyek</td><td>: <strong>${formatRupiah(totalRAB)}</strong></td></tr>
+        <tr><td>Total Dibayar</td><td>: <strong>${formatRupiah(totalPaid)}</strong></td></tr>
+        <tr><td>${sisa <= 0 ? 'Status' : 'Sisa Pembayaran'}</td><td>: <strong style="color:${sisa <= 0 ? 'green' : 'red'};">${sisa <= 0 ? '✅ LUNAS' : formatRupiah(sisa)}</strong></td></tr>
+    </table>
+</div>` : ''}
+
+<div class="ttd-area">
+    <div class="ttd-box">
+        <div>Penerima,</div>
+        <div class="space"></div>
+        <div class="nama">Admin Isakuiki</div>
+    </div>
+    <div class="ttd-box">
+        <div>Pemberi,</div>
+        <div class="space"></div>
+        <div class="nama">${proj.nama_konsumen}</div>
+    </div>
+</div>
+<div class="footer">Kwitansi ini sah dan diterbitkan oleh Sistem Isakuiki Interior • Dicetak: ${tglCetak}</div>
+<script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
+</body></html>`;
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { alert("Popup diblokir!"); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+}
+
+// CETAK FAKTUR PEMBELIAN
+async function cetakFaktur(expenseId) {
+    const { data: exp } = await db.from('project_expenses').select('*').eq('id', expenseId).single();
+    if (!exp) { alert("Data tidak ditemukan."); return; }
+    const { data: proj } = await db.from('projects').select('*').eq('id', exp.project_id).single();
+    const tgl = new Date(exp.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const tglCetak = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const noFaktur = `FK-${new Date(exp.tanggal).getFullYear()}${String(new Date(exp.tanggal).getMonth()+1).padStart(2,'0')}-${String(exp.id).padStart(4,'0')}`;
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Faktur ${noFaktur}</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { padding:40px 50px; color:#333; font-size:12px; }
+.kop { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:3px double #333; padding-bottom:15px; margin-bottom:20px; }
+.kop-kiri h1 { font-size:22px; color:#009ACD; }
+.kop-kiri p { font-size:11px; color:#666; margin-top:3px; }
+.kop-kanan { text-align:right; font-size:11px; }
+.kop-kanan .label { font-size:18px; color:#009ACD; font-weight:bold; letter-spacing:2px; }
+.info-grid { display:flex; justify-content:space-between; margin-bottom:20px; }
+.info-block { font-size:11px; }
+.info-block .title { font-weight:bold; color:#666; text-transform:uppercase; font-size:9px; margin-bottom:3px; letter-spacing:0.5px; }
+.info-block .name { font-weight:bold; font-size:13px; color:#333; }
+.info-block .detail { color:#666; line-height:1.5; }
+table.items { width:100%; border-collapse:collapse; margin-bottom:20px; }
+table.items th { background-color:#E0F7FA; border:1px solid #333; padding:10px 8px; text-align:left; font-size:11px; }
+table.items td { border:1px solid #333; padding:10px 8px; font-size:11px; }
+table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12px; }
+.total-box { text-align:right; margin-bottom:20px; padding:12px; background:#f5f5f5; border-radius:6px; }
+.total-box .label { font-size:10px; color:#666; text-transform:uppercase; }
+.total-box .amount { font-size:22px; font-weight:bold; color:#009ACD; margin-top:3px; }
+.note { margin-bottom:30px; padding:10px; background:#fff8e1; border-left:3px solid #ffc107; font-size:10px; font-style:italic; }
+.ttd { display:flex; justify-content:space-between; margin-top:50px; font-size:11px; }
+.ttd-box { width:200px; text-align:center; }
+.ttd-box .space { height:60px; }
+.ttd-box .name { border-top:1px solid #333; padding-top:5px; font-weight:bold; }
+.footer { margin-top:40px; text-align:center; font-size:9px; color:#999; border-top:1px solid #ddd; padding-top:10px; font-style:italic; }
+@media print { body { padding:20px 30px; } .no-print { display:none !important; } @page { size:A5 portrait; margin:1cm; } }
+.no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
+</style></head><body>
+<button class="no-print" onclick="window.print()">🖨️ Cetak Faktur</button>
+<div class="kop">
+    <div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Desain & Pembuatan Furniture Custom</p></div>
+    <div class="kop-kanan"><div class="label">FAKTUR PEMBELIAN</div><div style="margin-top:8px;">No: <strong>${noFaktur}</strong></div><div>Tanggal: ${tgl}</div></div>
+</div>
+<div class="info-grid">
+    <div class="info-block">
+        <div class="title">Kepada (Supplier)</div>
+        <div class="name">${exp.supplier || '—'}</div>
+        <div class="detail">${exp.metode_bayar ? 'Pembayaran: ' + exp.metode_bayar : ''}</div>
+    </div>
+    <div class="info-block" style="text-align:right;">
+        <div class="title">Untuk Proyek</div>
+        <div class="name">${proj ? proj.kode_proyek : '—'}</div>
+        <div class="detail">${proj ? proj.nama_konsumen : ''}</div>
+    </div>
+</div>
+<table class="items">
+    <thead><tr><th style="width:40px;">No</th><th>Deskripsi Barang / Jasa</th><th style="width:120px;">Kategori</th><th style="width:130px; text-align:right;">Jumlah</th></tr></thead>
+    <tbody><tr><td style="text-align:center;">1</td><td>${exp.deskripsi}${exp.keterangan ? '<br><small style="color:#666; font-style:italic;">' + exp.keterangan + '</small>' : ''}</td><td>${exp.kategori}</td><td style="text-align:right; font-weight:bold;">${formatRupiah(exp.jumlah)}</td></tr></tbody>
+    <tfoot><tr><td colspan="3" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(exp.jumlah)}</td></tr></tfoot>
+</table>
+<div class="total-box">
+    <div class="label">Total Pembayaran</div>
+    <div class="amount">${formatRupiah(exp.jumlah)}</div>
+    <div style="font-size:10px; color:#666; margin-top:5px; font-style:italic;">(${terbilangRupiah(exp.jumlah)})</div>
+</div>
+<div class="note">Catatan: Faktur ini adalah bukti pembelian/pengeluaran internal. Simpan sebagai bukti akuntansi proyek.</div>
+<div class="ttd">
+    <div class="ttd-box"><div>Diterima oleh (Supplier),</div><div class="space"></div><div class="name">${exp.supplier || '................'}</div></div>
+    <div class="ttd-box"><div>Disetujui,</div><div class="space"></div><div class="name">Admin Isakuiki</div></div>
+</div>
+<div class="footer">Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}</div>
+<script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
+</body></html>`;
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { alert("Popup diblokir!"); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+}
+
+// LAPORAN LABA RUGI
+function initLaporanLabaRugi() {
+    const sel = document.getElementById('lrTahun');
+    if (sel.options.length === 0) {
+        const now = new Date().getFullYear();
+        let opts = '';
+        for (let y = now + 1; y >= now - 5; y--) opts += `<option value="${y}">${y}</option>`;
+        sel.innerHTML = opts;
+        sel.value = now;
+    }
+    muatLaporanLabaRugi();
+}
+
+async function muatLaporanLabaRugi() {
+    const bulan = parseInt(document.getElementById('lrBulan').value);
+    const tahun = parseInt(document.getElementById('lrTahun').value);
+
+    const startDate = bulan === 0 ? `${tahun}-01-01` : `${tahun}-${String(bulan).padStart(2,'0')}-01`;
+    const lastDay = new Date(tahun, bulan, 0).getDate();
+    const endDate = bulan === 0 ? `${tahun}-12-31` : `${tahun}-${String(bulan).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
+
+    const { data: projects } = await db.from('projects').select('id, kode_proyek, nama_konsumen');
+    const { data: incomes } = await db.from('project_incomes').select('*').gte('tanggal', startDate).lte('tanggal', endDate);
+    const { data: expenses } = await db.from('project_expenses').select('*').gte('tanggal', startDate).lte('tanggal', endDate);
+    const { data: items } = await db.from('project_items').select('*').eq('is_third_party', true);
+
+    const totalIncome = (incomes || []).reduce((s, i) => s + (i.jumlah || 0), 0);
+    const totalExpense = (expenses || []).reduce((s, e) => s + (e.jumlah || 0), 0);
+    const labaKotor = totalIncome - totalExpense;
+    const margin = totalIncome > 0 ? ((labaKotor / totalIncome) * 100).toFixed(1) : 0;
+    const totalFee = (items || []).reduce((s, i) => s + ((i.harga_satuan - (i.harga_vendor || 0)) * i.qty), 0);
+
+    document.getElementById('lr-total-income').innerText = formatRupiah(totalIncome);
+    document.getElementById('lr-count-income').innerText = (incomes || []).length + ' transaksi';
+    document.getElementById('lr-total-expense').innerText = formatRupiah(totalExpense);
+    document.getElementById('lr-count-expense').innerText = (expenses || []).length + ' transaksi';
+    document.getElementById('lr-laba-kotor').innerText = formatRupiah(labaKotor);
+    document.getElementById('lr-laba-kotor').className = 'value ' + (labaKotor >= 0 ? 'text-hijau' : 'text-merah');
+    document.getElementById('lr-margin').innerText = totalIncome > 0 ? 'Margin ' + margin + '%' : '-';
+    document.getElementById('lr-total-fee').innerText = formatRupiah(totalFee);
+    document.getElementById('lr-fee-info').innerText = (items || []).length + ' item vendor';
+
+    const perProj = {};
+    (projects || []).forEach(p => { perProj[p.id] = { income: 0, expense: 0, proj: p }; });
+    (incomes || []).forEach(i => { if (perProj[i.project_id]) perProj[i.project_id].income += (i.jumlah || 0); });
+    (expenses || []).forEach(e => { if (perProj[e.project_id]) perProj[e.project_id].expense += (e.jumlah || 0); });
+    const rekapArr = Object.values(perProj).filter(x => x.income > 0 || x.expense > 0);
+
+    const rekapBody = document.getElementById('lr-rekap-body');
+    if (rekapArr.length === 0) {
+        rekapBody.innerHTML = '<tr><td colspan="7" class="empty-state">Belum ada transaksi pada periode ini.</td></tr>';
+        document.getElementById('lr-rekap-income').innerText = 'Rp 0';
+        document.getElementById('lr-rekap-expense').innerText = 'Rp 0';
+        document.getElementById('lr-rekap-laba').innerText = 'Rp 0';
+        document.getElementById('lr-rekap-margin').innerText = '-';
+    } else {
+        rekapBody.innerHTML = rekapArr.map((x, i) => {
+            const laba = x.income - x.expense;
+            const m = x.income > 0 ? ((laba / x.income) * 100).toFixed(1) + '%' : '-';
+            return `<tr>
+                <td>${i + 1}</td>
+                <td><strong>${x.proj.kode_proyek}</strong></td>
+                <td>${x.proj.nama_konsumen}</td>
+                <td style="color:var(--hijau-aman); font-weight:bold;">${formatRupiah(x.income)}</td>
+                <td style="color:var(--merah-alert); font-weight:bold;">${formatRupiah(x.expense)}</td>
+                <td style="font-weight:bold; color:${laba >= 0 ? 'var(--hijau-aman)' : 'var(--merah-alert)'};">${formatRupiah(laba)}</td>
+                <td>${m}</td>
+            </tr>`;
+        }).join('');
+        document.getElementById('lr-rekap-income').innerText = formatRupiah(totalIncome);
+        document.getElementById('lr-rekap-expense').innerText = formatRupiah(totalExpense);
+        document.getElementById('lr-rekap-laba').innerText = formatRupiah(labaKotor);
+        document.getElementById('lr-rekap-margin').innerText = totalIncome > 0 ? margin + '%' : '-';
+    }
+
+    const perKat = {};
+    (expenses || []).forEach(e => {
+        const k = e.kategori || 'Lainnya';
+        if (!perKat[k]) perKat[k] = { count: 0, total: 0 };
+        perKat[k].count++; perKat[k].total += (e.jumlah || 0);
+    });
+    const katBody = document.getElementById('lr-kategori-body');
+    const katArr = Object.entries(perKat).sort((a, b) => b[1].total - a[1].total);
+    if (katArr.length === 0) {
+        katBody.innerHTML = '<tr><td colspan="4" class="empty-state">Belum ada pengeluaran.</td></tr>';
+    } else {
+        katBody.innerHTML = katArr.map(([k, v]) => {
+            const pct = totalExpense > 0 ? ((v.total / totalExpense) * 100).toFixed(1) : 0;
+            return `<tr><td><strong>${k}</strong></td><td>${v.count}</td><td style="font-weight:bold; color:var(--merah-alert);">${formatRupiah(v.total)}</td><td>${pct}%</td></tr>`;
+        }).join('');
+    }
+
+    lrDataCache = { bulan, tahun, totalIncome, totalExpense, labaKotor, margin, totalFee, rekapArr, katArr };
+}
+
+async function cetakLaporanLabaRugi() {
+    if (!lrDataCache) { alert("Pilih periode dulu."); return; }
+    const d = lrDataCache;
+    const bulanNama = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const periodeLabel = d.bulan === 0 ? `Tahun ${d.tahun}` : `${bulanNama[d.bulan]} ${d.tahun}`;
+    const tglCetak = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const rekapRows = d.rekapArr.map((x, i) => {
+        const laba = x.income - x.expense;
+        const m = x.income > 0 ? ((laba / x.income) * 100).toFixed(1) + '%' : '-';
+        return `<tr><td>${i+1}</td><td>${x.proj.kode_proyek}</td><td>${x.proj.nama_konsumen}</td><td style="text-align:right;">${formatRupiah(x.income)}</td><td style="text-align:right;">${formatRupiah(x.expense)}</td><td style="text-align:right; font-weight:bold; color:${laba >= 0 ? '#28A745' : '#FF4C4C'};">${formatRupiah(laba)}</td><td style="text-align:center;">${m}</td></tr>`;
+    }).join('') || '<tr><td colspan="7" style="text-align:center;">Tidak ada data</td></tr>';
+
+    const katRows = d.katArr.map(([k, v]) => {
+        const pct = d.totalExpense > 0 ? ((v.total / d.totalExpense) * 100).toFixed(1) : 0;
+        return `<tr><td>${k}</td><td style="text-align:center;">${v.count}</td><td style="text-align:right;">${formatRupiah(v.total)}</td><td style="text-align:center;">${pct}%</td></tr>`;
+    }).join('') || '<tr><td colspan="4" style="text-align:center;">Tidak ada data</td></tr>';
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Laporan Laba Rugi</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { padding:30px 40px; color:#333; font-size:11px; }
+.kop { display:flex; justify-content:space-between; border-bottom:3px double #333; padding-bottom:15px; margin-bottom:20px; }
+.kop-kiri h1 { font-size:22px; color:#009ACD; }
+.kop-kiri p { font-size:11px; color:#666; margin-top:3px; }
+.kop-kanan { text-align:right; font-size:11px; }
+.judul { text-align:center; margin-bottom:25px; }
+.judul h2 { font-size:17px; text-decoration:underline; margin-bottom:6px; }
+.judul p { font-size:12px; color:#666; font-style:italic; }
+.summary { display:flex; gap:12px; margin-bottom:25px; flex-wrap:wrap; }
+.summary-box { flex:1; min-width:140px; border:1px solid #ddd; padding:14px; border-radius:6px; }
+.summary-box h4 { font-size:10px; color:#777; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px; }
+.summary-box .val { font-size:15px; font-weight:bold; }
+h3.section { font-size:12px; color:#009ACD; border-bottom:2px solid #E0F7FA; padding-bottom:5px; margin:20px 0 10px 0; text-transform:uppercase; letter-spacing:0.5px; }
+table.data { width:100%; border-collapse:collapse; margin-bottom:15px; font-size:10px; }
+table.data th { background-color:#E0F7FA; border:1px solid #333; padding:8px 6px; text-align:center; font-weight:bold; }
+table.data td { border:1px solid #333; padding:7px 6px; }
+table.data tfoot td { background-color:#F0F8FF; font-weight:bold; }
+.footer { margin-top:40px; text-align:center; font-size:9px; color:#999; border-top:1px solid #ddd; padding-top:10px; }
+.ttd-area { display:flex; justify-content:space-between; margin-top:60px; font-size:11px; }
+.ttd-box { width:200px; text-align:center; }
+.ttd-box .space { height:60px; }
+.ttd-box .name { border-top:1px solid #333; padding-top:5px; font-weight:bold; }
+@media print { body { padding:15px 25px; } .no-print { display:none !important; } @page { size:A4 portrait; margin:1cm; } }
+.no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
+</style></head><body>
+<button class="no-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+<div class="kop">
+    <div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Desain & Pembuatan Furniture Custom</p></div>
+    <div class="kop-kanan"><div><strong>LAPORAN LABA RUGI</strong></div><div>Dicetak: ${tglCetak}</div></div>
+</div>
+<div class="judul"><h2>LAPORAN LABA RUGI</h2><p>Periode: ${periodeLabel}</p></div>
+<div class="summary">
+    <div class="summary-box"><h4>Total Pemasukan</h4><div class="val" style="color:#28A745;">${formatRupiah(d.totalIncome)}</div></div>
+    <div class="summary-box"><h4>Total Pengeluaran</h4><div class="val" style="color:#FF4C4C;">${formatRupiah(d.totalExpense)}</div></div>
+    <div class="summary-box"><h4>Laba Kotor</h4><div class="val" style="color:${d.labaKotor >= 0 ? '#28A745' : '#FF4C4C'};">${formatRupiah(d.labaKotor)}</div></div>
+    <div class="summary-box"><h4>Margin</h4><div class="val" style="color:#009ACD;">${d.totalIncome > 0 ? d.margin + '%' : '-'}</div></div>
+    <div class="summary-box"><h4>Fee Vendor</h4><div class="val" style="color:#9b59b6;">${formatRupiah(d.totalFee)}</div></div>
+</div>
+<h3 class="section">A. Rekap Laba Rugi Per Proyek</h3>
+<table class="data">
+    <thead><tr><th>No</th><th>Kode</th><th>Konsumen</th><th>Pemasukan</th><th>Pengeluaran</th><th>Laba</th><th>Margin</th></tr></thead>
+    <tbody>${rekapRows}</tbody>
+    <tfoot><tr><td colspan="3" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(d.totalIncome)}</td><td style="text-align:right;">${formatRupiah(d.totalExpense)}</td><td style="text-align:right; color:${d.labaKotor >= 0 ? '#28A745' : '#FF4C4C'};">${formatRupiah(d.labaKotor)}</td><td style="text-align:center;">${d.totalIncome > 0 ? d.margin + '%' : '-'}</td></tr></tfoot>
+</table>
+<h3 class="section">B. Rincian Pengeluaran per Kategori</h3>
+<table class="data">
+    <thead><tr><th>Kategori</th><th>Jumlah Transaksi</th><th>Total</th><th>Persentase</th></tr></thead>
+    <tbody>${katRows}</tbody>
+    <tfoot><tr><td style="text-align:right;" colspan="2">TOTAL</td><td style="text-align:right;">${formatRupiah(d.totalExpense)}</td><td style="text-align:center;">100%</td></tr></tfoot>
+</table>
+<div class="ttd-area">
+    <div class="ttd-box"><div>Dibuat oleh,</div><div class="space"></div><div class="name">Admin Isakuiki</div></div>
+    <div class="ttd-box"><div>Disetujui,</div><div class="space"></div><div class="name">Pemilik</div></div>
+</div>
+<div class="footer">Laporan ini dibuat otomatis oleh Sistem Isakuiki Interior • ${tglCetak}</div>
+<script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
+</body></html>`;
+    const w = window.open('', '_blank', 'width=1000,height=800');
+    if (!w) { alert("Popup diblokir!"); return; }
     w.document.open(); w.document.write(html); w.document.close();
 }
 
