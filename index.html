@@ -209,6 +209,21 @@ tr:hover { background-color: #f9f9f9; }
     <div class="main-header"><h1>Dashboard</h1><p>Ringkasan performa bisnis Isakuiki Interior.</p></div>
     <div class="widget-grid" id="dashboard-widgets"><div class="widget-card"><h4>Memuat</h4><div class="value">...</div></div></div>
     <div class="panel-grid">
+        <div class="panel" style="padding:15px 20px; margin-bottom:15px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.5em;">💓</span>
+                <div>
+                    <strong style="color:var(--teks-gelap);">Status Koneksi Database</strong>
+                    <div style="font-size:0.8em; color:#666;" id="heartbeat-status-text">Memuat...</div>
+                </div>
+            </div>
+            <button class="btn-primary" style="padding:6px 15px; font-size:0.85em;" onclick="pingSupabase(true)">🔄 Ping Manual</button>
+        </div>
+    </div>
+    <!-- BATAS TAMBAHAN -->
+
+    <div class="panel-grid">
         <div class="panel"><h3>📈 Rencana vs Realisasi Biaya</h3><div class="chart-placeholder">Lihat detail di menu <strong>Akuntansi Proyek</strong>.</div></div>
         <div class="panel"><h3>📋 Update Info AHSP</h3>
             <ul class="link-list">
@@ -777,6 +792,62 @@ function terbilangRupiah(n) {
     return (t.charAt(0).toUpperCase() + t.slice(1)) + ' Rupiah';
 }
 
+    // ==========================================
+// HEARTBEAT: Cegah Supabase Freeze (Ping tiap 3 hari)
+// ==========================================
+const HEARTBEAT_INTERVAL = 3 * 24 * 60 * 60 * 1000; // 3 hari dalam ms
+const HEARTBEAT_KEY = 'isakuiki_last_ping';
+
+function showHeartbeatToast(msg, isError = false) {
+    let el = document.getElementById('heartbeat-toast');
+    if (!el) {
+        el = document.createElement('div');
+        el.id = 'heartbeat-toast';
+        el.style.cssText = 'position:fixed; bottom:20px; right:20px; padding:10px 18px; border-radius:8px; font-size:0.85em; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:9999; transition:opacity 0.5s; opacity:0; color:#fff; max-width:300px;';
+        document.body.appendChild(el);
+    }
+    el.style.background = isError ? '#c0392b' : '#28a745';
+    el.textContent = msg;
+    el.style.opacity = '1';
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => { el.style.opacity = '0'; }, 5000);
+}
+
+async function pingSupabase(force = false) {
+    const now = Date.now();
+    const lastPing = parseInt(localStorage.getItem(HEARTBEAT_KEY) || '0');
+    const diff = now - lastPing;
+
+    if (!force && diff < HEARTBEAT_INTERVAL) {
+        console.log(`[Heartbeat] ⏭️ Skip — terakhir ping ${(diff / 3600000).toFixed(1)} jam lalu`);
+        return;
+    }
+
+    try {
+        // Ambil ping_count saat ini
+        const { data: current } = await db.from('app_heartbeat').select('ping_count').eq('id', 1).single();
+        const newCount = (current?.ping_count || 0) + 1;
+
+        const { error } = await db.from('app_heartbeat').upsert({
+            id: 1,
+            last_ping: new Date().toISOString(),
+            ping_count: newCount
+        });
+
+        if (error) throw error;
+
+        localStorage.setItem(HEARTBEAT_KEY, now.toString());
+        console.log(`[Heartbeat] ✅ Ping #${newCount} berhasil di ${new Date().toLocaleString('id-ID')}`);
+        showHeartbeatToast(`💓 Supabase aktif (ping #${newCount})`);
+    } catch (e) {
+        console.warn('[Heartbeat] ❌ Gagal:', e.message);
+        showHeartbeatToast('⚠️ Heartbeat gagal: ' + e.message, true);
+    }
+}
+
+// Cek tiap 1 jam (hanya akan ping kalau sudah 3 hari)
+setInterval(() => pingSupabase(), 60 * 60 * 1000);
+    
 // NAVIGASI
 document.querySelectorAll('.menu-item').forEach(item => {
     item.addEventListener('click', (e) => {
@@ -850,6 +921,20 @@ async function muatDashboard() {
         <div class="widget-card" style="border-left-color: ${overbudgetCount > 0 ? 'var(--merah-alert)' : 'var(--hijau-aman)'};">
             <h4>Peringatan Dini</h4><div class="value ${overbudgetCount > 0 ? 'text-merah' : 'text-hijau'}" style="font-size:1.2em;">${overbudgetCount > 0 ? '⚠️ ' + overbudgetCount + ' Overbudget' : '✅ Semua Aman'}</div>
             <span class="sub-value">${overbudgetCount > 0 ? 'Cek Akuntansi Proyek' : 'Tidak ada pembengkakan'}</span></div>`;
+    // Update status heartbeat di dashboard
+    try {
+        const { data: hb } = await db.from('app_heartbeat').select('*').eq('id', 1).single();
+        if (hb) {
+            const lastPing = new Date(hb.last_ping);
+            const daysSince = ((Date.now() - lastPing.getTime()) / 86400000).toFixed(1);
+            const el = document.getElementById('heartbeat-status-text');
+            if (el) {
+                const statusColor = daysSince < 3 ? '#28a745' : daysSince < 7 ? '#b8860b' : '#FF4C4C';
+                const statusIcon = daysSince < 3 ? '✅' : daysSince < 7 ? '⚠️' : '🔴';
+                el.innerHTML = `<span style="color:${statusColor};">${statusIcon} Terakhir aktif ${daysSince} hari lalu • Total ${hb.ping_count} ping</span>`;
+            }
+        }
+    } catch(e) { console.warn('Heartbeat status:', e.message); }
 }
 
 // SUMBER SELECTOR
@@ -2180,6 +2265,7 @@ window.addEventListener('DOMContentLoaded', () => {
     muatRABTersimpan(); muatDropdownProyekAkuntansi();
     muatDropdownProyekResource(); muatDropdownProyekJadwal();
     muatDashboard();
+    pingSupabase();
 });
 </script>
 
