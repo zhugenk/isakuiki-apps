@@ -1354,7 +1354,7 @@ async function bukaPrintRAB(rabId, jenis) {
 <table class="data"><thead><tr><th>No</th><th>Uraian</th><th>Kategori</th><th>Vol</th><th>Satuan</th><th>Harga</th><th>Subtotal</th></tr></thead><tbody>${rowsHtml}</tbody>
 <tfoot><tr><td colspan="6" style="text-align:right;">TOTAL</td><td style="text-align:right;">${formatRupiah(total)}</td></tr></tfoot></table>
 ${header.catatan ? `<div class="catatan"><strong>Catatan:</strong> ${header.catatan}</div>` : ''}
-<div class="ttd-container"><div class="ttd-box"><div>Dibuat oleh,</div><div class="nama">Admin Isakuiki</div></div><div class="ttd-box"><div>Disetujui,</div><div class="nama">Klien</div></div></div>
+<div class="ttd-container"><div class="ttd-box"><div>Dibuat oleh,</div><div class="nama">Sugeng Sirojuddin</div></div><div class="ttd-box"><div>Disetujui,</div><div class="nama">Klien</div></div></div>
 <div class="footer">Sistem Isakuiki Interior • ${tgl}</div><script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script></body></html>`;
     const w = window.open('', '_blank', 'width=900,height=700'); if (!w) { alert("Popup diblokir!"); return; }
     w.document.open(); w.document.write(html); w.document.close();
