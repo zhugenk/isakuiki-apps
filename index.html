@@ -1555,7 +1555,7 @@ body { padding:40px 50px; color:#000; font-size:13px; }
 .kwitansi-title h2 { font-size:20px; text-decoration:underline; letter-spacing:3px; }
 .kwitansi-title .no { margin-top:5px; font-size:12px; }
 .row { display:flex; margin-bottom:12px; font-size:13px; }
-.row .label { width:170px; font-weight:normal; }
+.row .label { width:150px; font-weight:normal; } /* Lebar disesuaikan sedikit */
 .row .colon { width:15px; }
 .row .value { flex:1; font-weight:bold; border-bottom:1px dotted #666; padding-bottom:3px; }
 .jumlah-box { margin:20px 0; padding:15px 20px; background-color:#f5f5f5; border-left:5px solid #000; border-radius:4px; }
@@ -1569,7 +1569,13 @@ body { padding:40px 50px; color:#000; font-size:13px; }
 .ttd-box .space { height:70px; }
 .ttd-box .nama { border-top:1px solid #000; padding-top:5px; font-weight:bold; }
 .footer { margin-top:40px; text-align:center; font-size:10px; color:#666; font-style:italic; }
-@media print { body { padding:20px 30px; } .no-print { display:none !important; } @page { size:A5 landscape; margin:1cm; } }
+
+/* PERUBAHAN ADA DI SINI */
+@media print { 
+    body { padding:20px 30px; } 
+    .no-print { display:none !important; } 
+    @page { size:A5 portrait; margin:1cm; } 
+}
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; font-family:'Segoe UI',sans-serif; }
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak Kwitansi</button>
