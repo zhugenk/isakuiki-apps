@@ -1131,14 +1131,38 @@ async function muatProyek() {
     grid.innerHTML = data.map(p => {
         const jItem = p.project_items && p.project_items[0] ? p.project_items[0].count : 0;
         const jRAB = p.project_rab && p.project_rab[0] ? p.project_rab[0].count : 0;
-        return `<div class="project-card" onclick="bukaDetailProyek(${p.id})">
+        return `<div class="project-card" onclick="bukaDetailProyek(${p.id})" style="position: relative;">
+            <!-- TOMBOL HAPUS -->
+            <button onclick="hapusProyek(${p.id}, event)" style="position:absolute; top:15px; right:15px; background:#FF4C4C; color:white; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer; font-size:1.1em; display:flex; align-items:center; justify-content:center; z-index:10; box-shadow:0 2px 5px rgba(0,0,0,0.2);" title="Hapus Proyek">🗑️</button>
+            
             <div class="kode">${p.kode_proyek}</div><h4>${p.nama_konsumen}</h4>
+            <div class="konsumen">📞 ${p.kontak || '-'} &nbsp;|&nbsp; 📍 ${p.alamat ? p.alamat.substring(0, 30) + (p.alamat.length > 30 ? '...' : '') : '-'}</div>
+            <div class="detail-row"><span>Jenis:</span> <strong>${p.jenis_proyek || '-'}</strong></div>
             <div class="detail-row"><span>Item:</span> <strong>${jItem}</strong></div>
             <div class="detail-row"><span>RAB:</span> <strong>${jRAB} versi</strong></div>
             <div class="detail-row"><span>Budget:</span> <span class="budget">${formatRupiah(p.budget)}</span></div>
             <span class="badge-status badge-${p.status}">${p.status}</span></div>`;
     }).join('');
 }
+    
+    // TAMBAHKAN FUNGSI BARU DI SINI
+async function hapusProyek(id, event) {
+    if (event) event.stopPropagation(); 
+    
+    if (!confirm("⚠️ PERINGATAN KERAS!\n\nApakah Anda yakin ingin menghapus proyek ini?\n\nTindakan ini akan MENGHAPUS PERMANEN semua data terkait:\n- Item Pesanan\n- RAB\n- Jadwal & Kurva-S\n- Catatan Akuntansi (Pemasukan & Pengeluaran)\n\nData yang sudah dihapus TIDAK BISA dikembalikan.")) {
+        return;
+    }
+
+    try {
+        const { error } = await db.from('projects').delete().eq('id', id);
+        if (error) throw error;
+        muatProyek();
+        muatDashboard(); 
+    } catch (err) {
+        alert("Gagal menghapus proyek: " + err.message);
+    }
+}
+    
 async function simpanProyek() {
     const nama = document.getElementById('projNama').value.trim();
     if (!nama) { alert("Nama konsumen wajib diisi."); return; }
