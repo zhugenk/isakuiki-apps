@@ -1690,16 +1690,11 @@ ${totalRAB > 0 ? `<div class="info-sisa">
     </table>
 </div>` : ''}
 
-<div class="ttd-area">
-    <div class="ttd-box">
-        <div>Penerima,</div>
+<div class="ttd-area" style="justify-content: flex-end;">
+    <div class="ttd-box" style="margin-right: 20px;">
+        <div>Hormat Saya,</div>
         <div class="space"></div>
         <div class="nama">Sugeng Sirojuddin</div>
-    </div>
-    <div class="ttd-box">
-        <div>Pemberi,</div>
-        <div class="space"></div>
-        <div class="nama">${proj.nama_konsumen}</div>
     </div>
 </div>
 <div class="footer">Kwitansi ini sah dan diterbitkan oleh Sistem Isakuiki Interior • Dicetak: ${tglCetak}</div>
@@ -1801,9 +1796,14 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
 </div>
 <div class="note">Catatan: Faktur ini merupakan tagihan resmi untuk pekerjaan proyek interior sesuai dengan kesepakatan bersama.</div>
 <div class="ttd">
-    <div class="ttd-box"><div>Penerima / Klien,</div><div class="space"></div><div class="name">${proj.nama_konsumen}</div></div>
-    <div class="ttd-box"><div>Hormat Kami,</div><div class="space"></div><div class="name">Sugeng Sirojuddin</div></div>
+  <div class="ttd" style="justify-content: flex-end;">
+    <div class="ttd-box" style="margin-right: 20px;">
+        <div>Hormat Saya,</div>
+        <div class="space"></div>
+        <div class="name">Sugeng Sirojuddin</div>
+    </div>
 </div>
+
 <div class="footer">Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}</div>
 <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
 </body></html>`;
