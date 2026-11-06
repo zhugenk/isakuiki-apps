@@ -184,9 +184,7 @@ tr:hover { background-color: #f9f9f9; }
 .total-summary-item .label { font-size: 0.75em; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
 .total-summary-item .val { font-size: 1.05em; font-weight: bold; }
 
-@media (max-width: 900px) { .flex-container { flex-direction: column; } .panel-grid { grid-template-columns: 1fr; } }
-    
-    /* ==========================================
+/* ==========================================
    MOBILE RESPONSIVE DESIGN (Tampilan HP)
    ========================================== */
 .mobile-header { display: none; }
@@ -238,11 +236,13 @@ tr:hover { background-color: #f9f9f9; }
     .main-header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
     .main-header h1 { font-size: 1.5em; }
 }
+
+@media (max-width: 900px) { .flex-container { flex-direction: column; } .panel-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-    <!-- MOBILE HEADER & OVERLAY -->
+<!-- MOBILE HEADER & OVERLAY -->
 <div class="mobile-header">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <h1>Isakuiki Interior</h1>
@@ -250,8 +250,7 @@ tr:hover { background-color: #f9f9f9; }
 </div>
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- SIDEBAR ASLI ANDA (Biarkan apa adanya) -->
-
+<!-- SIDEBAR ASLI ANDA -->
 <aside class="sidebar">
     <div class="sidebar-header"><h2>🏠 Isakuiki Interior</h2></div>
     <ul class="menu-list">
@@ -347,9 +346,9 @@ tr:hover { background-color: #f9f9f9; }
                 <div><h1 id="detail-nama">Detail Proyek</h1><p id="detail-kode">-</p></div>
             </div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-    <button class="btn-print" style="padding: 10px 20px; font-size: 0.9em;" onclick="cetakFakturPenjualan()">🖨️ Cetak Faktur Konsumen</button>
-    <button class="btn-success" onclick="simpanSebagaiRAB()">📋 Simpan sebagai RAB</button>
-</div>
+                <button class="btn-print" style="padding: 10px 20px; font-size: 0.9em;" onclick="cetakFakturPenjualan()">🖨️ Cetak Faktur Konsumen</button>
+                <button class="btn-success" onclick="simpanSebagaiRAB()">📋 Simpan sebagai RAB</button>
+            </div>
         </div>
         <div class="info-box" id="detail-info-box"></div>
         <div class="flex-container">
@@ -1637,7 +1636,7 @@ body { padding:40px 50px; color:#000; font-size:13px; }
 .kwitansi-title h2 { font-size:20px; text-decoration:underline; letter-spacing:3px; }
 .kwitansi-title .no { margin-top:5px; font-size:12px; }
 .row { display:flex; margin-bottom:12px; font-size:13px; }
-.row .label { width:150px; font-weight:normal; } /* Lebar disesuaikan sedikit */
+.row .label { width:150px; font-weight:normal; }
 .row .colon { width:15px; }
 .row .value { flex:1; font-weight:bold; border-bottom:1px dotted #666; padding-bottom:3px; }
 .jumlah-box { margin:20px 0; padding:15px 20px; background-color:#f5f5f5; border-left:5px solid #000; border-radius:4px; }
@@ -1646,13 +1645,6 @@ body { padding:40px 50px; color:#000; font-size:13px; }
 .info-sisa { margin-top:15px; padding:10px 15px; background:#fff8e1; border-left:3px solid #ffc107; font-size:12px; }
 .info-sisa table { width:auto; }
 .info-sisa td { padding:3px 15px 3px 0; }
-.ttd-area { display:flex; justify-content:space-between; margin-top:60px; font-size:13px; }
-.ttd-box { width:200px; text-align:center; }
-.ttd-box .space { height:70px; }
-.ttd-box .nama { border-top:1px solid #000; padding-top:5px; font-weight:bold; }
-.footer { margin-top:40px; text-align:center; font-size:10px; color:#666; font-style:italic; }
-
-/* PERUBAHAN ADA DI SINI */
 @media print { 
     body { padding:20px 30px; } 
     .no-print { display:none !important; } 
@@ -1701,8 +1693,14 @@ ${totalRAB > 0 ? `<div class="info-sisa">
 <div style="margin-top: 40px; text-align: center; font-size: 10px; color: #666; font-style: italic; width: 100%; border-top: 1px solid #ddd; padding-top: 10px;">
     Kwitansi ini sah dan diterbitkan oleh Sistem Isakuiki Interior • Dicetak: ${tglCetak}
 </div>
+<script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
+</body></html>`;
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { alert("Popup diblokir!"); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+}
 
-    // ==========================================
+// ==========================================
 // CETAK FAKTUR PENJUALAN (UNTUK KONSUMEN)
 // ==========================================
 async function cetakFakturPenjualan() {
@@ -1755,11 +1753,6 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
 .total-box .label { font-size:10px; color:#666; text-transform:uppercase; }
 .total-box .amount { font-size:22px; font-weight:bold; color:#009ACD; margin-top:3px; }
 .note { margin-bottom:30px; padding:10px; background:#fff8e1; border-left:3px solid #ffc107; font-size:10px; font-style:italic; }
-.ttd { display:flex; justify-content:space-between; margin-top:50px; font-size:11px; }
-.ttd-box { width:200px; text-align:center; }
-.ttd-box .space { height:60px; }
-.ttd-box .name { border-top:1px solid #333; padding-top:5px; font-weight:bold; }
-.footer { margin-top:40px; text-align:center; font-size:9px; color:#999; border-top:1px solid #ddd; padding-top:10px; font-style:italic; }
 @media print { body { padding:20px 30px; } .no-print { display:none !important; } @page { size:A4 portrait; margin:1cm; } }
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
 </style></head><body>
@@ -1809,7 +1802,7 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
     if (!w) { alert("Popup diblokir!"); return; }
     w.document.open(); w.document.write(html); w.document.close();
 }
-    
+
 // CETAK FAKTUR PEMBELIAN
 async function cetakFaktur(expenseId) {
     const { data: exp } = await db.from('project_expenses').select('*').eq('id', expenseId).single();
@@ -1841,11 +1834,6 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
 .total-box .label { font-size:10px; color:#666; text-transform:uppercase; }
 .total-box .amount { font-size:22px; font-weight:bold; color:#009ACD; margin-top:3px; }
 .note { margin-bottom:30px; padding:10px; background:#fff8e1; border-left:3px solid #ffc107; font-size:10px; font-style:italic; }
-.ttd { display:flex; justify-content:space-between; margin-top:50px; font-size:11px; }
-.ttd-box { width:200px; text-align:center; }
-.ttd-box .space { height:60px; }
-.ttd-box .name { border-top:1px solid #333; padding-top:5px; font-weight:bold; }
-.footer { margin-top:40px; text-align:center; font-size:9px; color:#999; border-top:1px solid #ddd; padding-top:10px; font-style:italic; }
 @media print { body { padding:20px 30px; } .no-print { display:none !important; } @page { size:A5 portrait; margin:1cm; } }
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
 </style></head><body>
@@ -1877,11 +1865,12 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
     <div style="font-size:10px; color:#666; margin-top:5px; font-style:italic;">(${terbilangRupiah(exp.jumlah)})</div>
 </div>
 <div class="note">Catatan: Faktur ini adalah bukti pembelian/pengeluaran internal. Simpan sebagai bukti akuntansi proyek.</div>
-<div class="ttd">
-    <div class="ttd-box"><div>Diterima oleh (Supplier),</div><div class="space"></div><div class="name">${exp.supplier || '................'}</div></div>
-    <div class="ttd-box"><div>Disetujui,</div><div class="space"></div><div class="name">Sugeng Sirojuddin</div></div>
+<div class="ttd" style="display:flex; justify-content:flex-end; margin-top:50px; font-size:11px;">
+    <div class="ttd-box" style="width:200px; text-align:center;">
+        <div>Hormat Saya,</div><div class="space" style="height:60px;"></div><div class="name" style="border-top:1px solid #333; padding-top:5px; font-weight:bold;">Sugeng Sirojuddin</div>
+    </div>
 </div>
-<div class="footer">Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}</div>
+<div class="footer" style="margin-top:40px; text-align:center; font-size:9px; color:#999; border-top:1px solid #ddd; padding-top:10px; font-style:italic;">Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}</div>
 <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
 </body></html>`;
     const w = window.open('', '_blank', 'width=900,height=700');
@@ -2023,10 +2012,6 @@ table.data th { background-color:#E0F7FA; border:1px solid #333; padding:8px 6px
 table.data td { border:1px solid #333; padding:7px 6px; }
 table.data tfoot td { background-color:#F0F8FF; font-weight:bold; }
 .footer { margin-top:40px; text-align:center; font-size:9px; color:#999; border-top:1px solid #ddd; padding-top:10px; }
-.ttd-area { display:flex; justify-content:space-between; margin-top:60px; font-size:11px; }
-.ttd-box { width:200px; text-align:center; }
-.ttd-box .space { height:60px; }
-.ttd-box .name { border-top:1px solid #333; padding-top:5px; font-weight:bold; }
 @media print { body { padding:15px 25px; } .no-print { display:none !important; } @page { size:A4 portrait; margin:1cm; } }
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
 </style></head><body>
@@ -2055,9 +2040,10 @@ table.data tfoot td { background-color:#F0F8FF; font-weight:bold; }
     <tbody>${katRows}</tbody>
     <tfoot><tr><td style="text-align:right;" colspan="2">TOTAL</td><td style="text-align:right;">${formatRupiah(d.totalExpense)}</td><td style="text-align:center;">100%</td></tr></tfoot>
 </table>
-<div class="ttd-area">
-    <div class="ttd-box"><div>Dibuat oleh,</div><div class="space"></div><div class="name">Sugeng Sirojuddin</div></div>
-    <div class="ttd-box"><div>Disetujui,</div><div class="space"></div><div class="name">Pemilik</div></div>
+<div style="display:flex; justify-content:flex-end; margin-top:60px; font-size:11px;">
+    <div style="width:200px; text-align:center;">
+        <div>Hormat Saya,</div><div style="height:60px;"></div><div style="border-top:1px solid #333; padding-top:5px; font-weight:bold;">Sugeng Sirojuddin</div>
+    </div>
 </div>
 <div class="footer">Laporan ini dibuat otomatis oleh Sistem Isakuiki Interior • ${tglCetak}</div>
 <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
