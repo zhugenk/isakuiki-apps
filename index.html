@@ -1804,6 +1804,102 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
     w.document.open(); w.document.write(html); w.document.close();
 }
 
+    // ==========================================
+// CETAK SURAT JALAN
+// ==========================================
+async function cetakSuratJalan() {
+    if (!currentProjectId) { alert("Pilih proyek terlebih dahulu."); return; }
+    
+    const { data: proj } = await db.from('projects').select('*').eq('id', currentProjectId).single();
+    if (!proj) { alert("Proyek tidak ditemukan."); return; }
+
+    const { data: items } = await db.from('project_items').select('*').eq('project_id', currentProjectId).order('created_at');
+    if (!items || items.length === 0) { alert("Belum ada item pesanan untuk dicetak."); return; }
+
+    const rowsHtml = items.map((item, i) => {
+        return `<tr>
+            <td style="text-align:center;">${i + 1}</td>
+            <td>${item.nama_item}${item.keterangan ? '<br><small style="color:#666;font-style:italic;">' + item.keterangan + '</small>' : ''}</td>
+            <td style="text-align:center;">${item.qty}</td>
+            <td style="text-align:center;">${item.satuan}</td>
+            <td></td>
+        </tr>`;
+    }).join('');
+
+    const tgl = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const tglCetak = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const noSuratJalan = `SJ-${new Date().getFullYear()}${String(new Date().getMonth()+1).padStart(2,'0')}-${String(proj.id).padStart(4, '0')}`;
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Surat Jalan ${noSuratJalan}</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body { padding:40px 50px; color:#333; font-size:12px; }
+.kop { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:3px double #333; padding-bottom:15px; margin-bottom:20px; }
+.kop-kiri { display:flex; align-items:center; gap:15px; }
+.kop-kiri img { height: 50px; object-fit: contain; }
+.kop-kiri-text h1 { font-size:22px; color:#009ACD; margin:0; }
+.kop-kiri-text p { font-size:11px; color:#666; margin-top:3px; }
+.kop-kanan { text-align:right; font-size:11px; }
+.kop-kanan .label { font-size:18px; color:#009ACD; font-weight:bold; letter-spacing:2px; }
+.info-grid { display:flex; justify-content:space-between; margin-bottom:20px; }
+.info-block { font-size:11px; }
+.info-block .title { font-weight:bold; color:#666; text-transform:uppercase; font-size:9px; margin-bottom:3px; letter-spacing:0.5px; }
+.info-block .name { font-weight:bold; font-size:13px; color:#333; }
+.info-block .detail { color:#666; line-height:1.5; }
+table.items { width:100%; border-collapse:collapse; margin-bottom:20px; }
+table.items th { background-color:#E0F7FA; border:1px solid #333; padding:10px 8px; text-align:left; font-size:11px; }
+table.items td { border:1px solid #333; padding:10px 8px; font-size:11px; }
+.note { margin-bottom:30px; padding:10px; background:#fff8e1; border-left:3px solid #ffc107; font-size:10px; font-style:italic; }
+@media print { body { padding:20px 30px; } .no-print { display:none !important; } @page { size:A4 portrait; margin:1cm; } }
+.no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
+</style></head><body>
+<button class="no-print" onclick="window.print()">🖨️ Cetak Surat Jalan</button>
+<div class="kop">
+    <div class="kop-kiri">
+        <img src="logo.png" alt="Logo">
+        <div class="kop-kiri-text">
+            <h1>ISAKUIKI INTERIOR</h1>
+            <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+        </div>
+    </div>
+    <div class="kop-kanan"><div class="label">SURAT JALAN</div><div style="margin-top:8px;">No: <strong>${noSuratJalan}</strong></div><div>Tanggal: ${tgl}</div></div>
+</div>
+<div class="info-grid">
+    <div class="info-block">
+        <div class="title">Kepada Yth:</div>
+        <div class="name">${proj.nama_konsumen}</div>
+        <div class="detail">${proj.kontak ? 'Telp: ' + proj.kontak : ''}</div>
+        <div class="detail">${proj.alamat || ''}</div>
+    </div>
+    <div class="info-block" style="text-align:right;">
+        <div class="title">Proyek</div>
+        <div class="name">${proj.kode_proyek}</div>
+        <div class="detail">${proj.jenis_proyek || '-'}</div>
+    </div>
+</div>
+<table class="items">
+    <thead><tr><th style="width:40px;">No</th><th>Deskripsi Barang / Jasa</th><th style="width:60px; text-align:center;">Qty</th><th style="width:80px; text-align:center;">Satuan</th><th style="width:120px; text-align:center;">Keterangan</th></tr></thead>
+    <tbody>${rowsHtml}</tbody>
+</table>
+<div class="note">Catatan: Barang/jasa di atas dikirim/dibawa sesuai dengan pesanan proyek interior. Mohon periksa dengan teliti saat penerimaan.</div>
+<div style="display: flex; justify-content: flex-end; margin-top: 50px; width: 100%;">
+    <div style="width: 200px; text-align: center; font-size: 11px;">
+        <div>Hormat Saya,</div>
+        <div style="height: 60px;"></div>
+        <div style="border-top: 1px solid #333; padding-top: 5px; font-weight: bold;">Sugeng Sirojuddin</div>
+    </div>
+</div>
+
+<div style="margin-top: 40px; text-align: center; font-size: 9px; color: #999; border-top: 1px solid #ddd; padding-top: 10px; font-style: italic; width: 100%;">
+    Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}
+</div>
+<script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
+</body></html>`;
+    const w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) { alert("Popup diblokir! Izinkan popup untuk mencetak."); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+}
+    
 // CETAK FAKTUR PEMBELIAN
 async function cetakFaktur(expenseId) {
     const { data: exp } = await db.from('project_expenses').select('*').eq('id', expenseId).single();
