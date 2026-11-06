@@ -1610,6 +1610,7 @@ ${(items || []).length > 0 ? `
 }
 
 // CETAK KWITANSI
+// CETAK KWITANSI
 async function cetakKwitansi(incomeId) {
     const { data: inc } = await db.from('project_incomes').select('*').eq('id', incomeId).single();
     if (!inc) { alert("Data tidak ditemukan."); return; }
@@ -1629,34 +1630,38 @@ async function cetakKwitansi(incomeId) {
     const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Kwitansi ${noKwitansi}</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Times New Roman', Times, serif; }
-body { padding:40px 50px; color:#000; font-size:13px; }
-.kop { text-align:center; border-bottom:3px double #000; padding-bottom:15px; margin-bottom:25px; }
-.kop h1 { font-size:24px; letter-spacing:2px; }
-.kop p { font-size:11px; margin-top:4px; font-style:italic; }
-.kwitansi-title { text-align:center; margin-bottom:25px; }
-.kwitansi-title h2 { font-size:20px; text-decoration:underline; letter-spacing:3px; }
-.kwitansi-title .no { margin-top:5px; font-size:12px; }
-.row { display:flex; margin-bottom:12px; font-size:13px; }
-.row .label { width:150px; font-weight:normal; }
+body { padding:40px 50px; color:#000; font-size:14px; }
+.kop { display:flex; align-items:center; gap:20px; border-bottom:3px double #000; padding-bottom:15px; margin-bottom:25px; }
+.kop img { height: 70px; object-fit: contain; } /* Logo diperbesar sedikit untuk A4 */
+.kop-text h1 { font-size:26px; letter-spacing:2px; margin:0; }
+.kop-text p { font-size:12px; margin-top:4px; font-style:italic; }
+.kwitansi-title { text-align:center; margin-bottom:30px; }
+.kwitansi-title h2 { font-size:22px; text-decoration:underline; letter-spacing:3px; }
+.kwitansi-title .no { margin-top:5px; font-size:14px; }
+.row { display:flex; margin-bottom:15px; font-size:14px; }
+.row .label { width:180px; font-weight:normal; }
 .row .colon { width:15px; }
 .row .value { flex:1; font-weight:bold; border-bottom:1px dotted #666; padding-bottom:3px; }
-.jumlah-box { margin:20px 0; padding:15px 20px; background-color:#f5f5f5; border-left:5px solid #000; border-radius:4px; }
-.jumlah-box .angka { font-size:26px; font-weight:bold; margin-bottom:8px; }
-.jumlah-box .kata { font-size:12px; font-style:italic; color:#333; }
-.info-sisa { margin-top:15px; padding:10px 15px; background:#fff8e1; border-left:3px solid #ffc107; font-size:12px; }
+.jumlah-box { margin:25px 0; padding:20px; background-color:#f5f5f5; border-left:5px solid #000; border-radius:4px; }
+.jumlah-box .angka { font-size:30px; font-weight:bold; margin-bottom:8px; }
+.jumlah-box .kata { font-size:14px; font-style:italic; color:#333; }
+.info-sisa { margin-top:20px; padding:15px; background:#fff8e1; border-left:3px solid #ffc107; font-size:13px; }
 .info-sisa table { width:auto; }
-.info-sisa td { padding:3px 15px 3px 0; }
+.info-sisa td { padding:4px 20px 4px 0; }
 @media print { 
     body { padding:20px 30px; } 
     .no-print { display:none !important; } 
-    @page { size:A5 portrait; margin:1cm; } 
+    @page { size:A4 portrait; margin:1.5cm; } /* Diubah jadi A4 */
 }
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; font-family:'Segoe UI',sans-serif; }
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak Kwitansi</button>
 <div class="kop">
-    <h1>ISAKUIKI INTERIOR</h1>
-    <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+    <img src="logo.jpg" alt="Logo"> <!-- DISINI DIGANTI JADI logo.jpg -->
+    <div class="kop-text">
+        <h1>ISAKUIKI INTERIOR</h1>
+        <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+    </div>
 </div>
 <div class="kwitansi-title">
     <h2>KWITANSI ${jenisLabel}</h2>
@@ -1683,35 +1688,31 @@ ${totalRAB > 0 ? `<div class="info-sisa">
     </table>
 </div>` : ''}
 
-<div style="display: flex; justify-content: flex-end; margin-top: 50px; width: 100%;">
-    <div style="width: 200px; text-align: center; font-size: 13px;">
+<div style="display: flex; justify-content: flex-end; margin-top: 60px; width: 100%;">
+    <div style="width: 200px; text-align: center; font-size: 14px;">
         <div>Hormat Saya,</div>
-        <div style="height: 60px;"></div>
+        <div style="height: 70px;"></div>
         <div style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">Sugeng Sirojuddin</div>
     </div>
 </div>
 
-<div style="margin-top: 40px; text-align: center; font-size: 10px; color: #666; font-style: italic; width: 100%; border-top: 1px solid #ddd; padding-top: 10px;">
+<div style="margin-top: 50px; text-align: center; font-size: 10px; color: #666; font-style: italic; width: 100%; border-top: 1px solid #ddd; padding-top: 10px;">
     Kwitansi ini sah dan diterbitkan oleh Sistem Isakuiki Interior • Dicetak: ${tglCetak}
 </div>
 <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
 </body></html>`;
     const w = window.open('', '_blank', 'width=900,height=700');
-    if (!w) { alert("Popup diblokir!"); return; }
+    if (!w) { alert("Popup diblokir! Izinkan popup untuk mencetak."); return; }
     w.document.open(); w.document.write(html); w.document.close();
 }
 
-// ==========================================
 // CETAK FAKTUR PENJUALAN (UNTUK KONSUMEN)
-// ==========================================
 async function cetakFakturPenjualan() {
     if (!currentProjectId) { alert("Pilih proyek terlebih dahulu."); return; }
     
-    // Ambil data proyek
     const { data: proj } = await db.from('projects').select('*').eq('id', currentProjectId).single();
     if (!proj) { alert("Proyek tidak ditemukan."); return; }
 
-    // Ambil data item pesanan
     const { data: items } = await db.from('project_items').select('*').eq('project_id', currentProjectId).order('created_at');
     if (!items || items.length === 0) { alert("Belum ada item pesanan untuk dicetak."); return; }
 
@@ -1737,8 +1738,10 @@ async function cetakFakturPenjualan() {
 * { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
 body { padding:40px 50px; color:#333; font-size:12px; }
 .kop { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:3px double #333; padding-bottom:15px; margin-bottom:20px; }
-.kop-kiri h1 { font-size:22px; color:#009ACD; }
-.kop-kiri p { font-size:11px; color:#666; margin-top:3px; }
+.kop-kiri { display:flex; align-items:center; gap:15px; }
+.kop-kiri img { height: 60px; object-fit: contain; } /* Logo */
+.kop-kiri-text h1 { font-size:22px; color:#009ACD; margin:0; }
+.kop-kiri-text p { font-size:11px; color:#666; margin-top:3px; }
 .kop-kanan { text-align:right; font-size:11px; }
 .kop-kanan .label { font-size:18px; color:#009ACD; font-weight:bold; letter-spacing:2px; }
 .info-grid { display:flex; justify-content:space-between; margin-bottom:20px; }
@@ -1759,7 +1762,13 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak Faktur</button>
 <div class="kop">
-    <div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Desain & Pembuatan Furniture Custom</p></div>
+    <div class="kop-kiri">
+        <img src="logo.jpg" alt="Logo"> <!-- DISINI DIGANTI JADI logo.jpg -->
+        <div class="kop-kiri-text">
+            <h1>ISAKUIKI INTERIOR</h1>
+            <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+        </div>
+    </div>
     <div class="kop-kanan"><div class="label">FAKTUR PENJUALAN</div><div style="margin-top:8px;">No: <strong>${noFaktur}</strong></div><div>Tanggal: ${tgl}</div></div>
 </div>
 <div class="info-grid">
@@ -1800,7 +1809,7 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
 <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
 </body></html>`;
     const w = window.open('', '_blank', 'width=900,height=700');
-    if (!w) { alert("Popup diblokir!"); return; }
+    if (!w) { alert("Popup diblokir! Izinkan popup untuk mencetak."); return; }
     w.document.open(); w.document.write(html); w.document.close();
 }
 
