@@ -252,7 +252,15 @@ tr:hover { background-color: #f9f9f9; }
 
 <!-- SIDEBAR ASLI ANDA -->
 <aside class="sidebar">
-    <div class="sidebar-header"><h2>🏠 Isakuiki Interior</h2></div>
+    <div class="sidebar-header" style="text-align: center;">
+    <img src="logo.jpg" alt="Logo Isakuiki" style="max-width: 100%; height: 50px; object-fit: contain; margin-bottom: 10px;">
+    <h2 style="font-size: 1.1em; margin-bottom: 5px;">Isakuiki Interior</h2>
+    <p style="font-size: 0.75em; color: #555; line-height: 1.3;">
+        Jl. Anggana RT.08 Kel. Maluhu Kec. Tenggarong<br>
+        Kab. Kutai Kartanegara, Kaltim<br>
+        HP/WA: 085247043255
+    </p>
+</div>
     <ul class="menu-list">
         <li><a href="#" class="menu-item" data-page="dashboard"><span><span class="menu-icon">📊</span> Dashboard</span><span class="status-badge status-done">✓</span></a></li>
         <li><a href="#" class="menu-item" data-page="proyek"><span><span class="menu-icon">📁</span> Proyek</span><span class="status-badge status-done">✓</span></a></li>
@@ -1657,10 +1665,12 @@ body { padding:40px 50px; color:#000; font-size:14px; }
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak Kwitansi</button>
 <div class="kop">
-    <img src="logo.jpg" alt="Logo"> <!-- DISINI DIGANTI JADI logo.jpg -->
+    <img src="logo.jpg" alt="Logo">
     <div class="kop-text">
         <h1>ISAKUIKI INTERIOR</h1>
         <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+        <p style="font-size: 10px; margin-top: 5px;">Jl. Anggana RT.08 Kel. Maluhu Kec. Tenggarong Kab. Kutai Kartanegara Kalimantan Timur</p>
+        <p style="font-size: 10px;">Telp/WA: 085247043255 | Email: interiorisakuiki@gmail.com</p>
     </div>
 </div>
 <div class="kwitansi-title">
@@ -1761,14 +1771,15 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak Faktur</button>
-<div class="kop">
-    <div class="kop-kiri">
-        <img src="logo.jpg" alt="Logo"> <!-- DISINI DIGANTI JADI logo.jpg -->
-        <div class="kop-kiri-text">
-            <h1>ISAKUIKI INTERIOR</h1>
-            <p>Spesialis Desain & Pembuatan Furniture Custom</p>
-        </div>
+<div class="kop-kiri">
+    <img src="logo.jpg" alt="Logo">
+    <div class="kop-kiri-text">
+        <h1>ISAKUIKI INTERIOR</h1>
+        <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+        <p style="font-size: 10px; margin-top: 5px; color: #666;">Jl. Anggana RT.08 Kel. Maluhu Kec. Tenggarong Kab. Kutai Kartanegara Kalimantan Timur</p>
+        <p style="font-size: 10px; color: #666;">Telp/WA: 085247043255 | Email: interiorisakuiki@gmail.com</p>
     </div>
+</div>
     <div class="kop-kanan"><div class="label">FAKTUR PENJUALAN</div><div style="margin-top:8px;">No: <strong>${noFaktur}</strong></div><div>Tanggal: ${tgl}</div></div>
 </div>
 <div class="info-grid">
@@ -1863,14 +1874,15 @@ table.items td { border:1px solid #333; padding:10px 8px; font-size:11px; }
 .no-print { position:fixed; top:10px; right:10px; padding:10px 15px; background-color:#009ACD; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; }
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak Surat Jalan</button>
-<div class="kop">
-    <div class="kop-kiri">
-        <img src="logo.jpg" alt="Logo">
-        <div class="kop-kiri-text">
-            <h1>ISAKUIKI INTERIOR</h1>
-            <p>Spesialis Desain & Pembuatan Furniture Custom</p>
-        </div>
+<div class="kop-kiri">
+    <img src="logo.jpg" alt="Logo">
+    <div class="kop-kiri-text">
+        <h1>ISAKUIKI INTERIOR</h1>
+        <p>Spesialis Desain & Pembuatan Furniture Custom</p>
+        <p style="font-size: 10px; margin-top: 5px; color: #666;">Jl. Anggana RT.08 Kel. Maluhu Kec. Tenggarong Kab. Kutai Kartanegara Kalimantan Timur</p>
+        <p style="font-size: 10px; color: #666;">Telp/WA: 085247043255 | Email: interiorisakuiki@gmail.com</p>
     </div>
+</div>
     <div class="kop-kanan"><div class="label">SURAT JALAN</div><div style="margin-top:8px;">No: <strong>${noSuratJalan}</strong></div><div>Tanggal: ${tgl}</div></div>
 </div>
 <div class="info-grid">
@@ -2123,9 +2135,14 @@ table.data tfoot td { background-color:#F0F8FF; font-weight:bold; }
 </style></head><body>
 <button class="no-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
 <div class="kop">
-    <div class="kop-kiri"><h1>ISAKUIKI INTERIOR</h1><p>Spesialis Desain & Pembuatan Furniture Custom</p></div>
-    <div class="kop-kanan"><div><strong>LAPORAN LABA RUGI</strong></div><div>Dicetak: ${tglCetak}</div></div>
-</div>
+   <div class="sidebar-header" style="text-align: center; padding-bottom: 15px;">
+    <img src="logo.jpg" alt="Logo Isakuiki" style="max-width: 100%; height: 60px; object-fit: contain; margin-bottom: 10px;">
+    <h2 style="font-size: 1.1em; margin-bottom: 8px;">Isakuiki Interior</h2>
+    <p style="font-size: 0.7em; color: #555; line-height: 1.4; font-weight: normal;">
+        Jl. Anggana RT.08 Kel. Maluhu<br>
+        Kec. Tenggarong, Kukar, Kaltim<br>
+        <strong>HP/WA:</strong> 085247043255
+    </p>
 <div class="judul"><h2>LAPORAN LABA RUGI</h2><p>Periode: ${periodeLabel}</p></div>
 <div class="summary">
     <div class="summary-box"><h4>Total Pemasukan</h4><div class="val" style="color:#28A745;">${formatRupiah(d.totalIncome)}</div></div>
