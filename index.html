@@ -1690,20 +1690,17 @@ ${totalRAB > 0 ? `<div class="info-sisa">
     </table>
 </div>` : ''}
 
-<div class="ttd-area" style="justify-content: flex-end;">
-    <div class="ttd-box" style="margin-right: 20px;">
+<div style="display: flex; justify-content: flex-end; margin-top: 50px; width: 100%;">
+    <div style="width: 200px; text-align: center; font-size: 13px;">
         <div>Hormat Saya,</div>
-        <div class="space"></div>
-        <div class="nama">Sugeng Sirojuddin</div>
+        <div style="height: 60px;"></div>
+        <div style="border-top: 1px solid #000; padding-top: 5px; font-weight: bold;">Sugeng Sirojuddin</div>
     </div>
 </div>
-<div class="footer">Kwitansi ini sah dan diterbitkan oleh Sistem Isakuiki Interior • Dicetak: ${tglCetak}</div>
-<script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
-</body></html>`;
-    const w = window.open('', '_blank', 'width=900,height=700');
-    if (!w) { alert("Popup diblokir!"); return; }
-    w.document.open(); w.document.write(html); w.document.close();
-}
+
+<div style="margin-top: 40px; text-align: center; font-size: 10px; color: #666; font-style: italic; width: 100%; border-top: 1px solid #ddd; padding-top: 10px;">
+    Kwitansi ini sah dan diterbitkan oleh Sistem Isakuiki Interior • Dicetak: ${tglCetak}
+</div>
 
     // ==========================================
 // CETAK FAKTUR PENJUALAN (UNTUK KONSUMEN)
@@ -1795,16 +1792,17 @@ table.items tfoot td { background-color:#F0F8FF; font-weight:bold; font-size:12p
     <div style="font-size:10px; color:#666; margin-top:5px; font-style:italic;">(${terbilangRupiah(total)})</div>
 </div>
 <div class="note">Catatan: Faktur ini merupakan tagihan resmi untuk pekerjaan proyek interior sesuai dengan kesepakatan bersama.</div>
-<div class="ttd">
-  <div class="ttd" style="justify-content: flex-end;">
-    <div class="ttd-box" style="margin-right: 20px;">
+<div style="display: flex; justify-content: flex-end; margin-top: 50px; width: 100%;">
+    <div style="width: 200px; text-align: center; font-size: 11px;">
         <div>Hormat Saya,</div>
-        <div class="space"></div>
-        <div class="name">Sugeng Sirojuddin</div>
+        <div style="height: 60px;"></div>
+        <div style="border-top: 1px solid #333; padding-top: 5px; font-weight: bold;">Sugeng Sirojuddin</div>
     </div>
 </div>
 
-<div class="footer">Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}</div>
+<div style="margin-top: 40px; text-align: center; font-size: 9px; color: #999; border-top: 1px solid #ddd; padding-top: 10px; font-style: italic; width: 100%;">
+    Dokumen ini dicetak dari Sistem Isakuiki Interior • ${tglCetak}
+</div>
 <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),400);});<\/script>
 </body></html>`;
     const w = window.open('', '_blank', 'width=900,height=700');
