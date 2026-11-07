@@ -242,6 +242,29 @@ tr:hover { background-color: #f9f9f9; }
 </head>
 <body>
 
+    <!-- ================= LAYAR LOGIN ================= -->
+<div id="login-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-abu); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;">
+        <img src="logo.jpg" alt="Logo" style="height: 60px; margin-bottom: 20px; object-fit: contain;">
+        <h2 style="color: var(--biru-langit-gelap); margin-bottom: 5px;">Isakuiki Interior</h2>
+        <p style="color: #666; font-size: 0.9em; margin-bottom: 25px;">Silakan login untuk mengakses sistem</p>
+        
+        <div class="form-group" style="text-align: left;">
+            <label>Email</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="Masukkan email">
+        </div>
+        <div class="form-group" style="text-align: left;">
+            <label>Password</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••">
+        </div>
+        
+        <button class="btn-primary" id="btnLogin" onclick="prosesLogin()" style="width: 100%; margin-top: 10px; padding: 12px;">🔑 Login</button>
+        
+        <div id="login-error" style="color: var(--merah-alert); font-size: 0.85em; margin-top: 15px; display: none;"></div>
+    </div>
+</div>
+<!-- ================= END LAYAR LOGIN ================= -->
+    
 <!-- MOBILE HEADER & OVERLAY -->
 <div class="mobile-header">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -2585,14 +2608,76 @@ async function simpanLabor() {
 }
 async function hapusLabor(id) { if (!confirm("Hapus?")) return; await db.from('labors').delete().eq('id', id); muatLabor(); loadLaborDropdown(); }
 
-// INISIALISASI
-window.addEventListener('DOMContentLoaded', () => {
-    muatProyek(); muatMaterial(); muatLabor();
-    loadMaterialDropdown(); loadLaborDropdown();
-    muatRABTersimpan(); muatDropdownProyekAkuntansi();
-    muatDropdownProyekResource(); muatDropdownProyekJadwal();
-    muatDashboard();
-    pingSupabase();
+// ==========================================
+// FITUR LOGIN & AUTHENTICATION
+// ==========================================
+async function prosesLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('btnLogin');
+    const errorDiv = document.getElementById('login-error');
+    
+    if (!email || !password) {
+        errorDiv.innerText = "Email dan Password wajib diisi!";
+        errorDiv.style.display = 'block';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = 'Memproses...';
+    errorDiv.style.display = 'none';
+
+    // Proses login ke Supabase
+    const { data, error } = await db.auth.signInWithPassword({ email, password });
+
+    btn.disabled = false;
+    btn.innerText = '🔑 Login';
+
+    if (error) {
+        errorDiv.innerText = "Login Gagal: " + error.message;
+        errorDiv.style.display = 'block';
+    } else {
+        // Jika berhasil, sembunyikan layar login
+        document.getElementById('login-screen').style.display = 'none';
+    }
+}
+
+async function prosesLogout() {
+    if (!confirm("Apakah Anda yakin ingin keluar?")) return;
+    
+    const { error } = await db.auth.signOut();
+    if (error) {
+        alert("Gagal logout: " + error.message);
+    } else {
+        // Munculkan layar login kembali dan bersihkan form
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+        window.location.reload(); // Reload untuk membersihkan memori aplikasi
+    }
+}
+
+// ==========================================
+// INISIALISASI & PEMERIKSAAN SESI LOGIN
+// ==========================================
+window.addEventListener('DOMContentLoaded', async () => {
+    // 1. Cek apakah user sudah login atau belum
+    const { data: { session } } = await db.auth.getSession();
+
+    if (session) {
+        // Jika sudah login: sembunyikan layar login, muat data
+        document.getElementById('login-screen').style.display = 'none';
+        
+        muatProyek(); muatMaterial(); muatLabor();
+        loadMaterialDropdown(); loadLaborDropdown();
+        muatRABTersimpan(); muatDropdownProyekAkuntansi();
+        muatDropdownProyekResource(); muatDropdownProyekJadwal();
+        muatDashboard();
+        pingSupabase();
+    } else {
+        // Jika belum login: biarkan layar login terbuka
+        document.getElementById('login-screen').style.display = 'flex';
+    }
 });
 </script>
 
